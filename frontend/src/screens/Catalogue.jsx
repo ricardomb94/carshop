@@ -2,13 +2,13 @@ import {Row, Col} from 'react-bootstrap'
 import products from '../products'
 import Product from '../components/Product'
 
-const HomeScreen = () => {
+const Catalogue = () => {
   return (
     <>
       <h1>Voitures récentes</h1>
       <Row>
         {products.map((product) => (
-          <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+          <Col key={product._id} sm={12} md={8} lg={4} xl={4}>
             <Product  product={product}/>
           </Col>
         ))}
@@ -17,4 +17,4 @@ const HomeScreen = () => {
   )
 }
 
-export default HomeScreen
+export default Catalogue
