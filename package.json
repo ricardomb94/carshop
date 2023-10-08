@@ -1,0 +1,12 @@
+{
+  "name": "carshop",
+  "version": "2.0.0",
+  "description": "\"E-commerce project using MERN stack\"",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "author": "Ricardo MBK",
+  "license": "MIT"
+}
