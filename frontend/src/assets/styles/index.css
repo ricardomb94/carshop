@@ -67,6 +67,23 @@ table th {
     border-radius: 17px;
 }
 
-.list-group-item {
-    border-radius: 10px;
+/* .list-group-item {
+    border-radius: 5px;
+} */
+
+
+
+/* .image-gallery-slide .image-gallery-image {
+    width: 100%;
+    object-fit: cover !important;
+} */
+
+.image-gallery-content .image-gallery-slide .image-gallery-image {
+    max-height: calc(100vh - 0px) !important;
+}
+
+.descript {
+    width: 28rem;
+    padding: 0.2rem;
+    position: relative;
 }
