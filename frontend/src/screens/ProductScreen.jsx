@@ -31,6 +31,7 @@ const ProductScreen = (props) => {
         <Link className="btn btn-light my-3" to="/">Retour au Catalogue</Link>
         <Row>
             <Col md={6}>
+            {/* <Card> */}
                 {/* <Image src={product.images[0].original} alt={product.brand} fluid/> */}
                 {/* <Card className='my-3 p-3 rounded'> */}
                   <ImageGallery
@@ -44,14 +45,51 @@ const ProductScreen = (props) => {
             <Col md={3}>
                 <ListGroup variant='flush'>
                     <ListGroup.Item>
-                        <h3>{product.name}</h3>
+                      <h3>{product.name}</h3>
                     </ListGroup.Item>
+                    <ListGroup.Item><strong>Compteur</strong>: {product.odometerReading} </ListGroup.Item>
                     <ListGroup.Item>
-                        <Rating value={product.rating} text={`${product.numReviews} commentaires`}/>
-                        </ListGroup.Item>
-                        <ListGroup.Item>Prix: {product.price} €</ListGroup.Item>
-                    </ListGroup>
-                </Col>
+                      <Rating value={product.rating} text={`${product.numReviews} commentaires`}/>
+                    </ListGroup.Item>
+                    <ListGroup className='my-3 descript'><strong>Description : </strong> {product.description} </ListGroup>
+                </ListGroup>
+            </Col>
+            {/* <Col md={3}></Col> */}
+            <Col md={3}>
+              <Card>
+                <ListGroup variant='flush'>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Prix:</Col>
+                      <Col>
+                        <strong>{product.price} €</strong>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Statut:</Col>
+                      <Col>
+                        <strong>{product.countInStock > 0 ? "Disponible" : "indisponible"}</strong>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  
+                  <ListGroup.Item>
+                   <Button 
+                    className="btn-block"
+                    type="button"
+                    disabled={product.countInStock === 0}
+                    >
+                      Ajouter au panier
+                   </Button>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
+              {/* <Row>
+                <Col className='mt-5'><strong>Description : </strong> {product.description}</Col>
+              </Row> */}
+            </Col> 
         </Row>
         <Features product={product}/>
        

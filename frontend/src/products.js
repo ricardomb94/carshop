@@ -25,7 +25,7 @@ const products = [
       },
     ],
     description:
-      "L'Audi A1 est une voiture à hayon élégante et compacte qui respire la sophistication et la modernité. Elle présente un design extérieur élégant caractérisé par des lignes nettes, une calandre avant agressive et des phares à LED. Sa taille compacte en fait une voiture idéale pour la ville, permettant une maniabilité et un stationnement faciles.",
+      "La Toyota IQ est une voiture à hayon élégante et compacte qui respire la sophistication et la modernité. Elle présente un design extérieur élégant caractérisé par des lignes nettes, une calandre avant agressive et des phares à LED. Sa taille compacte en fait une voiture idéale pour la ville, permettant une maniabilité et un stationnement faciles.",
     features: [
       { marque: "Toyota IQ" },
       { année: 2009 },
@@ -46,7 +46,7 @@ const products = [
     year: 2009,
     category: "Essence",
     color: "noire",
-    countInStock: 0,
+    countInStock: 10,
     price: 7500,
     rating: 2.5,
     provenance: "Belgique",
@@ -93,7 +93,7 @@ const products = [
       },
     ],
     description:
-      "Le Volswagen Up! est une petite voiture citadine compacte connue pour sa taille réduite, sa praticité et son efficacité. Elle arbore un design moderne, un intérieur étonnamment spacieux pour sa catégorie et diverses fonctionnalités et technologies modernes. Avec sa maniabilité réactive et ses options respectueuses de l'environnement, elle est bien adaptée à la conduite en ville et aux déplacements quotidiens.",
+      "La Volswagen Up! est une petite voiture citadine compacte connue pour sa taille réduite, sa praticité et son efficacité. Elle arbore un design moderne, un intérieur étonnamment spacieux pour sa catégorie et diverses fonctionnalités et technologies modernes. Avec sa maniabilité réactive et ses options respectueuses de l'environnement, elle est bien adaptée à la conduite en ville et aux déplacements quotidiens.",
     features: [
       { marque: "Toyota IQ" },
       { année: 2009 },
@@ -114,7 +114,7 @@ const products = [
     year: 2013,
     category: "essence",
     color: "blanche",
-    countInStock: 0,
+    countInStock: 6,
     price: 9000,
     rating: 4.5,
     provenance: "Allemagne",
@@ -155,7 +155,7 @@ const products = [
       // },
     ],
     description:
-      "L'Audi A1 est une voiture à hayon élégante et compacte qui respire la sophistication et la modernité. Elle présente un design extérieur élégant caractérisé par des lignes nettes, une calandre avant agressive et des phares à LED. Sa taille compacte en fait une voiture idéale pour la ville, permettant une maniabilité et un stationnement faciles.",
+      "La Toyota  Yaris est une voiture à hayon élégante et compacte qui respire la sophistication et la modernité. Elle présente un design extérieur élégant caractérisé par des lignes nettes, une calandre avant agressive et des phares à LED. Sa taille compacte en fait une voiture idéale pour la ville, permettant une maniabilité et un stationnement faciles.",
     features: [
       { marque: "Toyota IQ" },
       { année: 2009 },
