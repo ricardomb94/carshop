@@ -59,3 +59,14 @@ table th {
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
 }
+
+.role {
+    background-color: #0978dd;
+    color: #ddd;
+    /* color: #f8e825; */
+    border-radius: 17px;
+}
+
+.list-group-item {
+    border-radius: 10px;
+}
