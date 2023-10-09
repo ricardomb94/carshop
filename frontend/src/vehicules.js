@@ -1,4 +1,4 @@
-const products = [
+const vehicules = [
   {
     _id: 1,
     name: "Toyota IQ",
@@ -193,4 +193,4 @@ const products = [
   },
 ];
 
-module.exports = products;
+module.exports = vehicules;

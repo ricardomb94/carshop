@@ -1,42 +1,50 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import {Row, Col, Image, ListGroup, Card, Button, ListGroupItem, Container} from 'react-bootstrap'
-import products from '../products'
+import {
+  Row, 
+  Col, 
+  // Image, 
+  ListGroup, 
+  Card, Button, 
+  // ListGroupItem, 
+  // Container
+} from 'react-bootstrap'
+import vehicules from '../vehicules'
 import Rating from '../components/Rating'
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import Features from '../components/Features'
 
-const ProductScreen = (props) => {
+const VehiculeScreen = (props) => {
 
     //Let's get the id from the URL to do so we can destructure anything from the params
-    const {id: productId} = useParams()
-    console.log(typeof productId);
+    const {id: vehiculeId} = useParams()
+    console.log(typeof vehiculeId);
 
-    // Let's fetch the product based on that id usng find() method
-    const product = products.find((p) => p._id === Number(productId));
-    console.log(product)
-    if (!product) {
+    // Let's fetch the vehicule based on that id usng find() method
+    const vehicule = vehicules.find((p) => p._id === Number(vehiculeId));
+    console.log(vehicule)
+    if (!vehicule) {
       return <div>Produit non trouvé</div>;
     }
 
-    const images = product.images.map((imageObj) => ({
+    const images = vehicule.images.map((imageObj) => ({
         original: imageObj.original,
         thumbnail: imageObj.thumbnail,
       }));
 
   return (
     <>
-        <Link className="btn btn-light my-3" to="/">Retour au Catalogue</Link>
+        <Link className="btn btn-light my-3" to="/">Retour au CatalogueScreen</Link>
         <Row>
             <Col md={6}>
             {/* <Card> */}
-                {/* <Image src={product.images[0].original} alt={product.brand} fluid/> */}
+                {/* <Image src={vehicule.images[0].original} alt={vehicule.brand} fluid/> */}
                 {/* <Card className='my-3 p-3 rounded'> */}
                   <ImageGallery
                     items={images}
-                    alt={product.brand}
+                    alt={vehicule.brand}
                     thumbnailPosition='bottom'
                     fluid
                   />
@@ -45,13 +53,17 @@ const ProductScreen = (props) => {
             <Col md={3}>
                 <ListGroup variant='flush'>
                     <ListGroup.Item>
-                      <h3>{product.name}</h3>
+                      <h3>{vehicule.name}</h3>
                     </ListGroup.Item>
-                    <ListGroup.Item><strong>Compteur</strong>: {product.odometerReading} </ListGroup.Item>
+                    <ListGroup.Item><strong>Compteur</strong>: {vehicule.odometerReading} </ListGroup.Item>
                     <ListGroup.Item>
-                      <Rating value={product.rating} text={`${product.numReviews} commentaires`}/>
+                      <Rating value={vehicule.rating} text={`${vehicule.numReviews} commentaires`}/>
                     </ListGroup.Item>
-                    <ListGroup className='my-3 descript'><strong>Description : </strong> {product.description} </ListGroup>
+                    
+                    <ListGroup.Item className='my-3 descript'>
+                      <strong>Description : </strong> {vehicule.description} 
+                    </ListGroup.Item>
+                    
                 </ListGroup>
             </Col>
             {/* <Col md={3}></Col> */}
@@ -62,7 +74,7 @@ const ProductScreen = (props) => {
                     <Row>
                       <Col>Prix:</Col>
                       <Col>
-                        <strong>{product.price} €</strong>
+                        <strong>{vehicule.price} €</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -70,7 +82,7 @@ const ProductScreen = (props) => {
                     <Row>
                       <Col>Statut:</Col>
                       <Col>
-                        <strong>{product.countInStock > 0 ? "Disponible" : "indisponible"}</strong>
+                        <strong>{vehicule.countInStock > 0 ? "Disponible" : "indisponible"}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -79,7 +91,7 @@ const ProductScreen = (props) => {
                    <Button 
                     className="btn-block"
                     type="button"
-                    disabled={product.countInStock === 0}
+                    disabled={vehicule.countInStock === 0}
                     >
                       Ajouter au panier
                    </Button>
@@ -87,14 +99,14 @@ const ProductScreen = (props) => {
                 </ListGroup>
               </Card>
               {/* <Row>
-                <Col className='mt-5'><strong>Description : </strong> {product.description}</Col>
+                <Col className='mt-5'><strong>Description : </strong> {vehicule.description}</Col>
               </Row> */}
             </Col> 
         </Row>
-        <Features product={product}/>
+        <Features vehicule={vehicule}/>
        
     </>
   )
 }
 
-export default ProductScreen
+export default VehiculeScreen
