@@ -1,8 +1,9 @@
 import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
 import vehicules from "./data/vehicules.js";
-import { log } from "console";
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 const app = express();
 
 app.get("/", (req, res) => {
