@@ -36,7 +36,7 @@ const VehiculeScreen = (props) => {
 
   return (
     <>
-        <Link className="btn btn-light my-3" to="/">Retour au CatalogueScreen</Link>
+        <Link className="btn btn-light my-3" to="/">Retour au Catalogue</Link>
         <Row>
             <Col md={6}>
             {/* <Card> */}

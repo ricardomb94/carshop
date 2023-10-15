@@ -1,5 +1,7 @@
 import React from 'react'
 import { Col, ListGroup, Row } from 'react-bootstrap'
+import { Fade} from "react-awesome-reveal";
+
 
 
 const Features = ({vehicule}) => {
@@ -13,6 +15,7 @@ const Features = ({vehicule}) => {
    
             <Col md={6} className='mb-3 role ronded'>
                <ListGroup  variant='flush' className='text-center'>
+               <Fade triggerOnce cascade >
                     <ListGroup.Item active> 
                         <span>Année : {vehicule.year} </span>
                     </ListGroup.Item>
@@ -31,11 +34,12 @@ const Features = ({vehicule}) => {
                     <ListGroup.Item>
                         <span> Première main: {vehicule.originalOwner} </span>
                     </ListGroup.Item> 
-                    
+                    </Fade>
                 </ListGroup>
             </Col> 
             <Col md={6} className='mb-3 role ronded'>
                  <ListGroup  variant='flush' className='text-center'>
+                 <Fade cascade  triggerOnce>
                 <ListGroup.Item active>
                         <span> Km compteur: {vehicule.odometerReading} </span>
                     </ListGroup.Item>
@@ -53,7 +57,8 @@ const Features = ({vehicule}) => {
                     </ListGroup.Item>
                     <ListGroup.Item >
                         <span> Nbre de places: {vehicule.seats} </span>
-                    </ListGroup.Item> 
+                    </ListGroup.Item>
+                    </Fade> 
                 </ListGroup>
             </Col> 
     </Row></div>
