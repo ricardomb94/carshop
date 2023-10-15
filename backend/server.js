@@ -1,10 +1,18 @@
 import express from "express";
+import morgan from "morgan";
 import dotenv from "dotenv";
 dotenv.config();
 import vehicules from "./data/vehicules.js";
+import connectDB from "./config/db.js";
 
 const port = process.env.PORT || 5000;
 const app = express();
+
+connectDB(app);
+
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms")
+);
 
 app.get("/", (req, res) => {
   res.send("Bienvenue l'API est déployée avec succés ");

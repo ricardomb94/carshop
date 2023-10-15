@@ -5,7 +5,7 @@ import { Fade} from "react-awesome-reveal";
 
 
 const Features = ({vehicule}) => {
-    console.log('vehicule', vehicule);
+    console.log('***VEHICULE***', vehicule);
     const features = vehicule.features;
 
     console.log('FEATURES', features);
