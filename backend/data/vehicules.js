@@ -1,6 +1,5 @@
 const vehicules = [
   {
-    _id: "1",
     name: "Toyota IQ",
     images: [
       {
@@ -49,7 +48,6 @@ const vehicules = [
     numReviews: 25,
   },
   {
-    _id: "2",
     name: "Volgswagen UP",
     images: [
       {
@@ -100,7 +98,6 @@ const vehicules = [
     numReviews: 12,
   },
   {
-    _id: "4",
     name: "Toyota Yaris",
     images: [
       // {
