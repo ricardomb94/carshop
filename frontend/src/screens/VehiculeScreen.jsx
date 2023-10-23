@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import {
@@ -10,52 +11,60 @@ import {
   // ListGroupItem, 
   // Container
 } from 'react-bootstrap'
-import vehicules from '../vehicules'
+// import vehicules from '../vehicules'
 import Rating from '../components/Rating'
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import Features from '../components/Features';
 // import Features from '../components/Features' 
 
 const VehiculeScreen = () => {
 
     //Let's get the id from the URL to do so we can destructure anything from the params
-    const {id: vehiculeId} = useParams()
-    console.log("TYPEOF-VEHICULEID", typeof vehiculeId);
-    console.log("VEHICULEID", vehiculeId);
-    console.log("VEHICULESCREEN", vehicules)
+    // console.log("TYPEOF-VEHICULEID", typeof vehiculeId);
+    // console.log("VEHICULEID", vehiculeId);
+    // console.log("VEHICULESCREEN", vehicules)
 
      // Convert vehiculeId to a string
     //  const stringVehiculeId = JSON.stringify(vehiculeId);
 
-    // Let's fetch the vehicule based on that id usng find() method
-    const vehicule = vehicules.find((v) => v._id === vehiculeId );
-    console.log("VEHICULE FROM DB", vehicule);
-    
-    if (!vehicule) {
-      return <div>Produit non trouvé</div>;
-    }
+  const { id: vehiculeId } = useParams();
+  const [vehicule, setVehicule] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const images = vehicule.images.map((imageObj) => ({
-        original: imageObj.original,
-        thumbnail: imageObj.thumbnail,
-      }));
+  useEffect(() => {
+    const fetchVehicule = async () => {
+      try {
+        const response = await axios.get(`/api/vehicules/${vehiculeId}`);
+        setVehicule(response.data);
+        console.log('RES.DATA', response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching vehicule:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchVehicule();
+  }, [vehiculeId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+    // Check if vehicule.images is defined before mapping
+  const images = vehicule.images && vehicule.images.map((imageObj) => ({
+    original: imageObj.original,
+    thumbnail: imageObj.thumbnail,
+  }));
 
   return (
     <>
         <Link className="btn btn-light my-3" to="/">Retour au Catalogue</Link>
         <Row>
-            <Col md={6}>
-            {/* <Card> */}
-                <ImageGallery src={vehicule.images[0].original} alt={vehicule.brand} fluid/>
-                {/* <Card className='my-3 p-3 rounded'> */}
-                  <ImageGallery
-                    items={images}
-                    alt={vehicule.brand}
-                    thumbnailPosition='bottom'
-                    fluid
-                  />
-                {/* </Card> */}
-            </Col>
+        <Col md={6}>
+          <ImageGallery items={images} alt={vehicule.brand} thumbnailPosition='bottom' fluid />
+        </Col>
             <Col md={3}>
                 <ListGroup variant='flush'>
                     <ListGroup.Item>
@@ -109,7 +118,7 @@ const VehiculeScreen = () => {
               </Row> */}
             </Col> 
         </Row>
-        {/* <Features vehicule={vehicule}/> */}
+        <Features vehicule={vehicule}/>
        
     </>
   )

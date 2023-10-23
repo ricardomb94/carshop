@@ -20,5 +20,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/vehicules", vehiculeRoutes);
+console.log("SERVER", vehiculeRoutes);
 
 app.listen(port, () => console.log(`Le Server écoute sur le port ${port}`));
