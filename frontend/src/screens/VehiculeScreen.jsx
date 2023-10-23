@@ -14,17 +14,23 @@ import vehicules from '../vehicules'
 import Rating from '../components/Rating'
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import Features from '../components/Features'
+// import Features from '../components/Features' 
 
-const VehiculeScreen = (props) => {
+const VehiculeScreen = () => {
 
     //Let's get the id from the URL to do so we can destructure anything from the params
     const {id: vehiculeId} = useParams()
-    console.log(typeof vehiculeId);
+    console.log("TYPEOF-VEHICULEID", typeof vehiculeId);
+    console.log("VEHICULEID", vehiculeId);
+    console.log("VEHICULESCREEN", vehicules)
+
+     // Convert vehiculeId to a string
+    //  const stringVehiculeId = JSON.stringify(vehiculeId);
 
     // Let's fetch the vehicule based on that id usng find() method
-    const vehicule = vehicules.find((p) => p._id === Number(vehiculeId));
-    console.log(vehicule)
+    const vehicule = vehicules.find((v) => v._id === vehiculeId );
+    console.log("VEHICULE FROM DB", vehicule);
+    
     if (!vehicule) {
       return <div>Produit non trouvé</div>;
     }
@@ -40,7 +46,7 @@ const VehiculeScreen = (props) => {
         <Row>
             <Col md={6}>
             {/* <Card> */}
-                {/* <Image src={vehicule.images[0].original} alt={vehicule.brand} fluid/> */}
+                <ImageGallery src={vehicule.images[0].original} alt={vehicule.brand} fluid/>
                 {/* <Card className='my-3 p-3 rounded'> */}
                   <ImageGallery
                     items={images}
@@ -103,7 +109,7 @@ const VehiculeScreen = (props) => {
               </Row> */}
             </Col> 
         </Row>
-        <Features vehicule={vehicule}/>
+        {/* <Features vehicule={vehicule}/> */}
        
     </>
   )

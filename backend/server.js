@@ -2,8 +2,9 @@ import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
 dotenv.config();
-import vehicules from "./data/vehicules.js";
+// import vehicules from "./data/vehicules.js";
 import connectDB from "./config/db.js";
+import vehiculeRoutes from "./routes/vehiculeRoutes.js";
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -18,13 +19,6 @@ app.get("/", (req, res) => {
   res.send("Bienvenue l'API est déployée avec succés ");
 });
 
-app.get("/api/vehicules", (req, res) => {
-  res.json(vehicules);
-});
-
-app.get("/api/vehicules/:id", (req, res) => {
-  const vehicule = vehicules.find((v) => v._id === req.params.id);
-  res.json(vehicule);
-});
+app.use("/api/vehicules", vehiculeRoutes);
 
 app.listen(port, () => console.log(`Le Server écoute sur le port ${port}`));

@@ -43,8 +43,6 @@ const vehicules = [
     upholstery: "cuir/tissu",
     doors: 3,
     seats: 4,
-    // doors: 3,
-    // seats: 4,
     numReviews: 25,
   },
   {
@@ -100,10 +98,6 @@ const vehicules = [
   {
     name: "Toyota Yaris",
     images: [
-      // {
-      //   original:'/images/yarris-rouge-1.jpeg',
-      //   thumbnail:'/thumbnails/yarris-rouge-t1.jpeg',
-      // },
       {
         original: "/images/yarris-rouge-2.jpeg",
         thumbnail: "/thumbnails/yarris-rouge-t2.jpeg",
@@ -116,10 +110,6 @@ const vehicules = [
         original: "/images/yarris-rouge-4.jpeg",
         thumbnail: "/thumbnails/yarris-rouge-t4.jpeg",
       },
-      // {
-      //   original:'/images/yarris-rouge-5.jpeg',
-      //   thumbnail:'/thumbnails/yarris-t5.jpeg',
-      // },
     ],
     description:
       "La Toyota  Yaris est une voiture à hayon élégante et compacte qui respire la sophistication et la modernité. Elle présente un design extérieur élégant caractérisé par des lignes nettes, une calandre avant agressive et des phares à LED. Sa taille compacte en fait une voiture idéale pour la ville, permettant une maniabilité et un stationnement faciles.",
