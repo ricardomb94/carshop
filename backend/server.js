@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 // import vehicules from "./data/vehicules.js";
 import connectDB from "./config/db.js";
+import { notFound, errorHandler } from "./middleware/errorHandler.js";
 import vehiculeRoutes from "./routes/vehiculeRoutes.js";
 
 const port = process.env.PORT || 5000;
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/vehicules", vehiculeRoutes);
-console.log("SERVER", vehiculeRoutes);
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`Le Server écoute sur le port ${port}`));

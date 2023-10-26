@@ -16,17 +16,9 @@ import Rating from '../components/Rating'
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import Features from '../components/Features';
-// import Features from '../components/Features' 
+import { Fade } from 'react-awesome-reveal';
 
 const VehiculeScreen = () => {
-
-    //Let's get the id from the URL to do so we can destructure anything from the params
-    // console.log("TYPEOF-VEHICULEID", typeof vehiculeId);
-    // console.log("VEHICULEID", vehiculeId);
-    // console.log("VEHICULESCREEN", vehicules)
-
-     // Convert vehiculeId to a string
-    //  const stringVehiculeId = JSON.stringify(vehiculeId);
 
   const { id: vehiculeId } = useParams();
   const [vehicule, setVehicule] = useState([]);
@@ -61,6 +53,7 @@ const VehiculeScreen = () => {
   return (
     <>
         <Link className="btn btn-light my-3" to="/">Retour au Catalogue</Link>
+        <Fade >
         <Row>
         <Col md={6}>
           <ImageGallery items={images} alt={vehicule.brand} thumbnailPosition='bottom' fluid />
@@ -74,11 +67,22 @@ const VehiculeScreen = () => {
                     <ListGroup.Item>
                       <Rating value={vehicule.rating} text={`${vehicule.numReviews} commentaires`}/>
                     </ListGroup.Item>
-                    
-                    <ListGroup.Item className='my-3 descript'>
-                      <strong>Description : </strong> {vehicule.description} 
-                    </ListGroup.Item>
-                    
+                </ListGroup>
+                <ListGroup>
+                  <ListGroup>
+                        <Card
+                          // className='py-3 px-3'
+                          style={{
+                            display:'inherited',
+                            width: '28rem',
+                            textAlign: 'justify',
+                            padding: '0.5em',
+                            marginTop: '1.5rem'
+                          }}
+                        >
+                          <strong>Description : </strong> {vehicule.description}
+                        </Card> 
+                  </ListGroup>
                 </ListGroup>
             </Col>
             {/* <Col md={3}></Col> */}
@@ -111,13 +115,33 @@ const VehiculeScreen = () => {
                       Ajouter au panier
                    </Button>
                   </ListGroup.Item>
+                  {/* <Row>
+                    <Col> */}
+                    {/* <ListGroup>
+                  <ListGroup.Item className='my-3 descript'>
+                        <Card className='m-3 px-3 py-3'>
+                          <strong>Description : </strong> {vehicule.description}
+                        </Card> 
+                    </ListGroup.Item>
+                  </ListGroup> */}
+                    {/* </Col>
+                  </Row> */}
                 </ListGroup>
+
               </Card>
               {/* <Row>
-                <Col className='mt-5'><strong>Description : </strong> {vehicule.description}</Col>
+                <Col md={6} className='mt-5'><strong>Description : </strong> {vehicule.description}</Col>
               </Row> */}
+               {/* <ListGroup>
+                  <ListGroup.Item className='my-3 descript'>
+                        <Card className='m-3 px-3 py-3'>
+                          <strong>Description : </strong> {vehicule.description}
+                        </Card> 
+                    </ListGroup.Item>
+              </ListGroup> */}
             </Col> 
         </Row>
+        </Fade>
         <Features vehicule={vehicule}/>
        
     </>

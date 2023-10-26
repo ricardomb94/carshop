@@ -1,17 +1,17 @@
 import express from "express";
 import mongoose from "mongoose";
+import {
+  getVehicules,
+  getVehiculeById,
+} from "../controllers/vehiculeController.js";
 const router = express.Router();
-import asyncHandler from "../middleware/asyncHandler.js";
-// import vehicules from "../data/vehicules.js";
-import Vehicule from "../models/vehiculeModel.js";
 
-router.get(
-  "/",
-  asyncHandler(async (req, res) => {
-    const vehicules = await Vehicule.find({});
-    res.json(vehicules);
-  })
-);
+// import asyncHandler from "../middleware/asyncHandler.js";
+// import vehicules from "../data/vehicules.js";
+// import Vehicule from "../models/vehiculeModel.js";
+
+router.route("/").get(getVehicules);
+router.route("/:id").get(getVehiculeById);
 
 // router.get(
 //   "/:id",
@@ -32,29 +32,9 @@ router.get(
 //   next();
 // }
 
-router.get(
-  "/:id",
-  asyncHandler(async (req, res) => {
-    const id = req.params.id;
-
-    console.log("Received vehiculeId:", id);
-
-    // Check if id is a valid ObjectId format
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      console.log("Invalid ObjectId format");
-      return res.status(400).json({ message: "Invalid ObjectId format" });
-    }
-
-    const singleVehicule = await Vehicule.findById(id);
-
-    if (singleVehicule) {
-      console.log("Found vehicule:", singleVehicule);
-      return res.json(singleVehicule);
-    }
-
-    console.log("Vehicule not found");
-    res.status(404).json({ message: "Vehicule introuvable" });
-  })
-);
+// router.get(
+//   "/:id",
+//   asyncHandler(async (req, res) => {})
+// );
 
 export default router;

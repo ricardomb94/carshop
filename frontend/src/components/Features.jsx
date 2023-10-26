@@ -6,12 +6,10 @@ import { Fade} from "react-awesome-reveal";
 
 const Features = ({vehicule}) => {
     console.log('***VEHICULE***', vehicule);
-    const features = vehicule.features;
-
-    console.log('FEATURES', features);
+    
   return (
-    <div>  <Row className='role'> 
-    <h3 className='text-center  my-5'>Caractéristiques</h3>
+    <div>  <Row className='role features'> 
+    <h4 className='text-center  my-5'>Caractéristiques</h4>
    
             <Col md={6} className='mb-3 role ronded'>
                <ListGroup  variant='flush' className='text-center'>
