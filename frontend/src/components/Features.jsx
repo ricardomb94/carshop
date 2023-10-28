@@ -1,59 +1,62 @@
 import React from 'react'
 import { Col, ListGroup, Row } from 'react-bootstrap'
+import { Fade} from "react-awesome-reveal";
 
 
-const Features = ({product}) => {
-    console.log('PRODUCT', product);
-    const features = product.features;
 
-    console.log('FEATURES', features);
+const Features = ({vehicule}) => {
+    console.log('***VEHICULE***', vehicule);
+    
   return (
-    <div>  <Row className='role'> 
-    <h3 className='text-center  my-5'>Caractéristiques</h3>
+    <div>  <Row className='role features'> 
+    <h4 className='text-center  my-5'>Caractéristiques</h4>
    
-                <Col md={6} className='mb-3 role ronded'>
+            <Col md={6} className='mb-3 role ronded'>
                <ListGroup  variant='flush' className='text-center'>
+               <Fade triggerOnce cascade >
                     <ListGroup.Item active> 
-                        <span>Année : {product.year} </span>
+                        <span>Année : {vehicule.year} </span>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                        <span>Couleur : {product.color} </span>
+                        <span>Couleur : {vehicule.color} </span>
                     </ListGroup.Item>
                     <ListGroup.Item active>
-                        <span>Provenance : {product.provenance} </span>
+                        <span>Provenance : {vehicule.provenance} </span>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                        <span>Mise en circulation : {product.registration} </span>
+                        <span>Mise en circulation : {vehicule.registration} </span>
                     </ListGroup.Item>
                     <ListGroup.Item active>
-                        <span>Contrôle technique : {product.vehicleInspection} </span>
+                        <span>Contrôle technique : {vehicule.vehicleInspection} </span>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                        <span> Première main: {product.originalOwner} </span>
+                        <span> Première main: {vehicule.originalOwner} </span>
                     </ListGroup.Item> 
-                    
+                    </Fade>
                 </ListGroup>
             </Col> 
             <Col md={6} className='mb-3 role ronded'>
                  <ListGroup  variant='flush' className='text-center'>
+                 <Fade cascade  triggerOnce>
                 <ListGroup.Item active>
-                        <span> Km compteur: {product.odometerReading} </span>
+                        <span> Km compteur: {vehicule.odometerReading} </span>
                     </ListGroup.Item>
                     <ListGroup.Item >
-                        <span> Carburant: {product.energy} </span>
+                        <span> Carburant: {vehicule.energy} </span>
                     </ListGroup.Item>
                     <ListGroup.Item active>
-                        <span> Boite vitesse: {product.transmission} </span>
+                        <span> Boite vitesse: {vehicule.transmission} </span>
                     </ListGroup.Item>
                     <ListGroup.Item >
-                        <span> Sellerie: {product.upholstery} </span>
+                        <span> Sellerie: {vehicule.upholstery} </span>
                     </ListGroup.Item>
                     <ListGroup.Item active>
-                        <span> Nbre de portes: {product.doors} </span>
+                        <span> Nbre de portes: {vehicule.doors} </span>
                     </ListGroup.Item>
                     <ListGroup.Item >
-                        <span> Nbre de places: {product.seats} </span>
-                    </ListGroup.Item> 
+                        <span> Nbre de places: {vehicule.seats} </span>
+                    </ListGroup.Item>
+                    </Fade> 
                 </ListGroup>
             </Col> 
     </Row></div>

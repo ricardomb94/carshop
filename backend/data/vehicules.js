@@ -1,6 +1,5 @@
-const products = [
+const vehicules = [
   {
-    _id: 1,
     name: "Toyota IQ",
     images: [
       {
@@ -26,22 +25,7 @@ const products = [
     ],
     description:
       "La Toyota IQ est une voiture à hayon élégante et compacte qui respire la sophistication et la modernité. Elle présente un design extérieur élégant caractérisé par des lignes nettes, une calandre avant agressive et des phares à LED. Sa taille compacte en fait une voiture idéale pour la ville, permettant une maniabilité et un stationnement faciles.",
-    features: [
-      { marque: "Toyota IQ" },
-      { année: 2009 },
-      { categorie: "essence" },
-      { couleur: "noire" },
-      { countInStock: 0 },
-      { prix: 7500 },
-      { rating: 2.5 },
-      { provenance: "Belgique" },
-      { marque: "Toyota IQ" },
-      { circulation: "12/09/2009" },
-      { controleTechnique: "requis" },
-      { occasion: "Oui" },
-      { transmission: "Manuelle" },
-      { sellerie: "cuir/tissu" },
-    ],
+
     brand: "Toyota IQ",
     year: 2009,
     category: "Essence",
@@ -59,12 +43,9 @@ const products = [
     upholstery: "cuir/tissu",
     doors: 3,
     seats: 4,
-    // doors: 3,
-    // seats: 4,
     numReviews: 25,
   },
   {
-    _id: 2,
     name: "Volgswagen UP",
     images: [
       {
@@ -94,22 +75,7 @@ const products = [
     ],
     description:
       "La Volswagen Up! est une petite voiture citadine compacte connue pour sa taille réduite, sa praticité et son efficacité. Elle arbore un design moderne, un intérieur étonnamment spacieux pour sa catégorie et diverses fonctionnalités et technologies modernes. Avec sa maniabilité réactive et ses options respectueuses de l'environnement, elle est bien adaptée à la conduite en ville et aux déplacements quotidiens.",
-    features: [
-      { marque: "Toyota IQ" },
-      { année: 2009 },
-      { categorie: "essence" },
-      { couleur: "noire" },
-      { countInStock: 0 },
-      { prix: 7500 },
-      { rating: 2.5 },
-      { provenance: "Belgique" },
-      { marque: "Toyota IQ" },
-      { circulation: "12/09/2009" },
-      { controleTechnique: "requis" },
-      { occasion: "Oui" },
-      { transmission: "Manuelle" },
-      { sellerie: "cuir/tissu" },
-    ],
+
     brand: "Volgswagen",
     year: 2013,
     category: "essence",
@@ -130,13 +96,8 @@ const products = [
     numReviews: 12,
   },
   {
-    _id: 4,
     name: "Toyota Yaris",
     images: [
-      // {
-      //   original:'/images/yarris-rouge-1.jpeg',
-      //   thumbnail:'/thumbnails/yarris-rouge-t1.jpeg',
-      // },
       {
         original: "/images/yarris-rouge-2.jpeg",
         thumbnail: "/thumbnails/yarris-rouge-t2.jpeg",
@@ -149,29 +110,10 @@ const products = [
         original: "/images/yarris-rouge-4.jpeg",
         thumbnail: "/thumbnails/yarris-rouge-t4.jpeg",
       },
-      // {
-      //   original:'/images/yarris-rouge-5.jpeg',
-      //   thumbnail:'/thumbnails/yarris-t5.jpeg',
-      // },
     ],
     description:
       "La Toyota  Yaris est une voiture à hayon élégante et compacte qui respire la sophistication et la modernité. Elle présente un design extérieur élégant caractérisé par des lignes nettes, une calandre avant agressive et des phares à LED. Sa taille compacte en fait une voiture idéale pour la ville, permettant une maniabilité et un stationnement faciles.",
-    features: [
-      { marque: "Toyota IQ" },
-      { année: 2009 },
-      { categorie: "essence" },
-      { couleur: "noire" },
-      { countInStock: 0 },
-      { prix: 7500 },
-      { rating: 2.5 },
-      { provenance: "Belgique" },
-      { marque: "Toyota IQ" },
-      { circulation: "12/09/2009" },
-      { controleTechnique: "requis" },
-      { occasion: "Oui" },
-      { transmission: "Manuelle" },
-      { sellerie: "cuir/tissu" },
-    ],
+
     brand: "Toyota Yaris",
     year: 2012,
     category: "Essence",
@@ -193,4 +135,4 @@ const products = [
   },
 ];
 
-module.exports = products;
+export default vehicules;

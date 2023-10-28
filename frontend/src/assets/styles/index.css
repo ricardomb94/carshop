@@ -20,7 +20,7 @@ main {
     padding-left: 0.5rem;
 }
 
-.product-title {
+.vehicule-title {
     height: 2.5em;
     /* Set a fixed height */
     overflow: hidden;
@@ -65,7 +65,14 @@ table th {
     color: #ddd;
     /* color: #f8e825; */
     border-radius: 17px;
+    margin: auto
 }
+
+.features {
+    margin-top: 1rem;
+    line-height: 1;
+}
+
 
 /* .list-group-item {
     border-radius: 5px;
@@ -83,7 +90,6 @@ table th {
 }
 
 .descript {
-    width: 28rem;
-    padding: 0.2rem;
     position: relative;
+    left: 5rem;
 }
