@@ -2,6 +2,10 @@ import {Navbar, Nav, Container} from 'react-bootstrap'
 import {FaShoppingCart, FaUser} from 'react-icons/fa'
 import {LinkContainer} from 'react-router-bootstrap'
 import logo from '../assets/adamologo01.png'
+// import logo from '../assets/adamo-logo-3.jpeg'
+// import logo from '../assets/adamo-logo-7.jpeg'
+
+
 import { Reveal, Fade} from "react-awesome-reveal";
 
 const Header = () => {
