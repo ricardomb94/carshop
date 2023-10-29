@@ -11,24 +11,35 @@ import {
 import Rating from '../components/Rating'
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-
+import { css } from '@emotion/react';
+import { ScaleLoader, RingLoader } from 'react-spinners';
 import Features from '../components/Features';
 import { Fade } from 'react-awesome-reveal';
 import { useGetVehiculeDetailsQuery } from '../slices/vehiculesApiSlice';
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const VehiculeScreenDetails = () => {
 
   const { id: vehiculeId } = useParams();
   const {data: vehicule, isLoading, error } = useGetVehiculeDetailsQuery(vehiculeId)
 
-  // Check if vehicule is defined before logging
-if (!vehicule) {
-  return <div>Loading...</div>; // or some other loading indicator
+
+ // Check if vehicule is defined before rendering
+ if (!vehicule) {
+  return <ScaleLoader
+  visible={true}
+  height={40}
+  width={5}
+  ariaLabel="scale-loading"
+  wrapperStyle={{color: 'pulple'}}
+  wrapperClass="scale-wrapper"
+/>; // or other loading indicator
 }
-
-  console.log('VOITURES', vehicule);
-
-  
 
     // Check if vehicule.images is defined before mapping
   const images = vehicule.images && vehicule.images.map((imageObj) => ({
@@ -41,7 +52,10 @@ if (!vehicule) {
       <Link className="btn btn-light my-3" to="/">Retour au Catalogue</Link>
 
     {isLoading ? (
-      <h2>Loading ... </h2>
+      
+      <div className="sweet-loading">
+        <RingLoader css={override} size={150} color={'#123abc'} loading={isLoading} />
+      </div>
       ): error ? (
       <div>{error?.data?.message || error.error }</div>) : (
       <>
