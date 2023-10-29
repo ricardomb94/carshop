@@ -4,10 +4,6 @@ import Rating from './Rating'
 
 const Vehicule = ({vehicule}) => {
     console.log('VEHIC', vehicule);
-    // if (!vehicule) {
-    //     return <div>Loading...</div>; 
-    //   }
-
       
   return (
     <Card className='my-3 p-3 rounded'>

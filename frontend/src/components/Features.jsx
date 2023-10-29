@@ -5,7 +5,7 @@ import { Fade} from "react-awesome-reveal";
 
 
 const Features = ({vehicule}) => {
-    console.log('***VEHICULE***', vehicule);
+    console.log('***VEHICULE-FEATURES***', vehicule);
     
   return (
     <div>  <Row className='role features'> 
