@@ -11,17 +11,18 @@ import {
 import Rating from '../components/Rating'
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import { css } from '@emotion/react';
-import { ScaleLoader, RingLoader } from 'react-spinners';
+// import { css } from '@emotion/react';
+import { ScaleLoader } from 'react-spinners';
 import Features from '../components/Features';
 import { Fade } from 'react-awesome-reveal';
 import { useGetVehiculeDetailsQuery } from '../slices/vehiculesApiSlice';
+import Message from '../components/Message';
 
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
+// const override = css`
+//   display: block;
+//   margin: 0 auto;
+//   border-color: red;
+// `;
 
 const VehiculeScreenDetails = () => {
 
@@ -32,13 +33,14 @@ const VehiculeScreenDetails = () => {
  // Check if vehicule is defined before rendering
  if (!vehicule) {
   return <ScaleLoader
-  visible={true}
+  visible={+true}
   height={40}
   width={5}
-  ariaLabel="scale-loading"
-  wrapperStyle={{color: 'pulple'}}
-  wrapperClass="scale-wrapper"
-/>; // or other loading indicator
+  color="#36d7b7"
+  aria-label="scale-loading"
+  wrapperstyle={{}}
+  wrapperclass="scale-wrapper"
+/>// or other loading indicator; 
 }
 
     // Check if vehicule.images is defined before mapping
@@ -50,14 +52,20 @@ const VehiculeScreenDetails = () => {
   return (
     <>
       <Link className="btn btn-light my-3" to="/">Retour au Catalogue</Link>
-
     {isLoading ? (
       
-      <div className="sweet-loading">
-        <RingLoader css={override} size={150} color={'#123abc'} loading={isLoading} />
-      </div>
+        <ScaleLoader
+          visible="true"
+          height={40}
+          width={5}
+          color="#36d7b7"
+          ariaLabel="scale-loading"
+          wrapperStyle={{}}
+          wrapperClass="scale-wrapper"
+        />
       ): error ? (
-      <div>{error?.data?.message || error.error }</div>) : (
+        <Message variant='danger'>{error?.data?.message || error.error }</Message>
+      ) : (
       <>
         <Fade >
         <Row>
