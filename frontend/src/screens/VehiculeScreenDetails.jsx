@@ -1,10 +1,11 @@
-import { useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import {
   Row, 
   Col, 
   ListGroup, 
-  Card, Button, 
+  Card, Button, FormControl, 
   
 } from 'react-bootstrap'
 
@@ -17,6 +18,8 @@ import Features from '../components/Features';
 import { Fade } from 'react-awesome-reveal';
 import { useGetVehiculeDetailsQuery } from '../slices/vehiculesApiSlice';
 import Message from '../components/Message';
+import {addToCart} from '../slices/cartSlice'
+import { useDispatch } from 'react-redux'
 
 // const override = css`
 //   display: block;
@@ -27,8 +30,22 @@ import Message from '../components/Message';
 const VehiculeScreenDetails = () => {
 
   const { id: vehiculeId } = useParams();
-  const {data: vehicule, isLoading, error } = useGetVehiculeDetailsQuery(vehiculeId)
 
+  const dispatch = useDispatch()
+const navigate = useNavigate()
+const [qty, setQty] = useState(1)
+
+
+  const {
+    data: vehicule, 
+    isLoading, 
+    error, 
+  } = useGetVehiculeDetailsQuery(vehiculeId)
+  
+  const addToCartHandler = () => {
+    dispatch(addToCart({...vehicule, qty}))
+    navigate('/cart')
+  }
 
  // Check if vehicule is defined before rendering
  if (!vehicule) {
@@ -115,15 +132,41 @@ const VehiculeScreenDetails = () => {
                       <Col>Statut:</Col>
                       <Col>
                         <strong>{vehicule.countInStock > 0 ? "Disponible" : "indisponible"}</strong>
+                        {console.log('COUNT-IN-STOCK', vehicule.countInStock)}
                       </Col>
                     </Row>
                   </ListGroup.Item>
                   
+                    {vehicule.countInStock > 0 && (
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>
+                          qty
+                          </Col>
+                          <Col>
+                          <FormControl
+                            as='select'
+                            value={qty}
+                            onChange={(e) =>setQty(Number(e.target.value))}
+                          >
+                            {[...Array(vehicule.countInStock).keys()].map((x) => (
+                              <option key={x + 1} value={x + 1}>
+                                {x + 1}
+                              </option>
+                            ))}
+                          </FormControl>
+                          </Col>
+
+                        </Row>
+                      </ListGroup.Item>
+                    )}
+
                   <ListGroup.Item>
                    <Button 
                     className="btn-block"
                     type="button"
                     disabled={vehicule.countInStock === 0}
+                    onClick={addToCartHandler}
                     >
                       Ajouter au panier
                    </Button>
