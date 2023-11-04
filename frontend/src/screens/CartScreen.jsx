@@ -77,9 +77,9 @@ const CartScreen = () => {
         <ListGroup >
             <ListGroup.Item>
                 <h6>
-                    Sous total : {cartItems.reduce((acc, item) => acc + item.qty, 0)} véhicules. <br/>Coût:
+                    Sous total : {cartItems.reduce((acc, item) => acc + item.qty, 0)} véhicules. 
                 </h6>
-                 {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}€ 
+                Coût: {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}€ 
             </ListGroup.Item>
             <ListGroup.Item>
                 <Button
