@@ -44,7 +44,7 @@ const [qty, setQty] = useState(1)
   
   const addToCartHandler = () => {
     dispatch(addToCart({...vehicule, qty}))
-    navigate('/cart')
+    navigate('/panier')
   }
 
  // Check if vehicule is defined before rendering

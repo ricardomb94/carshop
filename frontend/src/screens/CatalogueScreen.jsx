@@ -9,7 +9,6 @@ import Message from '../components/Message';
 
 const CatalogueScreen = () => {
   const {data: vehicules, isLoading, error } = useGetVehiculesQuery()
-  console.log('VEHICULE******: ' + vehicules);
 
   return (
     <>
@@ -28,7 +27,11 @@ const CatalogueScreen = () => {
     ) : error ? (
     <Message variant='danger'>{error?.data?.message || error.error }</Message>
     ) : (<>
-       <h1>Voitures récentes</h1>
+    
+     
+        <h2 className='text-center'> <Fade cascade damping={0.1}>Véhicules à vendre</Fade>
+    </h2>
+      
        <Fade triggerOnce cascade>
        <Row>
          {vehicules.map((vehicule) => (
