@@ -148,6 +148,7 @@ const [qty, setQty] = useState(1)
                             as='select'
                             value={qty}
                             onChange={(e) =>setQty(Number(e.target.value))}
+                            name="quantitySelect"
                           >
                             {[...Array(vehicule.countInStock).keys()].map((x) => (
                               <option key={x + 1} value={x + 1}>

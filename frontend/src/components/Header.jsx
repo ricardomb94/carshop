@@ -1,14 +1,18 @@
-import {Navbar, Nav, Container} from 'react-bootstrap'
+import {Navbar, Nav, Container, Badge} from 'react-bootstrap'
 import {FaShoppingCart, FaUser} from 'react-icons/fa'
 import {LinkContainer} from 'react-router-bootstrap'
 import logo from '../assets/adamologo01.png'
 // import logo from '../assets/adamo-logo-3.jpeg'
 // import logo from '../assets/adamo-logo-7.jpeg'
+import { useSelector} from 'react-redux'
 
 
 import { Reveal, Fade} from "react-awesome-reveal";
 
 const Header = () => {
+
+    const {cartItems } = useSelector((state) => state.cart)
+
   return (
     <header>
         < Navbar  bg="primary" variant="primary" expand="lg" collapseOnSelect >
@@ -25,7 +29,16 @@ const Header = () => {
                         <Nav className='ms-auto'>
                             <Reveal cascade >
                             <LinkContainer to="/panier">
-                            <Nav.Link  className="text-white" ><FaShoppingCart/>Panier</Nav.Link>
+                            <Nav.Link  className="text-white" >
+                                <FaShoppingCart/>Panier
+                                {
+                                    cartItems.length > 0 && (
+                                        <Badge pill bg='success' style={{marginLeft:'5px'}} >
+                                            {cartItems.reduce((a, c) => a + c.qty, 0)}
+                                        </Badge>
+                                    )
+                                }
+                            </Nav.Link>
                             </LinkContainer>
                             <LinkContainer to="/connexion">
                             <Nav.Link  className="text-white" ><FaUser/>Connexion</Nav.Link>
