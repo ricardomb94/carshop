@@ -36,10 +36,10 @@ const CartScreen = () => {
             Votre panier est vide <Link to='/'>Retour</Link>
         </Message>
     ) : (
-        <ListGroup >
+        <ListGroup  key={cartItems._id}>
             {
                 cartItems.map((item) => (
-                    <Fade key={item._qty}>
+                    <Fade key={item._id}>
                         <ListGroup.Item >
                             <Row>
                                 <Col md={2}>
@@ -85,8 +85,8 @@ const CartScreen = () => {
   </Col>
   <Col md={4} mt={5}>
     <Card >
-        <ListGroup >
-            <ListGroup.Item>
+        <ListGroup key={cartItems._id}>
+            <ListGroup.Item >
                 <h6>
                     Sous total : {cartItems.reduce((acc, item) => acc + item.qty, 0)} véhicules. 
                 </h6>
@@ -96,7 +96,7 @@ const CartScreen = () => {
                 <Button
                 type='button'
                 className='btn-block'
-                desabled={cartItems.length === 0}
+                disabled={cartItems.length === 0}
                 onClick={checkoutHandler}
                 >
                     Achetez
