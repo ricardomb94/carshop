@@ -4,16 +4,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaTrash } from 'react-icons/fa'
 import Message from '../components/Message'
 import { Fade } from 'react-awesome-reveal'
-import {addToCart} from '../slices/cartSlice'
+import {addToCart, removeFromCart} from '../slices/cartSlice'
 
 const CartScreen = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const cart = useSelector((state)=> state.cart)
     const {cartItems} = cart
+
     const addToCartHandler = async(vehicule, qty) => {
         dispatch(addToCart({...vehicule, qty}))
     }
+
+    const removeFromCartHandler = async(id) => {
+        dispatch(removeFromCart(id))
+    }
+
+    const checkoutHandler = () => {
+        navigate('/login?redirect=/shipping')
+    };
 
   return <Row>
   <Col md={8}>
@@ -59,7 +68,9 @@ const CartScreen = () => {
                                     </FormControl>
                                 </Col>
                                 <Col md={2}>
-                                    <Button type='button' variant='light'>
+                                    <Button type='button' variant='light'
+                                        onClick={() => removeFromCartHandler(item._id) }
+                                    >
                                         <FaTrash/>
                                     </Button>
                                 </Col>
@@ -86,6 +97,7 @@ const CartScreen = () => {
                 type='button'
                 className='btn-block'
                 desabled={cartItems.length === 0}
+                onClick={checkoutHandler}
                 >
                     Achetez
                 </Button>
