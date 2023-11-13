@@ -62,7 +62,8 @@ table th {
 
 .role {
     /* background-color: #0978dd; */
-    background-color: #18bc9c;
+    /* background-color: #18bc9c; */
+    background: #3498db;
     color: #ddd;
     /* color: #f8e825; */
     border-radius: 17px;
