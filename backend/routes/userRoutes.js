@@ -11,6 +11,7 @@ import {
   getUserByID,
   updateUser,
 } from "../controllers/userController.js";
+import { protect, admin } from "../middleware/authMiddleware.js";
 
 // import asyncHandler from "../middleware/asyncHandler.js";
 // import vehicules from "../data/vehicules.js";
