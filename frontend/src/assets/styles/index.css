@@ -61,7 +61,8 @@ table th {
 }
 
 .role {
-    background-color: #0978dd;
+    /* background-color: #0978dd; */
+    background-color: #18bc9c;
     color: #ddd;
     /* color: #f8e825; */
     border-radius: 17px;
@@ -89,7 +90,15 @@ table th {
     max-height: calc(100vh - 0px) !important;
 }
 
-.descript {
+/* .descript {
     position: relative;
     left: 5rem;
+} */
+
+
+.card-img,
+.card-img-top,
+.card-img-bottom {
+    object-fit: cover;
+    height: 40vh;
 }
