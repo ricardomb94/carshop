@@ -1,6 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/userModel.js";
-import jwt from "jsonwebtoken";
+import generateToken from "../utils/generateToken.js";
 
 // @desc Auth user and get token
 // @routes POST /api/users/login
@@ -10,20 +10,9 @@ const authUser = asyncHandler(async (req, res) => {
   //Let"s check if the user is already logged in
   const user = await User.findOne({ email });
   if (user && (await user.matchPassword(password))) {
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "30d",
-    });
+    generateToken(res, user._id);
 
-    //Set JWT as HTTP-only cookie
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV !== "development",
-      sameSite: "strict",
-      maxAge: 30 * 24 * 60 * 60 * 1000, //30 jours
-    });
-    console.log(res.cookie);
-
-    res.json({
+    res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -40,7 +29,36 @@ const authUser = asyncHandler(async (req, res) => {
 // @routes POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  res.send("register user");
+  const { name, email, password, telephone } = req.body;
+
+  //Let check if user is already registered
+  const isAlreadyRegistered = await User.findOne({ email });
+
+  if (isAlreadyRegistered) {
+    res.status(400);
+    throw new Error("Vous êtes déjà enregistré.e");
+  }
+  //If the user is not registered yet, then we need to create a new one
+  const user = await User.create({
+    name,
+    email,
+    password,
+    telephone,
+  });
+  //Then if they are a user we are going to respond with a success message
+  if (user) {
+    generateToken(res, user._Id);
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      telephone: user.telephone,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Vérifier vos données");
+  }
 });
 
 // @desc Logout user / clear cookie
@@ -58,14 +76,49 @@ const logoutUser = asyncHandler(async (req, res) => {
 // @routes GETT /api/users/profile
 // @access Private
 const getUserProfile = asyncHandler(async (req, res) => {
-  res.send("get user profile");
+  console.log("REQ-USER", req.user);
+  const user = await User.findById(req.user._id);
+  if (user) {
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      telephone: user.telephone,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Utilisateur non trouvé");
+  }
 });
 
 // @desc Update user
 // @routes PUT /api/users
 // @access Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  res.send("update user profile");
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    (user.name = req.body.name),
+      (user.email = req.body.email),
+      (user.telephone = req.body.telephone);
+
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      telephone: updatedUser.telephone,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Utilisateur non trouvé");
+  }
 });
 
 // @desc Get users
