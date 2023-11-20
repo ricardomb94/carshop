@@ -1,16 +1,43 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
+import { PulseLoader } from "react-spinners";
+import { useLoginMutation } from "../slices/usersApiSlice";
+import { setCredentials } from "../slices/authSlice";
+import { toast } from "react-toastify";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitHandler = (e) => {
+  const dispatcher = useDispatch();
+  const navigate = useNavigate();
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get("redirect") || "/";
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [userInfo, redirect, navigate]);
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("submit");
+    try {
+      const res = await login({ email, password }).unwrap();
+      dispatcher(setCredentials({ ...res }));
+      navigate(redirect);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
 
   return (
@@ -35,13 +62,32 @@ const LoginScreen = () => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button type='submit' variant='primary' className='mt-2'>
+        <Button
+          type='submit'
+          variant='primary'
+          className='mt-2'
+          disabled={isLoading}
+        >
           Se connecter
         </Button>
+        {isLoading && (
+          <PulseLoader
+            visible={+true}
+            height={40}
+            width={5}
+            color='#36d7b7'
+            aria-label='scale-loading'
+            wrapperstyle={{}}
+            wrapperclass='scale-wrapper'
+          />
+        )}
       </Form>
       <Row className='py-3'>
         <Col>
-          Vous n'avez pas de compte? <Link to='/register'>S'enregistrer</Link>
+          Vous n'avez pas de compte?{" "}
+          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
+            S'enregistrer
+          </Link>
         </Col>
       </Row>
     </FormContainer>
