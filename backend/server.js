@@ -1,4 +1,5 @@
 import express from "express";
+// import bodyParser from "body-parser";
 import morgan from "morgan";
 import dotenv from "dotenv";
 dotenv.config();
@@ -15,6 +16,7 @@ const app = express();
 //  Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 //Cookies middleware
 app.use(cookieParser());

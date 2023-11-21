@@ -29,21 +29,21 @@ const authUser = asyncHandler(async (req, res) => {
 // @routes POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, telephone } = req.body;
+  const { name, email, telephone, password } = req.body;
 
   //Let check if user is already registered
   const isAlreadyRegistered = await User.findOne({ email });
 
   if (isAlreadyRegistered) {
     res.status(400);
-    throw new Error("Vous êtes déjà enregistré.e");
+    throw new Error("Vous avez déja un compte");
   }
   //If the user is not registered yet, then we need to create a new one
   const user = await User.create({
     name,
     email,
-    password,
     telephone,
+    password,
   });
   //Then if they are a user we are going to respond with a success message
   if (user) {
@@ -53,6 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       telephone: user.telephone,
+      password: user.password,
       isAdmin: user.isAdmin,
     });
   } else {

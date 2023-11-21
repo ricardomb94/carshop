@@ -20,6 +20,8 @@ import VehiculeScreenDetails from "./screens/VehiculeScreenDetails";
 import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import { ProfileScreen } from "./screens/ProfileScreen";
+import ShippingScreen from "./screens/ShippingScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +31,8 @@ const router = createBrowserRouter(
       <Route path='/panier' element={<CartScreen />} />
       <Route path='/connexion' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
+      <Route path='/profile' element={<ProfileScreen />} />
+      <Route path='/envoie' element={<ShippingScreen />} />
     </Route>
   )
 );
