@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import FormContainer from "../components/FormContainer";
 // import CheckoutSteps from "../components/CheckoutSteps";
 import { saveShippingAddress } from "../slices/cartSlice";
+import CheckoutSteps from "../components/CheckoutSteps";
 
 const ShippingScreen = () => {
   const cart = useSelector((state) => state.cart);
@@ -23,13 +24,13 @@ const ShippingScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
-    navigate("/payment");
+    navigate("/payement");
   };
 
   return (
     <FormContainer>
-      {/* <CheckoutSteps step1 step2 /> */}
-      <h1>Shipping</h1>
+      <CheckoutSteps step1 step2 />
+      <h1>Expédition</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className='my-2' controlId='address'>
           <Form.Label>Adresse</Form.Label>

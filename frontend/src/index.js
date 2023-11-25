@@ -15,6 +15,7 @@ import "./assets/styles/bootstrap.custom.css";
 import "./assets/styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import PrivateRoute from "./components/PrivateRoute";
 import CatalogueScreen from "./screens/CatalogueScreen";
 import VehiculeScreenDetails from "./screens/VehiculeScreenDetails";
 import CartScreen from "./screens/CartScreen";
@@ -22,6 +23,7 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import { ProfileScreen } from "./screens/ProfileScreen";
 import ShippingScreen from "./screens/ShippingScreen";
+import PaymentScreen from "./screens/PaymentScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,7 +34,11 @@ const router = createBrowserRouter(
       <Route path='/connexion' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
       <Route path='/profile' element={<ProfileScreen />} />
-      <Route path='/envoie' element={<ShippingScreen />} />
+
+      <Route path='' element={<PrivateRoute />}>
+        <Route path='/envoie' element={<ShippingScreen />} />
+        <Route path='/payement' element={<PaymentScreen />} />
+      </Route>
     </Route>
   )
 );
