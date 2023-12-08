@@ -27,6 +27,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
         product: x._id,
         _id: undefined,
       })),
+
       user: req.user._id,
       shippingAddress,
       paymentMethod,
@@ -46,9 +47,9 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/myorders
 // @access  Private
 const getMyOrders = asyncHandler(async (req, res) => {
-  // const orders = await Order.find({ user: req.user._id });
-  // console.log("REQ USER ID from OCtrler", Order);
-  // res.json(orders);
+  const orders = await Order.find({ user: req.user._id });
+  console.log("REQ USER ID from OCtrler", orders);
+  res.json(orders);
   res.send("Get my orders");
 });
 

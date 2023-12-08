@@ -37,6 +37,9 @@ app.use("/api/vehicules", vehiculeRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 
+app.get("api/config/paypal", (req, res) =>
+  res.send({ clientId: process.env.PAYPAL_client_ID })
+);
 app.use(notFound);
 app.use(errorHandler);
 
