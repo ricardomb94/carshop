@@ -8,6 +8,7 @@ import {
   RouteProvider,
   RouterProvider,
 } from "react-router-dom";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { Provider } from "react-redux";
 import store from "./store";
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,15 +17,22 @@ import "./assets/styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminRoute from "./components/AdminRoute";
 import CatalogueScreen from "./screens/CatalogueScreen";
 import VehiculeScreenDetails from "./screens/VehiculeScreenDetails";
 import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import { ProfileScreen } from "./screens/ProfileScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import OrderScreen from "./screens/OrderScreen";
+import OrderListScreen from "./screens/admin/OrderListScreen";
+
+// import OrdersScreen from "./screens/OrdersScreen";
+// import OrderDetailsScreen from "./screens/OrderDetailsScreen";
+// import CartScreenDetails from "./screen
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,7 +47,13 @@ const router = createBrowserRouter(
       <Route path='' element={<PrivateRoute />}>
         <Route path='/envoie' element={<ShippingScreen />} />
         <Route path='/payement' element={<PaymentScreen />} />
-        <Route path='/placeorder' element={<PlaceOrderScreen />} />
+        <Route path='/commande' element={<PlaceOrderScreen />} />
+        <Route path='/order/:id' element={<OrderScreen />} />
+        <Route path='/profile' element={<ProfileScreen />} />
+      </Route>
+
+      <Route path='' element={<AdminRoute />}>
+        <Route path='/admin/orderList' element={<OrderListScreen />} />
       </Route>
     </Route>
   )
@@ -49,7 +63,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PayPalScriptProvider deferLoading={true}>
+        <RouterProvider router={router} />
+      </PayPalScriptProvider>
     </Provider>
   </React.StrictMode>
 );
