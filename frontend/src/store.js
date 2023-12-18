@@ -1,20 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./slices/apiSlice";
 import cartSliceReducer from "./slices/cartSlice";
-import authSliceReducer from "./slices/authSlice";
+import authReducer from "./slices/authSlice"; // add this line
 
-//Let's create the store
 const store = configureStore({
   reducer: {
-    //With apiSlice we don't need a reducer
     [apiSlice.reducerPath]: apiSlice.reducer,
     cart: cartSliceReducer,
-    auth: authSliceReducer,
+    auth: authReducer, // add this line
   },
   middleware: (getDefaultMiddleware) =>
-    // Store has all of the default middleware added, _plus_ the apiSlice middleware
     getDefaultMiddleware().concat(apiSlice.middleware),
-  devTools: TextTrackCue,
+  devTools: true,
 });
 
 export default store;
