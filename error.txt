@@ -1,0 +1,6 @@
+// The error you are getting is a TypeError. This means that the JavaScript engine was unable to convert a value to the expected type. In this case, the error is being caused by the fetch() function. The fetch() function is used to make HTTP requests, and it expects the first argument to be a string that represents the URL of the resource you want to fetch. In your case, you are passing an object as the first argument to the fetch() function. This is causing the TypeError.
+
+// To fix this error, you need to pass a string as the first argument to the fetch() function. You can do this by using the URL() function to convert the object to a string. For example, you could use the following code:
+// const url = new URL('https://example.com');
+// const response = await fetch(url);
+// This code will create a new URL object from the string "https://example.com", and then it will use the fetch() function to make a request to that URL. The response from the request will be stored in the response variable.

@@ -15,8 +15,23 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    createVehicule: builder.mutation({
+      query: (newVehicule) => ({
+        url: `${VEHICULES_URL}/admin/vehiculeslist`,
+        method: "POST",
+        body: { ...newVehicule },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.JWT_SECRET}`,
+        },
+      }),
+      invalidatesTags: ["Vehicule"],
+    }),
   }),
 });
 
-export const { useGetVehiculesQuery, useGetVehiculeDetailsQuery } =
-  vehiculesApiSlice;
+export const {
+  useGetVehiculesQuery,
+  useGetVehiculeDetailsQuery,
+  useCreateVehiculeMutation,
+} = vehiculesApiSlice;

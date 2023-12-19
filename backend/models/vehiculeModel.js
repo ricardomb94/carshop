@@ -62,6 +62,7 @@ const vehiculeSchema = new mongoose.Schema({
   year: {
     type: Number,
     required: true,
+    min: 1900,
   },
   category: {
     type: String,
@@ -74,6 +75,7 @@ const vehiculeSchema = new mongoose.Schema({
   countInStock: {
     type: Number,
     required: true,
+    default: 0,
   },
   price: {
     type: Number,

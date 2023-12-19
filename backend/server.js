@@ -1,24 +1,30 @@
 import express from "express";
-// import bodyParser from "body-parser";
-import morgan from "morgan";
-import dotenv from "dotenv";
-dotenv.config();
-// import vehicules from "./data/vehicules.js";
+import cors from "cors";
 import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 import vehiculeRoutes from "./routes/vehiculeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import morgan from "morgan";
+import dotenv from "dotenv";
+dotenv.config();
 
 import cookieParser from "cookie-parser";
 
 const port = process.env.PORT || 5000;
 const app = express();
 
-//  Body parser middleware
+//Cors
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow requests from this origin
+    credentials: true, // Enable credentials (cookies, authorization headers, etc.)
+  })
+);
+
+//Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(bodyParser.urlencoded({ extended: true }));
 
 //Cookies middleware
 app.use(cookieParser());
@@ -37,7 +43,10 @@ app.use("/api/vehicules", vehiculeRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 
-app.get("api/config/paypal", (req, res) =>
+// Define the admin routes before the notFound and errorHandler middleware
+app.use("/api/admin/vehiculeslist", vehiculeRoutes);
+
+app.get("/api/config/paypal", (req, res) =>
   res.send({ clientId: process.env.PAYPAL_client_ID })
 );
 app.use(notFound);

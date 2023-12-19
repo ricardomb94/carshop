@@ -16,10 +16,10 @@ const errorHandler = (err, req, res, next) => {
 
   /*This par of the code cause the "Error ([ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client") due to multiple res in the same function*/
 
-  // res.status(statusCode).json({
-  //   message: message,
-  //   stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-  // });
+  res.status(statusCode).json({
+    message: message,
+    stack: process.env.NODE_ENV === "production" ? null : err.stack,
+  });
 };
 
 export { notFound, errorHandler };
