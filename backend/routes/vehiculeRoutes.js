@@ -8,7 +8,7 @@ import { admin, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.route("/").post(createVehicule).get(getVehicules);
+router.route("/").post(createVehicule, protect, admin).get(getVehicules);
 router.route("/:id").get(getVehiculeById);
 
 export default router;
