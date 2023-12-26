@@ -93,9 +93,9 @@ const vehiculeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  vehicleInspection: {
+  vehiculeInspection: {
     type: String,
-    required: true,
+    required: false,
   },
   originalOwner: {
     type: String,

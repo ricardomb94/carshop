@@ -48,37 +48,69 @@ const createVehicule = asyncHandler(async (req, res) => {
     .json({ error: "Internal Server Error", message: error.message });
   // }
 });
-//----------------------------------------------------------------------------------
-// const createVehicule = asyncHandler(async (req, res) => {
-//   const vehicule = new Vehicule({
-//     name: "Sample-Vehicules",
-//     images: [
-//       { original: "images/yarris-3.jpg", thumbnail: "images/yarris-3.jpg" },
-//     ],
-//     brand: "Rcd",
-//     year: 2007,
-//     color: "red",
-//     description: "Sample",
-//     price: 100,
-//     countInStock: 0,
-//     numReviews: 0,
-//     rating: 0,
-//     provenance: "sample",
-//     registration: "sample",
-//     vehiculeInspection: "sample",
-//     originalOwner: "sample",
-//     odometerReading: "sample",
-//     energy: "sample",
-//     transmission: "sample",
-//     upholstery: "sample",
-//     doors: 3,
-//     seats: 5,
-//     comment: "sample comment",
-//     user: "654722623f69c2fc934a77d7",
-//   }).unrwap();
-//   const createdVehicule = await vehicule.save();
-//   res.status(201).json(createdVehicule);
-//   console.log("CREATED-Vehicule", createdVehicule);
-// });
-//---------------------
-export { getVehicules, getVehiculeById, createVehicule };
+
+// @desc Update a vehicule
+// @routes PUT /api/vehicules/:id
+// @access Private/admin
+const updateVehicule = asyncHandler(async (req, res) => {
+  //Let's get the data coming from the body by destructuring them from the req.body
+  const {
+    name,
+    images,
+    description,
+    brand,
+    year,
+    category,
+    color,
+    countInStock,
+    price,
+    rating,
+    provenance,
+    registration,
+    vehiculeInspection,
+    originalOwner,
+    odometerReading,
+    energy,
+    transmission,
+    upholstery,
+    doors,
+    seats,
+    numReviews,
+  } = req.body;
+
+  //Here we are going to find the vehicule product
+  const vehicule = await Vehicule.findById(req.params.id);
+  console.log("VEHICULE-CONTROLLER", vehicule);
+
+  if (vehicule) {
+    vehicule.name = name;
+    vehicule.images = images;
+    vehicule.description = description;
+    vehicule.brand = brand;
+    vehicule.year = year;
+    vehicule.category = category;
+    vehicule.color = color;
+    vehicule.countInStock = countInStock;
+    vehicule.price = price;
+    vehicule.rating = rating;
+    vehicule.provenance = provenance;
+    vehicule.registration = registration;
+    vehicule.vehiculeInspection = vehiculeInspection;
+    vehicule.originalOwner = originalOwner;
+    vehicule.odometerReading = odometerReading;
+    vehicule.energy = energy;
+    vehicule.transmission = transmission;
+    vehicule.upholstery = upholstery;
+    vehicule.doors = doors;
+    vehicule.seats = seats;
+    vehicule.numReviews = numReviews;
+
+    const updatedVehicule = await vehicule.save();
+    res.json(updatedVehicule);
+  } else {
+    res.status(404);
+    throw new Error("Resource not found");
+  }
+});
+
+export { getVehicules, getVehiculeById, createVehicule, updateVehicule };

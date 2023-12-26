@@ -45,6 +45,7 @@ app.use("/api/orders", orderRoutes);
 
 // Define the admin routes before the notFound and errorHandler middleware
 app.use("/api/admin/vehiculeslist", vehiculeRoutes);
+app.use("/api/admin/vehicule/:id", vehiculeRoutes);
 
 app.get("/api/config/paypal", (req, res) =>
   res.send({ clientId: process.env.PAYPAL_client_ID })
