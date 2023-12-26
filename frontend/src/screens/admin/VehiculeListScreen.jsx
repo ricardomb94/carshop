@@ -27,12 +27,12 @@ const VehiculeListScreen = () => {
       name: "Toyota example",
       images: [
         {
-          original: "/images/audi-origin1.jpeg",
-          thumbnail: "/thumbnails/audi-t1.jpeg",
+          original: "/images/volgswagen-slider5.jpeg",
+          thumbnail: "/thumbnails/volgswagen-t5.jpeg",
         },
         {
-          original: "/images/audi-origin3.jpeg",
-          thumbnail: "/thumbnails/audi-t2.jpeg",
+          original: "/images/volgswagen-slider5.jpeg",
+          thumbnail: "/thumbnails/volgswagen-t5.jpeg",
         },
         // ... other image objects ...
       ],
@@ -46,7 +46,7 @@ const VehiculeListScreen = () => {
       rating: 0,
       provenance: "Germany",
       registration: "12/01/2023",
-      vehicleInspection: "Required",
+      vehiculeInspection: "Done",
       originalOwner: "Yes",
       odometerReading: "10,000 Km",
       energy: "Petrol",
@@ -192,7 +192,7 @@ const VehiculeListScreen = () => {
                   <td>{vehicule.category}</td>
                   <td>{vehicule.provenance}</td>
                   <td>{vehicule.registration}</td> */}
-                  <td>{vehicule.vehicleInspection}</td>
+                  <td>{vehicule.vehiculeInspection}</td>
                   <td>{vehicule.originalOwner}</td>
                   <td>{vehicule.odometerReading}</td>
                   <td>{vehicule.energy}</td>
