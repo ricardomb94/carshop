@@ -1,4 +1,4 @@
-import { VEHICULES_URL } from "../constants";
+import { UPLOADS_URL, VEHICULES_URL } from "../constants";
 import { apiSlice } from "./apiSlice";
 
 export const vehiculesApiSlice = apiSlice.injectEndpoints({
@@ -44,7 +44,7 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
     }),
     uploadVehiculeImage: builder.mutation({
       query: (data) => ({
-        url: `/api/upload`,
+        url: `${UPLOADS_URL}`,
         method: "POST",
         body: data,
       }),
@@ -76,4 +76,8 @@ export const {
   useGetVehiculeDetailsQuery,
   useCreateVehiculeMutation,
   useUpdateVehiculeMutation,
+  useUploadVehiculeImageMutation,
+  useDeleteVehiculeMutation,
+  useCreateReviewMutation,
+  useGetTopVehiculesQuery,
 } = vehiculesApiSlice;

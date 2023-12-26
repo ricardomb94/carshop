@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import {
   useUpdateVehiculeMutation,
   useGetVehiculeDetailsQuery,
+  useUploadVehiculeImageMutation,
 } from "../../slices/vehiculesApiSlice";
 
 const VehiculeEditScreen = () => {
@@ -47,6 +48,11 @@ const VehiculeEditScreen = () => {
     updateVehicule,
     { isLoading: loadingUpdate },
   ] = useUpdateVehiculeMutation();
+
+  const [
+    uploadVehiculeImage,
+    { loading: loadingUpload },
+  ] = useUploadVehiculeImageMutation();
 
   const navigate = useNavigate();
 
@@ -119,6 +125,10 @@ const VehiculeEditScreen = () => {
     return <ScaleLoader />;
   }
 
+  const uploadFileHandler = async (e) => {
+    console.log("Upload", e.target.files);
+  };
+
   return (
     <>
       <Link to='/admin/vehiculeslist' className='btn btn-light my-3'>
@@ -130,7 +140,7 @@ const VehiculeEditScreen = () => {
         {isLoading ? (
           <ScaleLoader />
         ) : error ? (
-          <Message variant='danger'>{error}</Message>
+          <Message variant='danger'>{error.toString()}</Message>
         ) : (
           <Form onSubmit={submitHandler} autoComplete='off'>
             <Form.Group controlId='name'>
@@ -153,7 +163,22 @@ const VehiculeEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='image'>
+            {/* <Form.Group controlId='image'>
+              <Form.Label>Image</Form.Label> */}
+            {/* <Form.Control
+                type='text'
+                placeholder='Enter image url'
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+              ></Form.Control> */}
+            {/* <Form.Control
+                label='Choose File'
+                onChange={uploadFileHandler}
+                type='file'
+              ></Form.Control>
+              {loadingUpload && <ScaleLoader />} */}
+            {/* </Form.Group> */}
+            <Form.Group controlId='image' className='my-2'>
               <Form.Label>Image</Form.Label>
               <Form.Control
                 type='text'
@@ -161,12 +186,12 @@ const VehiculeEditScreen = () => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
-              {/* <Form.Control
+              <Form.Control
                 label='Choose File'
-                onChange={uploadFileHandler}
                 type='file'
+                onChange={uploadFileHandler}
               ></Form.Control>
-              {loadingUpload && <ScaleLoader />} */}
+              {loadingUpload && <ScaleLoader />}
             </Form.Group>
 
             <Form.Group controlId='brand'>
