@@ -14,7 +14,7 @@ import {
 const VehiculeEditScreen = () => {
   const { id: vehiculeId } = useParams();
 
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
@@ -64,7 +64,7 @@ const VehiculeEditScreen = () => {
         _id: vehiculeId,
         name,
         price,
-        image,
+        images,
         brand,
         category,
         description,
@@ -96,7 +96,7 @@ const VehiculeEditScreen = () => {
     console.log("V-EditScreen", vehicule);
     if (vehicule && vehiculeId === vehicule._id) {
       setName(vehicule.name || "");
-      setImage(vehicule.image || "");
+      setImages(vehicule.images || "");
       setDescription(vehicule.description || "");
       setBrand(vehicule.brand || "");
       setYear(vehicule.year || 1900);
@@ -125,10 +125,36 @@ const VehiculeEditScreen = () => {
     return <ScaleLoader />;
   }
 
-  const uploadFileHandler = async (e) => {
-    console.log("Upload", e.target.files);
-  };
+  const uploadFileHandler = async (e, fileType) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append(fileType, file);
 
+    try {
+      const response = await uploadVehiculeImage(formData);
+      const newImage = {
+        original: fileType === "image" ? response.data.imagePath : "",
+        thumbnail: fileType === "thumbnail" ? response.data.imagePath : "",
+      };
+
+      // If this is a thumbnail, find the corresponding image and update it
+      if (fileType === "thumbnail") {
+        setImages((prevImages) =>
+          prevImages.map((img) =>
+            img.original === ""
+              ? { ...img, thumbnail: response.data.imagePath }
+              : img
+          )
+        );
+      } else {
+        // This is an original image, so add it to the array
+        setImages((prevImages) => [...prevImages, newImage]);
+      }
+      toast.success("Image uploaded successfully");
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
   return (
     <>
       <Link to='/admin/vehiculeslist' className='btn btn-light my-3'>
@@ -181,15 +207,16 @@ const VehiculeEditScreen = () => {
             <Form.Group controlId='image' className='my-2'>
               <Form.Label>Image</Form.Label>
               <Form.Control
+                name='image'
                 type='text'
                 placeholder='Enter image url'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                value={images} // Display the current value of the images state
+                onChange={(e) => setImages(e.target.value)}
               ></Form.Control>
               <Form.Control
                 label='Choose File'
                 type='file'
-                onChange={uploadFileHandler}
+                onChange={(e) => uploadFileHandler(e, "image")} // Pass the correct fileType
               ></Form.Control>
               {loadingUpload && <ScaleLoader />}
             </Form.Group>
