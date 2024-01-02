@@ -56,7 +56,7 @@ const updateVehicule = asyncHandler(async (req, res) => {
   //Let's get the data coming from the body by destructuring them from the req.body
   const {
     name,
-    images,
+    image,
     description,
     brand,
     year,
@@ -83,27 +83,28 @@ const updateVehicule = asyncHandler(async (req, res) => {
   console.log("VEHICULE-CONTROLLER", vehicule);
 
   if (vehicule) {
-    vehicule.name = name;
-    vehicule.images = images;
-    vehicule.description = description;
-    vehicule.brand = brand;
-    vehicule.year = year;
-    vehicule.category = category;
-    vehicule.color = color;
-    vehicule.countInStock = countInStock;
-    vehicule.price = price;
-    vehicule.rating = rating;
-    vehicule.provenance = provenance;
-    vehicule.registration = registration;
-    vehicule.vehiculeInspection = vehiculeInspection;
-    vehicule.originalOwner = originalOwner;
-    vehicule.odometerReading = odometerReading;
-    vehicule.energy = energy;
-    vehicule.transmission = transmission;
-    vehicule.upholstery = upholstery;
-    vehicule.doors = doors;
-    vehicule.seats = seats;
-    vehicule.numReviews = numReviews;
+    vehicule.name = name || vehicule.name;
+    vehicule.images = image || vehicule.images;
+    vehicule.description = description || vehicule.description;
+    vehicule.brand = brand || vehicule.brand;
+    vehicule.year = year || vehicule.year;
+    vehicule.category = category || vehicule.category;
+    vehicule.color = color || vehicule.color;
+    vehicule.countInStock = countInStock || vehicule.countInStock;
+    vehicule.price = price || vehicule.price;
+    vehicule.rating = rating || vehicule.rating;
+    vehicule.provenance = provenance || vehicule.provenance;
+    vehicule.registration = registration || vehicule.registration;
+    vehicule.vehiculeInspection =
+      vehiculeInspection || vehicule.vehiculeInspection;
+    vehicule.originalOwner = originalOwner || vehicule.originalOwner;
+    vehicule.odometerReading = odometerReading || vehicule.odometerReading;
+    vehicule.energy = energy || vehicule.energy;
+    vehicule.transmission = transmission || vehicule.transmission;
+    vehicule.upholstery = upholstery || vehicule.upholstery;
+    vehicule.doors = doors || vehicule.doors;
+    vehicule.seats = seats || vehicule.seats;
+    vehicule.numReviews = numReviews || vehicule.numReviews;
 
     const updatedVehicule = await vehicule.save();
     res.json(updatedVehicule);

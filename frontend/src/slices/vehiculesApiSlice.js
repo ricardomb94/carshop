@@ -1,4 +1,4 @@
-import { VEHICULES_URL } from "../constants";
+import { UPLOADS_URL, VEHICULES_URL } from "../constants";
 import { apiSlice } from "./apiSlice";
 
 export const vehiculesApiSlice = apiSlice.injectEndpoints({
@@ -38,15 +38,40 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
           method: "PUT",
           body: data,
           log: console.log("Update URL:", url),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.JWT_SECRET}`,
+          },
         };
       },
       invalidatesTags: ["Vehicules"],
     }),
+    // updateVehicule: builder.mutation({
+    //   query: (data) => {
+    //     const { _id, ...updatedData } = data;
+    //     const url = `${VEHICULES_URL}/${_id}`;
+
+    //     return {
+    //       url,
+    //       method: "PUT",
+    //       body: updatedData, // Use updatedData without _id for the body
+    //       log: console.log("PUT REQUEST UPDATE VEHICULE:", updatedData),
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer ${process.env.JWT_SECRET}`,
+    //       },
+    //     };
+    //   },
+    //   invalidatesTags: ["Vehicules"],
+    // }),
     uploadVehiculeImage: builder.mutation({
       query: (data) => ({
-        url: `/api/upload`,
+        url: `${UPLOADS_URL}`,
         method: "POST",
         body: data,
+        headers: {
+          Authorization: `Bearer ${process.env.JWT_SECRET}`,
+        },
       }),
     }),
     deleteVehicule: builder.mutation({
@@ -76,4 +101,8 @@ export const {
   useGetVehiculeDetailsQuery,
   useCreateVehiculeMutation,
   useUpdateVehiculeMutation,
+  useUploadVehiculeImageMutation,
+  useDeleteVehiculeMutation,
+  useCreateReviewMutation,
+  useGetTopVehiculesQuery,
 } = vehiculesApiSlice;

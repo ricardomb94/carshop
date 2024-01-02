@@ -71,7 +71,7 @@ const ProfileScreen = () => {
             ></Form.Control>
           </Form.Group>
 
-          <Form.Group className='my-2' controlId='name'>
+          <Form.Group className='my-2' controlId='telephone'>
             <Form.Label>Téléphone</Form.Label>
             <Form.Control
               type='name'
