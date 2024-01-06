@@ -113,5 +113,7 @@ const updateVehicule = asyncHandler(async (req, res) => {
     throw new Error("Resource not found");
   }
 });
+console.log("UPDATED-VEHICULE", updateVehicule);
+console;
 
 export { getVehicules, getVehiculeById, createVehicule, updateVehicule };

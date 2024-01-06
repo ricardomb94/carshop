@@ -61,11 +61,12 @@ const VehiculeScreenDetails = () => {
 
   // Check if vehicule.images is defined before mapping
   const images =
-    vehicule.images &&
-    vehicule.images.map((imageObj) => ({
+    vehicule.images?.map((imageObj) => ({
       original: imageObj.original,
       thumbnail: imageObj.thumbnail,
-    }));
+    })) || [];
+
+  console.log("IMAGES-IN V-SCREEN-DETAILS", images);
 
   return (
     <>

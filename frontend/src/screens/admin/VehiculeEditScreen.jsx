@@ -14,7 +14,7 @@ import {
 const VehiculeEditScreen = () => {
   const { id: vehiculeId } = useParams();
 
-  const [images, setImages] = useState("");
+  const [images, setImages] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
@@ -39,13 +39,14 @@ const VehiculeEditScreen = () => {
 
   const {
     data: vehicule,
+    user,
     isLoading,
     refetch,
     error,
   } = useGetVehiculeDetailsQuery(vehiculeId);
 
   const [
-    updateVehicule,
+    { mutate: updateVehicule },
     { isLoading: loadingUpdate },
   ] = useUpdateVehiculeMutation();
 
@@ -58,10 +59,11 @@ const VehiculeEditScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("VEHICULE ID", vehiculeId);
+    console.log("VEHICULE ID IN SUBMIT HANDLER", vehiculeId);
     try {
       await updateVehicule({
         _id: vehiculeId,
+        user: user._id,
         name,
         price,
         images,
@@ -96,7 +98,7 @@ const VehiculeEditScreen = () => {
     console.log("V-EditScreen", vehicule);
     if (vehicule && vehiculeId === vehicule._id) {
       setName(vehicule.name || "");
-      setImages(vehicule.images || "");
+      setImages(vehicule.images || []);
       setDescription(vehicule.description || "");
       setBrand(vehicule.brand || "");
       setYear(vehicule.year || 1900);
@@ -125,31 +127,27 @@ const VehiculeEditScreen = () => {
     return <ScaleLoader />;
   }
 
-  const uploadFileHandler = async (e, fileType) => {
+  const uploadFileHandler = async (e, fileType, index, imageId) => {
     const file = e.target.files[0];
+    console.log("FILE-UPLOAD", file);
     const formData = new FormData();
     formData.append(fileType, file);
+    console.log("FORMDATA", formData);
 
     try {
       const response = await uploadVehiculeImage(formData);
+      console.log(" REASPONSE IN UPLOAD-HANDLER:", response);
       const newImage = {
-        original: fileType === "image" ? response.data.imagePath : "",
-        thumbnail: fileType === "thumbnail" ? response.data.imagePath : "",
+        original: fileType === "image" ? response.data.image : "",
+        thumbnail: fileType === "thumbnail" ? response.data.thumbnail : "",
+        _id: imageId,
       };
 
-      // If this is a thumbnail, find the corresponding image and update it
-      if (fileType === "thumbnail") {
-        setImages((prevImages) =>
-          prevImages.map((img) =>
-            img.original === ""
-              ? { ...img, thumbnail: response.data.imagePath }
-              : img
-          )
-        );
-      } else {
-        // This is an original image, so add it to the array
-        setImages((prevImages) => [...prevImages, newImage]);
-      }
+      console.log(" NEW-IMAGES IN UPLOAD-HANDLER:", newImage);
+
+      setImages((prevImages) =>
+        prevImages.map((img, i) => (i === index ? newImage : img))
+      );
       toast.success("Image uploaded successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -189,29 +187,40 @@ const VehiculeEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            {/* <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label> */}
-            {/* <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control> */}
-            {/* <Form.Control
-                label='Choose File'
-                onChange={uploadFileHandler}
-                type='file'
-              ></Form.Control>
-              {loadingUpload && <ScaleLoader />} */}
-            {/* </Form.Group> */}
             <Form.Group controlId='image' className='my-2'>
+              <Form.Label>Image</Form.Label>
+              {images.map((image, index) => (
+                <div key={index}>
+                  <Form.Control
+                    name={`images[${index}].original`}
+                    type='text'
+                    placeholder='Enter image url'
+                    value={image.original}
+                    onChange={(e) =>
+                      uploadFileHandler(e, "original", index, image._id || "")
+                    }
+                  />
+                  <Form.Control
+                    name={`images[${index}].thumbnail`}
+                    label='Choose File'
+                    type='file'
+                    onChange={(e) =>
+                      uploadFileHandler(e, "image", index, image._id || "")
+                    }
+                  />
+                </div>
+              ))}
+              {loadingUpload && <ScaleLoader />}
+            </Form.Group>
+
+            {/* <Form.Group controlId='image' className='my-2'>
               <Form.Label>Image</Form.Label>
               <Form.Control
                 name='image'
                 type='text'
                 placeholder='Enter image url'
-                value={images} // Display the current value of the images state
-                onChange={(e) => setImages(e.target.value)}
+                value={JSON.stringify(images.join(","))} // Display the current value of the images state
+                onChange={(e) => setImages(e.target.value.split(","))}
               ></Form.Control>
               <Form.Control
                 label='Choose File'
@@ -219,7 +228,7 @@ const VehiculeEditScreen = () => {
                 onChange={(e) => uploadFileHandler(e, "image")} // Pass the correct fileType
               ></Form.Control>
               {loadingUpload && <ScaleLoader />}
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group controlId='brand'>
               <Form.Label>Brand</Form.Label>

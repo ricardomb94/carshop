@@ -20,12 +20,14 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
       query: (newVehicule) => ({
         url: `${VEHICULES_URL}/admin/vehiculeslist`,
         method: "POST",
-        body: { ...newVehicule },
+        // body: { ...newVehicule },
+        body: JSON.stringify(newVehicule),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.JWT_SECRET}`,
         },
       }),
+
       invalidatesTags: ["Vehicules"],
     }),
     updateVehicule: builder.mutation({
