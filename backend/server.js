@@ -14,7 +14,7 @@ dotenv.config();
 
 import cookieParser from "cookie-parser";
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 const app = express();
 
 //helmet
