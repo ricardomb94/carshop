@@ -1,19 +1,40 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Vehicule from "../models/vehiculeModel.js";
+import User from "../models/userModel.js";
 
 // @desc Fetch all vehicules
 // @routes GET /api/vehicules
 // @access Public
 const getVehicules = asyncHandler(async (req, res) => {
   const vehicules = await Vehicule.find({});
-  console.log("ALL-VEHICULES", vehicules);
   res.json(vehicules);
+  console.log("ALL-VEHICULES", vehicules);
 });
 
 // @desc Fetch a vehicule by Id
 // @routes GET /api/vehicules/:id
 // @access Public
 const getVehiculeById = asyncHandler(async (req, res) => {
+  //const vehiculeId = req.params.id;
+
+//   try {
+//     // Fetch vehicule details from the database
+//     const vehicule = await Vehicule.findById(vehiculeId);
+
+//     // Fetch user details associated with the vehicule
+//     const user = await User.findById(vehicule.user);
+
+//     // Combine vehicule and user details in the response
+//     res.json({
+//       vehicule,
+//       user,
+//     });
+//     console.log("RES-IN VEHICULE-CTLER", vehicule);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
   const vehicule = await Vehicule.findById(req.params.id);
 
   if (!vehicule) {
@@ -48,37 +69,72 @@ const createVehicule = asyncHandler(async (req, res) => {
     .json({ error: "Internal Server Error", message: error.message });
   // }
 });
-//----------------------------------------------------------------------------------
-// const createVehicule = asyncHandler(async (req, res) => {
-//   const vehicule = new Vehicule({
-//     name: "Sample-Vehicules",
-//     images: [
-//       { original: "images/yarris-3.jpg", thumbnail: "images/yarris-3.jpg" },
-//     ],
-//     brand: "Rcd",
-//     year: 2007,
-//     color: "red",
-//     description: "Sample",
-//     price: 100,
-//     countInStock: 0,
-//     numReviews: 0,
-//     rating: 0,
-//     provenance: "sample",
-//     registration: "sample",
-//     vehiculeInspection: "sample",
-//     originalOwner: "sample",
-//     odometerReading: "sample",
-//     energy: "sample",
-//     transmission: "sample",
-//     upholstery: "sample",
-//     doors: 3,
-//     seats: 5,
-//     comment: "sample comment",
-//     user: "654722623f69c2fc934a77d7",
-//   }).unrwap();
-//   const createdVehicule = await vehicule.save();
-//   res.status(201).json(createdVehicule);
-//   console.log("CREATED-Vehicule", createdVehicule);
-// });
-//---------------------
-export { getVehicules, getVehiculeById, createVehicule };
+
+// @desc Update a vehicule
+// @routes PUT /api/vehicules/:id
+// @access Private/admin
+const updateVehicule = asyncHandler(async (req, res) => {
+  //Let's get the data coming from the body by destructuring them from the req.body
+  const {
+    name,
+    images,
+    description,
+    brand,
+    year,
+    category,
+    color,
+    countInStock,
+    price,
+    rating,
+    provenance,
+    registration,
+    vehiculeInspection,
+    originalOwner,
+    odometerReading,
+    energy,
+    transmission,
+    upholstery,
+    doors,
+    seats,
+    numReviews,
+  } = req.body;
+
+  //Here we are going to find the vehicule product
+  const vehicule = await Vehicule.findById(req.params.id);
+  console.log("VEHICULE-CONTROLLER", vehicule);
+
+  if (vehicule) {
+    vehicule.name = name || vehicule.name;
+    vehicule.images = images || vehicule.images;
+    vehicule.description = description || vehicule.description;
+    vehicule.brand = brand || vehicule.brand;
+    vehicule.year = year || vehicule.year;
+    vehicule.category = category || vehicule.category;
+    vehicule.color = color || vehicule.color;
+    vehicule.countInStock = countInStock || vehicule.countInStock;
+    vehicule.price = price || vehicule.price;
+    vehicule.rating = rating || vehicule.rating;
+    vehicule.provenance = provenance || vehicule.provenance;
+    vehicule.registration = registration || vehicule.registration;
+    vehicule.vehiculeInspection =
+      vehiculeInspection || vehicule.vehiculeInspection;
+    vehicule.originalOwner = originalOwner || vehicule.originalOwner;
+    vehicule.odometerReading = odometerReading || vehicule.odometerReading;
+    vehicule.energy = energy || vehicule.energy;
+    vehicule.transmission = transmission || vehicule.transmission;
+    vehicule.upholstery = upholstery || vehicule.upholstery;
+    vehicule.doors = doors || vehicule.doors;
+    vehicule.seats = seats || vehicule.seats;
+    vehicule.numReviews = numReviews || vehicule.numReviews;
+
+    const updatedVehicule = await vehicule.save();
+    res.json(updatedVehicule);
+  } else {
+    res.status(404);
+    throw new Error("Resource not found");
+  }
+});
+console.log("UPDATED-VEHICULE", updateVehicule);
+console;
+
+export { getVehicules, getVehiculeById, createVehicule, updateVehicule };

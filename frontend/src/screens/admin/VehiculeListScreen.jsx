@@ -27,26 +27,30 @@ const VehiculeListScreen = () => {
       name: "Toyota example",
       images: [
         {
-          original: "/images/yarris-rouge-4.jpeg",
-          thumbnail: "/thumbnails/yarris-rouge-t4.jpeg",
+          original: "/images/volgswagen-slider5.jpeg",
+          thumbnail: "/thumbnails/volgswagen-t5.jpeg",
+        },
+        {
+          original: "/images/volgswagen-slider5.jpeg",
+          thumbnail: "/thumbnails/volgswagen-t5.jpeg",
         },
         // ... other image objects ...
       ],
       description: "Example of description.",
-      brand: "Mazda",
+      brand: "Audi-A3",
       year: 2023,
       category: "Sedan",
-      color: "Goldenrod",
+      color: "White",
       countInStock: 15,
       price: 45000,
       rating: 0,
-      provenance: "Japan",
+      provenance: "Germany",
       registration: "12/01/2023",
-      vehicleInspection: "Required",
+      vehiculeInspection: "Done",
       originalOwner: "Yes",
       odometerReading: "10,000 Km",
       energy: "Petrol",
-      transmission: "Manual",
+      transmission: "Automatic",
       upholstery: "Leather",
       doors: 4,
       seats: 5,
@@ -188,7 +192,7 @@ const VehiculeListScreen = () => {
                   <td>{vehicule.category}</td>
                   <td>{vehicule.provenance}</td>
                   <td>{vehicule.registration}</td> */}
-                  <td>{vehicule.vehicleInspection}</td>
+                  <td>{vehicule.vehiculeInspection}</td>
                   <td>{vehicule.originalOwner}</td>
                   <td>{vehicule.odometerReading}</td>
                   <td>{vehicule.energy}</td>
