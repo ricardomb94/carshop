@@ -14,7 +14,7 @@ import {
 const VehiculeEditScreen = () => {
   const { id: vehiculeId } = useParams();
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState([{}]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
@@ -57,13 +57,20 @@ const VehiculeEditScreen = () => {
 
   const navigate = useNavigate();
 
+  // const userId = user._id;
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("VEHICULE ID IN SUBMIT HANDLER", vehiculeId);
+    console.log(
+      "VEHICULE ID IN SUBMIT HANDLER",
+      vehiculeId,
+      "AND USER ID",
+      user
+    );
     try {
-      await updateVehicule({
+      const response = await updateVehicule({
         _id: vehiculeId,
-        user: user._id,
+        // user: userId,
         name,
         price,
         images,
@@ -86,6 +93,11 @@ const VehiculeEditScreen = () => {
         seats,
         numReviews,
       });
+      if (response.error) {
+        // Handle specific error cases if needed
+        throw new Error(response.error.message || "Error updating product");
+      }
+
       toast.success("Product updated");
       refetch();
       navigate("/admin/vehiculeslist");
@@ -98,7 +110,7 @@ const VehiculeEditScreen = () => {
     console.log("V-EditScreen", vehicule);
     if (vehicule && vehiculeId === vehicule._id) {
       setName(vehicule.name || "");
-      setImages(vehicule.images || []);
+      setImages(vehicule.images || [{}]);
       setDescription(vehicule.description || "");
       setBrand(vehicule.brand || "");
       setYear(vehicule.year || 1900);
@@ -127,32 +139,132 @@ const VehiculeEditScreen = () => {
     return <ScaleLoader />;
   }
 
-  const uploadFileHandler = async (e, fileType, index, imageId) => {
+  // const uploadFileHandler = async (e, fileType, index, imageId) => {
+  //   const file = e.target.files[0];
+  //   console.log("FILE-UPLOAD", file);
+
+  //   if (!file) {
+  //     // Handle the case where no file is selected
+  //     toast.error("Please select a file.");
+  //     return;
+  //   }
+
+  //   const formData = new FormData();
+  //   formData.append(fileType, file);
+  //   console.log("FORMDATA", formData);
+
+  //   try {
+  //     const response = await uploadVehiculeImage(formData);
+  //     console.log(" RESPONSE IN UPLOAD-HANDLER:", response.data);
+
+  //     if (
+  //       !response.data ||
+  //       !response.data.imagePath ||
+  //       !response.data.thumbnailPath
+  //     ) {
+  //       // Handle the case where the response data is not as expected
+  //       toast.error("Error uploading image. Please try again.");
+  //       return;
+  //     }
+
+  //     const updatedImages = [...images];
+  //     console.log("UPDATED-IMAGES 1", updatedImages);
+
+  //     const newImage = {
+  //       original: `/${response.data.imagePath}`,
+  //       thumbnail: `/${response.data.thumbnailPath}`,
+  //       _id: vehiculeId,
+  //       // user: userId,
+  //     };
+
+  //     console.log(" NEWIMAGES", newImage);
+
+  //     updatedImages[index] = newImage;
+
+  //     console.log(" UPDATED-IMAGES IN UPLOAD-HANDLER-2:", updatedImages);
+
+  //     setImages(updatedImages);
+  //     console.log("SET-UPDATED-IMAGES", setImages(updatedImages));
+  //     toast.success("Image uploaded successfully");
+  //   } catch (err) {
+  //     toast.error(err?.data?.message || err.error);
+  //   }
+  // };
+
+  const uploadFileHandler = async (e, index, vehiculeId) => {
     const file = e.target.files[0];
-    console.log("FILE-UPLOAD", file);
+
+    if (!file) {
+      toast.error("Please select a file.");
+      return;
+    }
+
     const formData = new FormData();
-    formData.append(fileType, file);
-    console.log("FORMDATA", formData);
+    // formData.append(fileType, file);
+    formData.append("image", file); // Assuming "image" is the field name for the file
+
+    // Append other fields as strings
+    formData.append("images", images.toString());
+    formData.append("name", name.toString());
+    formData.append("price", Number(price));
+    formData.append("brand", brand.toString());
+    formData.append("category", category.toString());
+    formData.append("description", description.toString());
+    formData.append("countInStock", Number(countInStock));
+    formData.append("year", Number(year));
+    formData.append("color", color.toString());
+    formData.append("rating", Number(rating));
+    formData.append("provenance", provenance.toString());
+    formData.append("registration", registration.toString());
+    formData.append("vehiculeInspection", vehiculeInspection.toString());
+    formData.append("originalOwner", originalOwner.toString());
+    formData.append("odometerReading", odometerReading.toString());
+    formData.append("energy", energy.toString());
+    formData.append("transmission", transmission.toString());
+    formData.append("upholstery", upholstery.toString());
+    formData.append("doors", Number(doors));
+    formData.append("seats", Number(seats));
+    formData.append("numReviews", Number(numReviews));
 
     try {
       const response = await uploadVehiculeImage(formData);
-      console.log(" REASPONSE IN UPLOAD-HANDLER:", response);
+      // console.log(" RESPONSE IN UPLOAD-HANDLER:", response.data);
+
+      if (
+        !response.data ||
+        !response.data.imagePath ||
+        !response.data.thumbnailPath
+      ) {
+        // Handle the case where the response data is not as expected
+        toast.error("Error uploading image. Please try again.");
+        return;
+      }
+
+      const updatedImages = [...images];
+      console.log("UPDATED-IMAGES 1", updatedImages);
+
       const newImage = {
-        original: fileType === "image" ? response.data.image : "",
-        thumbnail: fileType === "thumbnail" ? response.data.thumbnail : "",
-        _id: imageId,
+        original: `/${response.data.imagePath}`,
+        thumbnail: `/${response.data.thumbnailPath}`,
+        _id: vehiculeId,
+        // user: userId,
       };
 
-      console.log(" NEW-IMAGES IN UPLOAD-HANDLER:", newImage);
+      console.log(" NEWIMAGES", newImage);
 
-      setImages((prevImages) =>
-        prevImages.map((img, i) => (i === index ? newImage : img))
-      );
+      updatedImages[index] = newImage;
+
+      console.log(" UPDATED-IMAGES IN UPLOAD-HANDLER-2:", updatedImages);
+
+      setImages(updatedImages);
+      console.log("SET-UPDATED-IMAGES", setImages(updatedImages));
+
       toast.success("Image uploaded successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
+
   return (
     <>
       <Link to='/admin/vehiculeslist' className='btn btn-light my-3'>
@@ -189,27 +301,38 @@ const VehiculeEditScreen = () => {
 
             <Form.Group controlId='image' className='my-2'>
               <Form.Label>Image</Form.Label>
-              {images.map((image, index) => (
-                <div key={index}>
-                  <Form.Control
-                    name={`images[${index}].original`}
-                    type='text'
-                    placeholder='Enter image url'
-                    value={image.original}
-                    onChange={(e) =>
-                      uploadFileHandler(e, "original", index, image._id || "")
-                    }
-                  />
-                  <Form.Control
-                    name={`images[${index}].thumbnail`}
-                    label='Choose File'
-                    type='file'
-                    onChange={(e) =>
-                      uploadFileHandler(e, "image", index, image._id || "")
-                    }
-                  />
-                </div>
-              ))}
+              {Array.isArray(images) &&
+                images.map((image, index) => (
+                  <div key={index}>
+                    <Form.Control
+                      name={`images[${index}].original`}
+                      type='text'
+                      placeholder='Enter image url'
+                      value={image && image.original ? image.original : ""}
+                      onChange={(e) =>
+                        uploadFileHandler(
+                          e,
+                          "original",
+                          index,
+                          image ? image._id || "" : ""
+                        )
+                      }
+                    />
+                    <Form.Control
+                      name={`images[${index}].thumbnail`}
+                      label='Choose File'
+                      type='file'
+                      onChange={(e) =>
+                        uploadFileHandler(
+                          e,
+                          "image",
+                          index,
+                          image ? image._id || "" : ""
+                        )
+                      }
+                    />
+                  </div>
+                ))}
               {loadingUpload && <ScaleLoader />}
             </Form.Group>
 
