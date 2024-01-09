@@ -17,7 +17,7 @@ const getVehiculeById = asyncHandler(async (req, res) => {
   const vehicule = await Vehicule.findById(req.params.id);
 
   if (!vehicule) {
-    return res.status(404).json({ message: "No vehicle found" });
+    return res.status(404).json({ message: "No vehicule found" });
   }
 
   res.setHeader("Cache-Control", "no-store");
@@ -56,7 +56,7 @@ const updateVehicule = asyncHandler(async (req, res) => {
   //Let's get the data coming from the body by destructuring them from the req.body
   const {
     name,
-    image,
+    images,
     description,
     brand,
     year,
@@ -84,7 +84,7 @@ const updateVehicule = asyncHandler(async (req, res) => {
 
   if (vehicule) {
     vehicule.name = name || vehicule.name;
-    vehicule.images = image || vehicule.images;
+    vehicule.images = images || vehicule.images;
     vehicule.description = description || vehicule.description;
     vehicule.brand = brand || vehicule.brand;
     vehicule.year = year || vehicule.year;
