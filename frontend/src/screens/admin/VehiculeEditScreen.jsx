@@ -14,7 +14,7 @@ import {
 const VehiculeEditScreen = () => {
   const { id: vehiculeId } = useParams();
 
-  const [images, setImages] = useState("");
+  const [images, setImages] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
@@ -124,7 +124,13 @@ const VehiculeEditScreen = () => {
   if (loadingUpdate || isLoading) {
     return <ScaleLoader />;
   }
-
+  const updateImageField = (index, field, value) => {
+    setImages((prevImages) => {
+      const updatedImages = [...prevImages];
+      updatedImages[index] = { ...updatedImages[index], [field]: value };
+      return updatedImages;
+    });
+  };
   const uploadFileHandler = async (e, fileType) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -189,37 +195,57 @@ const VehiculeEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            {/* <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label> */}
-            {/* <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control> */}
-            {/* <Form.Control
-                label='Choose File'
-                onChange={uploadFileHandler}
-                type='file'
-              ></Form.Control>
-              {loadingUpload && <ScaleLoader />} */}
-            {/* </Form.Group> */}
-            <Form.Group controlId='image' className='my-2'>
-              <Form.Label>Image</Form.Label>
+            {images.map((img, index) => (
+              <Form.Group
+                key={img._id}
+                controlId={`image-${index}`}
+                className='my-2'
+              >
+                <Form.Label>{`Image ${index + 1}`}</Form.Label>
+                <div className='d-flex'>
+                  <Form.Control
+                    type='text'
+                    placeholder={`Enter image ${index + 1} url`}
+                    value={img.original}
+                    onChange={(e) =>
+                      updateImageField(index, "original", e.target.value)
+                    }
+                  ></Form.Control>
+                  <Form.Control
+                    type='file'
+                    onChange={(e) => uploadFileHandler(e, "thumbnail", index)}
+                  ></Form.Control>
+                  {loadingUpload && <ScaleLoader />}
+                </div>
+              </Form.Group>
+            ))}
+
+            {/* <Form.Group controlId='image' className='my-2'>
+              <Form.Label>Images</Form.Label>
               <Form.Control
                 name='image'
                 type='text'
                 placeholder='Enter image url'
-                value={images} // Display the current value of the images state
+                value={images.map((img) => img.original).join(",")}
                 onChange={(e) => setImages(e.target.value)}
               ></Form.Control>
               <Form.Control
-                label='Choose File'
+                label='Choose Original Image'
                 type='file'
-                onChange={(e) => uploadFileHandler(e, "image")} // Pass the correct fileType
+                onChange={(e) => uploadFileHandler(e, "image")}
               ></Form.Control>
               {loadingUpload && <ScaleLoader />}
             </Form.Group>
+
+            <Form.Group controlId='thumbnail' className='my-2'>
+              <Form.Label>Thumbnail</Form.Label>
+              <Form.Control
+                label='Choose Thumbnail'
+                type='file'
+                onChange={(e) => uploadFileHandler(e, "thumbnail")}
+              ></Form.Control>
+              {loadingUpload && <ScaleLoader />}
+            </Form.Group> */}
 
             <Form.Group controlId='brand'>
               <Form.Label>Brand</Form.Label>

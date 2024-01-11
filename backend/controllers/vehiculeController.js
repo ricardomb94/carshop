@@ -6,7 +6,7 @@ import Vehicule from "../models/vehiculeModel.js";
 // @access Public
 const getVehicules = asyncHandler(async (req, res) => {
   const vehicules = await Vehicule.find({});
-  console.log("ALL-VEHICULES", vehicules);
+  console.log("ALL-VEHICULES", vehicules.images);
   res.json(vehicules);
 });
 
