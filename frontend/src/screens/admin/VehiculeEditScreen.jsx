@@ -131,31 +131,22 @@ const VehiculeEditScreen = () => {
       return updatedImages;
     });
   };
-  const uploadFileHandler = async (e, fileType) => {
+
+  const uploadFileHandler = async (e, fileType, index) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append(fileType, file);
 
     try {
       const response = await uploadVehiculeImage(formData);
-      const newImage = {
-        original: fileType === "image" ? response.data.imagePath : "",
-        thumbnail: fileType === "thumbnail" ? response.data.imagePath : "",
-      };
 
-      // If this is a thumbnail, find the corresponding image and update it
-      if (fileType === "thumbnail") {
-        setImages((prevImages) =>
-          prevImages.map((img) =>
-            img.original === ""
-              ? { ...img, thumbnail: response.data.imagePath }
-              : img
-          )
-        );
-      } else {
-        // This is an original image, so add it to the array
-        setImages((prevImages) => [...prevImages, newImage]);
-      }
+      // Update the corresponding image in the array
+      setImages((prevImages) =>
+        prevImages.map((img, i) =>
+          i === index ? { ...img, [fileType]: response.data.imagePath } : img
+        )
+      );
+
       toast.success("Image uploaded successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -206,6 +197,41 @@ const VehiculeEditScreen = () => {
                   <Form.Control
                     type='text'
                     placeholder={`Enter image ${index + 1} url`}
+                    value={img.original || ""}
+                    onChange={(e) =>
+                      updateImageField(index, "original", e.target.value)
+                    }
+                    disabled={loadingUpload}
+                    aria-label={`Image ${index + 1} URL`}
+                  ></Form.Control>
+                  <Form.Control
+                    type='file'
+                    onChange={(e) => uploadFileHandler(e, "original", index)}
+                    disabled={loadingUpload}
+                    aria-label={`Upload original for Image ${index + 1}`}
+                  ></Form.Control>
+                  {/* <Form.Control
+                    type='file'
+                    onChange={(e) => uploadFileHandler(e, "thumbnail", index)}
+                    disabled={loadingUpload}
+                    aria-label={`Upload thumbnail for Image ${index + 1}`}
+                  ></Form.Control> */}
+                  {loadingUpload && <ScaleLoader />}
+                </div>
+              </Form.Group>
+            ))}
+
+            {/* {images.map((img, index) => (
+              <Form.Group
+                key={img._id}
+                controlId={`image-${index}`}
+                className='my-2'
+              >
+                <Form.Label>{`Image ${index + 1}`}</Form.Label>
+                <div className='d-flex'>
+                  <Form.Control
+                    type='text'
+                    placeholder={`Enter image ${index + 1} url`}
                     value={img.original}
                     onChange={(e) =>
                       updateImageField(index, "original", e.target.value)
@@ -218,7 +244,7 @@ const VehiculeEditScreen = () => {
                   {loadingUpload && <ScaleLoader />}
                 </div>
               </Form.Group>
-            ))}
+            ))} */}
 
             {/* <Form.Group controlId='image' className='my-2'>
               <Form.Label>Images</Form.Label>

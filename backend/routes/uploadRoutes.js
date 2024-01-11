@@ -41,10 +41,8 @@ const upload = multer({
   },
 ]);
 
-console.log("MULTER UPLOAD", upload);
-
 router.post("/", (req, res) => {
-  upload(req, res, function (err) {
+  upload(req, res, async function (err) {
     if (err) {
       console.log(err);
       return res.status(500).send({ message: "Error uploading image" });
@@ -53,60 +51,161 @@ router.post("/", (req, res) => {
     // Access uploaded files from req.files
     const originalImages = req.files["original"];
     const thumbnailImages = req.files["thumbnail"];
-    // console.log("originalImage :", req.file["original"]);
 
-    // Check if files are present
-    if (!originalImages || !thumbnailImages) {
-      return res
-        .status(400)
-        .send({ message: "Original and Thumbnail images are required" });
-    }
+    // Process all images
+    const results = [];
+    for (let i = 0; i < originalImages.length; i++) {
+      const originalImage = originalImages[i];
 
-    // const originalImages = req.files["original"];
-    // const thumbnailImages = req.files["thumbnail"];
+      // Ensure the thumbnails directory exists
+      const thumbnailDir = path.dirname(originalImage.path);
+      if (!fs.existsSync(thumbnailDir)) {
+        fs.mkdirSync(thumbnailDir, { recursive: true });
+      }
 
-    // Check if files are present
-    if (!originalImages || !thumbnailImages) {
-      return res
-        .status(400)
-        .send({ message: "Original and Thumbnail images are required" });
-    }
-
-    // Assuming there's only one file for each type, you can access them directly
-    const originalImage = originalImages[0];
-    const thumbnailImage = thumbnailImages[0];
-
-    // const imagePath = req.file.path;
-    // const thumbnailPath = `thumbnails/${req.file.filename}`;
-
-    // Ensure the thumbnails directory exists
-    const thumbnailDir = path.dirname(thumbnailPath);
-    if (!fs.existsSync(thumbnailDir)) {
-      fs.mkdirSync(thumbnailDir, { recursive: true });
-    }
-    sharp(imagePath)
-      .resize(350, 250)
-      .toFile(thumbnailPath, (err, info) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send({ message: "Error creating thumbnail" });
+      // Use sharp to resize image and save as thumbnail
+      let thumbnailPath;
+      try {
+        if (thumbnailImages && thumbnailImages[i]) {
+          thumbnailPath = thumbnailImages[i].path;
+        } else {
+          // Create a new file for the thumbnail
+          thumbnailPath = path.join(
+            path.dirname(originalImage.path),
+            "thumbnail-" + path.basename(originalImage.path)
+          );
         }
-        console.log(info);
-        res.send({
+
+        await sharp(originalImage.path).resize(350, 250).toFile(thumbnailPath);
+
+        // Save result
+        results.push({
           message: "Image uploaded successfully",
           imagePath: originalImage.path,
-          thumbnailPath: thumbnailImage.path,
+          thumbnailPath: thumbnailPath,
         });
-        console.log(
-          "IMG PATH FROM UPLOAD-ROUTE :",
-          imagePath,
-          "THUMBNAIL PATH :",
-          thumbnailPath
-        );
-      });
+      } catch (err) {
+        console.log(err);
+        return res.status(500).send({ message: "Error creating thumbnail" });
+      }
+    } // This closing bracket was missing
+
+    // Send response
+    res.send(results);
   });
 });
+
 export default router;
+
+// import path from "path";
+// import express from "express";
+// import multer from "multer";
+// import sharp from "sharp";
+// import fs from "fs";
+
+// const router = express.Router();
+
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "images/");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(
+//       null,
+//       file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+//     );
+//   },
+// });
+
+// const upload = multer({
+//   storage: storage,
+//   limits: { fileSize: 1000000 },
+//   fileFilter: function (req, file, cb) {
+//     const filetypes = /jpeg|jpg|png/;
+//     const mimetype = filetypes.test(file.mimetype);
+//     const extname = filetypes.test(
+//       path.extname(file.originalname).toLowerCase()
+//     );
+//     if (mimetype && extname) {
+//       return cb(null, true);
+//     }
+//     cb(new Error("Only image files are allowed!"));
+//   },
+// }).fields([
+//   {
+//     name: "original",
+//   },
+//   {
+//     name: "thumbnail",
+//   },
+// ]);
+
+// console.log("MULTER UPLOAD", upload);
+
+// router.post("/", (req, res) => {
+//   upload(req, res, function (err) {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).send({ message: "Error uploading image" });
+//     }
+
+//     // Access uploaded files from req.files
+//     const originalImages = req.files["original"];
+//     const thumbnailImages = req.files["thumbnail"];
+//     // console.log("originalImage :", req.file["original"]);
+
+//     // Check if files are present
+//     if (!originalImages || !thumbnailImages) {
+//       return res
+//         .status(400)
+//         .send({ message: "Original and Thumbnail images are required" });
+//     }
+
+//     // const originalImages = req.files["original"];
+//     // const thumbnailImages = req.files["thumbnail"];
+
+//     // Check if files are present
+//     if (!originalImages || !thumbnailImages) {
+//       return res
+//         .status(400)
+//         .send({ message: "Original and Thumbnail images are required" });
+//     }
+
+//     // Assuming there's only one file for each type, you can access them directly
+//     const originalImage = originalImages[0];
+//     const thumbnailImage = thumbnailImages[0];
+
+//     // const imagePath = req.file.path;
+//     // const thumbnailPath = `thumbnails/${req.file.filename}`;
+
+//     // Ensure the thumbnails directory exists
+//     const thumbnailDir = path.dirname(thumbnailPath);
+//     if (!fs.existsSync(thumbnailDir)) {
+//       fs.mkdirSync(thumbnailDir, { recursive: true });
+//     }
+//     sharp(imagePath)
+//       .resize(350, 250)
+//       .toFile(thumbnailPath, (err, info) => {
+//         if (err) {
+//           console.log(err);
+//           return res.status(500).send({ message: "Error creating thumbnail" });
+//         }
+//         console.log(info);
+//         res.send({
+//           message: "Image uploaded successfully",
+//           imagePath: originalImage.path,
+//           thumbnailPath: thumbnailImage.path,
+//         });
+//         console.log(
+//           "IMG PATH FROM UPLOAD-ROUTE :",
+//           imagePath,
+//           "THUMBNAIL PATH :",
+//           thumbnailPath
+//         );
+//       });
+//   });
+// });
+// export default router;
 
 // const storage = multer.diskStorage({
 //   destination(req, file, cb) {
