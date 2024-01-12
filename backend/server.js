@@ -49,7 +49,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/uploads", uploadRoutes);
 const __dirname = path.resolve(); //Set __dirname to current directory
-app.use("/api/uploads", express.static(path.join(__dirname, "/images")));
+app.use("/api/uploads/", express.static(path.join(__dirname, "/uploads")));
 // Define the admin routes before the notFound and errorHandler middleware
 app.use("/api/admin/vehiculeslist", vehiculeRoutes);
 app.use("/api/admin/vehicule/:id", vehiculeRoutes);

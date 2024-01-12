@@ -8,7 +8,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "images/");
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
     cb(
@@ -56,6 +56,7 @@ router.post("/", (req, res) => {
     const results = [];
     for (let i = 0; i < originalImages.length; i++) {
       const originalImage = originalImages[i];
+      console.log("ORIGINAL IMAGE: " + originalImage.path); // Make sure to log the path
 
       // Ensure the thumbnails directory exists
       const thumbnailDir = path.dirname(originalImage.path);
@@ -71,9 +72,10 @@ router.post("/", (req, res) => {
         } else {
           // Create a new file for the thumbnail
           thumbnailPath = path.join(
-            path.dirname(originalImage.path),
+            thumbnailDir,
             "thumbnail-" + path.basename(originalImage.path)
           );
+          console.log("THUMBNAIL: " + thumbnailPath);
         }
 
         await sharp(originalImage.path).resize(350, 250).toFile(thumbnailPath);
@@ -81,21 +83,54 @@ router.post("/", (req, res) => {
         // Save result
         results.push({
           message: "Image uploaded successfully",
-          imagePath: originalImage.path,
+          imagePath: originalImage.path, // This should now correctly reference the path
           thumbnailPath: thumbnailPath,
         });
       } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "Error creating thumbnail" });
       }
-    } // This closing bracket was missing
+    }
 
     // Send response
     res.send(results);
+    console.log("RESULT from upload: " + JSON.stringify(results)); // Stringify the results for better logging
   });
 });
 
 export default router;
+
+// router.post("/", (req, res) => {
+//   upload(req, res, async function (err) {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).send({ message: "Error uploading image" });
+//     }
+
+//     // Access uploaded files from req.files
+//     const originalImages = req.files["original"];
+//     const thumbnailImages = req.files["thumbnail"];
+
+//     // Process all images and update the image objects
+//     const updatedImages = images.map((img, index) => {
+//       const originalImage = originalImages[index];
+//       const thumbnailImage = thumbnailImages[index];
+
+//       // Update the image object with the new file paths
+//       return {
+//         ...img,
+//         original: originalImage ? originalImage.path : img.original,
+//         thumbnail: thumbnailImage ? thumbnailImage.path : img.thumbnail,
+//         // Add any other properties you want to update here
+//         name: "New Name", // Example property
+//         description: "New Description", // Example property
+//       };
+//     });
+
+//     // Respond with the updated image objects
+//     res.status(200).send(updatedImages);
+//   });
+// });
 
 // import path from "path";
 // import express from "express";

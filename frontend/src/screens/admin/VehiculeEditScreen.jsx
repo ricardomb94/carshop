@@ -10,6 +10,7 @@ import {
   useGetVehiculeDetailsQuery,
   useUploadVehiculeImageMutation,
 } from "../../slices/vehiculesApiSlice";
+import { UPLOADS_URL } from "../../constants";
 
 const VehiculeEditScreen = () => {
   const { id: vehiculeId } = useParams();
@@ -60,11 +61,23 @@ const VehiculeEditScreen = () => {
     e.preventDefault();
     console.log("VEHICULE ID", vehiculeId);
     try {
-      await updateVehicule({
-        _id: vehiculeId,
+      // Map images to include the full URLs
+      const updatedImages = images.map((img) => ({
+        original: `${UPLOADS_URL}${img.original}`,
+        thumbnail: `${UPLOADS_URL}${img.thumbnail}`,
+        _id: img._id, // Keep any other properties you need
+      }));
+      // const updatedImages = images.map((img) => ({
+      //   original: `${UPLOADS_URL}${img.original}`,
+      //   thumbnail: `${UPLOADS_URL}${img.thumbnail}`,
+      // }));
+
+      console.log("UPDATED-IMAGES :", updatedImages);
+      //
+      const updatedVehiculeData = {
         name,
         price,
-        images,
+        images: updatedImages,
         brand,
         category,
         description,
@@ -83,7 +96,14 @@ const VehiculeEditScreen = () => {
         doors,
         seats,
         numReviews,
+      };
+
+      // Use the correct mutation function and pass the updated data
+      await updateVehicule({
+        _id: vehiculeId,
+        ...updatedVehiculeData,
       });
+
       toast.success("Product updated");
       refetch();
       navigate("/admin/vehiculeslist");
@@ -96,7 +116,7 @@ const VehiculeEditScreen = () => {
     console.log("V-EditScreen", vehicule);
     if (vehicule && vehiculeId === vehicule._id) {
       setName(vehicule.name || "");
-      setImages(vehicule.images || "");
+      setImages(vehicule.images || []);
       setDescription(vehicule.description || "");
       setBrand(vehicule.brand || "");
       setYear(vehicule.year || 1900);
@@ -134,11 +154,13 @@ const VehiculeEditScreen = () => {
 
   const uploadFileHandler = async (e, fileType, index) => {
     const file = e.target.files[0];
+    console.log("Uploading file :", file);
     const formData = new FormData();
     formData.append(fileType, file);
 
     try {
       const response = await uploadVehiculeImage(formData);
+      console.log("Response DATA :", response);
 
       // Update the corresponding image in the array
       setImages((prevImages) =>
@@ -165,7 +187,11 @@ const VehiculeEditScreen = () => {
         ) : error ? (
           <Message variant='danger'>{error.toString()}</Message>
         ) : (
-          <Form onSubmit={submitHandler} autoComplete='off'>
+          <Form
+            onSubmit={submitHandler}
+            autoComplete='off'
+            encType='multipart/form-data'
+          >
             <Form.Group controlId='name'>
               <Form.Label>Name</Form.Label>
               <Form.Control

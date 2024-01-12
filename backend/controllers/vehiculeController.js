@@ -6,7 +6,7 @@ import Vehicule from "../models/vehiculeModel.js";
 // @access Public
 const getVehicules = asyncHandler(async (req, res) => {
   const vehicules = await Vehicule.find({});
-  console.log("ALL-VEHICULES", vehicules.images);
+  console.log("ALL-VEHICULES", vehicules);
   res.json(vehicules);
 });
 
@@ -56,7 +56,7 @@ const updateVehicule = asyncHandler(async (req, res) => {
   //Let's get the data coming from the body by destructuring them from the req.body
   const {
     name,
-    image,
+    images,
     description,
     brand,
     year,
@@ -84,7 +84,7 @@ const updateVehicule = asyncHandler(async (req, res) => {
 
   if (vehicule) {
     vehicule.name = name || vehicule.name;
-    vehicule.images = image || vehicule.images;
+    vehicule.images = images || vehicule.images;
     vehicule.description = description || vehicule.description;
     vehicule.brand = brand || vehicule.brand;
     vehicule.year = year || vehicule.year;
@@ -108,6 +108,7 @@ const updateVehicule = asyncHandler(async (req, res) => {
 
     const updatedVehicule = await vehicule.save();
     res.json(updatedVehicule);
+    console.log("VEhic-OBJ From Controller" + updatedVehicule);
   } else {
     res.status(404);
     throw new Error("Resource not found");
