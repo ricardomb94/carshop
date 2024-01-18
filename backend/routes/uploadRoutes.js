@@ -48,6 +48,8 @@ router.post("/", (req, res) => {
       return res.status(500).send({ message: "Error uploading image" });
     }
 
+    console.log("RECEIVEDFILES:", req.files); // Log the received files
+
     // Access uploaded files from req.files
     const originalImages = req.files["original"];
     const thumbnailImages = req.files["thumbnail"];
@@ -56,7 +58,7 @@ router.post("/", (req, res) => {
     const results = [];
     for (let i = 0; i < originalImages.length; i++) {
       const originalImage = originalImages[i];
-      console.log("ORIGINAL IMAGE: " + originalImage.path); // Make sure to log the path
+      console.log("ORIGINAL IMAGEPATH: " + originalImage.path); // Make sure to log the path
 
       // Ensure the thumbnails directory exists
       const thumbnailDir = path.dirname(originalImage.path);
@@ -86,6 +88,7 @@ router.post("/", (req, res) => {
           imagePath: originalImage.path, // This should now correctly reference the path
           thumbnailPath: thumbnailPath,
         });
+        console.log("RESULT from UPLOADROUTES :", results)
       } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "Error creating thumbnail" });

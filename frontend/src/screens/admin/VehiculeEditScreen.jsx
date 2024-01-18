@@ -67,6 +67,7 @@ const VehiculeEditScreen = () => {
         thumbnail: `${UPLOADS_URL}${img.thumbnail}`,
         _id: img._id, // Keep any other properties you need
       }));
+
       // const updatedImages = images.map((img) => ({
       //   original: `${UPLOADS_URL}${img.original}`,
       //   thumbnail: `${UPLOADS_URL}${img.thumbnail}`,
@@ -139,7 +140,7 @@ const VehiculeEditScreen = () => {
     } else {
       refetch();
     }
-  }, [vehicule, vehiculeId, refetch]);
+  }, [vehicule, vehiculeId, images, refetch]);
 
   if (loadingUpdate || isLoading) {
     return <ScaleLoader />;
@@ -152,20 +153,31 @@ const VehiculeEditScreen = () => {
     });
   };
 
+  //
+
   const uploadFileHandler = async (e, fileType, index) => {
     const file = e.target.files[0];
-    console.log("Uploading file :", file);
+    console.log("Uploading file:", file);
     const formData = new FormData();
     formData.append(fileType, file);
 
     try {
       const response = await uploadVehiculeImage(formData);
-      console.log("Response DATA :", response);
+      console.log("Response DATA:", response);
 
       // Update the corresponding image in the array
       setImages((prevImages) =>
         prevImages.map((img, i) =>
-          i === index ? { ...img, [fileType]: response.data.imagePath } : img
+          i === index
+            ? {
+                ...img,
+                [fileType]: response.data.imagePath,
+                thumbnail:
+                  fileType === "original"
+                    ? img.thumbnail
+                    : response.data.thumbnailPath,
+              }
+            : img
         )
       );
 
@@ -174,6 +186,7 @@ const VehiculeEditScreen = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
+
   return (
     <>
       <Link to='/admin/vehiculeslist' className='btn btn-light my-3'>
