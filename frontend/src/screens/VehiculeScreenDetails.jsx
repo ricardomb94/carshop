@@ -43,7 +43,7 @@ const VehiculeScreenDetails = () => {
     dispatch(addToCart({ ...vehicule, qty }));
     navigate("/panier");
   };
-
+  console.log("IF VEHICULE EXIST BEFORE RENDERING :", vehicule);
   // Check if vehicule is defined before rendering
   if (!vehicule) {
     return (
@@ -66,6 +66,12 @@ const VehiculeScreenDetails = () => {
       original: imageObj.original,
       thumbnail: imageObj.thumbnail,
     }));
+
+  console.log("IMAGES AFTER MAPPING :", images);
+  // Check if images array is defined before rendering ImageGallery
+  if (!images) {
+    return <Message variant='danger'>Image data not available</Message>;
+  }
 
   return (
     <>

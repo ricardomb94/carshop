@@ -48,7 +48,7 @@ router.post("/", (req, res) => {
       return res.status(500).send({ message: "Error uploading image" });
     }
 
-    console.log("RECEIVEDFILES:", req.files); // Log the received files
+    console.log("REQ-FILES in Upload's route :", req.files); // Log the received files
 
     // Access uploaded files from req.files
     const originalImages = req.files["original"];

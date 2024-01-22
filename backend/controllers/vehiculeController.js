@@ -6,7 +6,7 @@ import Vehicule from "../models/vehiculeModel.js";
 // @access Public
 const getVehicules = asyncHandler(async (req, res) => {
   const vehicules = await Vehicule.find({});
-  console.log("ALL-VEHICULES", vehicules);
+  console.log("ALL-VEHICULES", vehicules.toString());
   res.json(vehicules);
 });
 
@@ -81,6 +81,8 @@ const updateVehicule = asyncHandler(async (req, res) => {
   //Here we are going to find the vehicule product
   const vehicule = await Vehicule.findById(req.params.id);
   console.log("VEHICULE-CONTROLLER", vehicule);
+  console.log("VEHICULE-IMAGE-CONTROLLER", vehicule.images);
+
 
   if (vehicule) {
     vehicule.name = name || vehicule.name;

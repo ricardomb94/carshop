@@ -59,26 +59,22 @@ const VehiculeEditScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("VEHICULE ID", vehiculeId);
+    console.log("VEHICULE - SUBMITHANDLER", vehicule);
     try {
+      console.log("IMAGES IN SUBMITHANDLER :", images);
       // Map images to include the full URLs
-      const updatedImages = images.map((img) => ({
-        original: `${UPLOADS_URL}${img.original}`,
-        thumbnail: `${UPLOADS_URL}${img.thumbnail}`,
-        _id: img._id, // Keep any other properties you need
+      const updatedImages = images.map((image) => ({
+        original: `${UPLOADS_URL}/${image.originalPath}`,
+        thumbnail: `${UPLOADS_URL}/${image.thumbnailPath}`,
+        _id: image._id,
       }));
-
-      // const updatedImages = images.map((img) => ({
-      //   original: `${UPLOADS_URL}${img.original}`,
-      //   thumbnail: `${UPLOADS_URL}${img.thumbnail}`,
-      // }));
 
       console.log("UPDATED-IMAGES :", updatedImages);
       //
       const updatedVehiculeData = {
         name,
         price,
-        images: updatedImages,
+        images: images,
         brand,
         category,
         description,
@@ -115,6 +111,7 @@ const VehiculeEditScreen = () => {
 
   useEffect(() => {
     console.log("V-EditScreen", vehicule);
+    console.log("Current Images in useEffect:", images);
     if (vehicule && vehiculeId === vehicule._id) {
       setName(vehicule.name || "");
       setImages(vehicule.images || []);
@@ -140,7 +137,7 @@ const VehiculeEditScreen = () => {
     } else {
       refetch();
     }
-  }, [vehicule, vehiculeId, images, refetch]);
+  }, [vehicule, images, vehiculeId, refetch]);
 
   if (loadingUpdate || isLoading) {
     return <ScaleLoader />;
@@ -163,22 +160,38 @@ const VehiculeEditScreen = () => {
 
     try {
       const response = await uploadVehiculeImage(formData);
-      console.log("Response DATA:", response);
+      console.log(
+        "Response uploadVehiculeImage before setting data:",
+        response
+      );
 
-      // Update the corresponding image in the array
-      setImages((prevImages) =>
-        prevImages.map((img, i) =>
+      setImages((prevImages) => {
+        console.log("UPDATES IMAGES IN SETIMAGES");
+        const updatedImages = prevImages.map((img, i) =>
           i === index
             ? {
                 ...img,
-                [fileType]: response.data.imagePath,
-                thumbnail:
-                  fileType === "original"
-                    ? img.thumbnail
-                    : response.data.thumbnailPath,
+                original: response.data[0]?.imagePath || img.original,
+                thumbnail: response.data[0]?.thumbnailPath || img.thumbnail,
+                _id: response.data[0]?._id || img._id,
               }
             : img
-        )
+        );
+        console.log("UPDATED IMG IN SETIMAGES");
+        return updatedImages;
+      });
+
+      // Reset the file input value
+      // e.target.value = "";
+
+      console.log("RESPONSE DATA _Id after sitting:", response.data[0]._id);
+      console.log(
+        "RESPONSE DATA ThumbnailPath after setting:",
+        response.data[0].thumbnailPath
+      );
+      console.log(
+        "RESPONSE DATA ImagePath after setting:",
+        response.data[0].imagePath
       );
 
       toast.success("Image uploaded successfully");
@@ -225,7 +238,7 @@ const VehiculeEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            {images.map((img, index) => (
+            {/* {images.map((img, index) => (
               <Form.Group
                 key={img._id}
                 controlId={`image-${index}`}
@@ -255,12 +268,11 @@ const VehiculeEditScreen = () => {
                     disabled={loadingUpload}
                     aria-label={`Upload thumbnail for Image ${index + 1}`}
                   ></Form.Control> */}
-                  {loadingUpload && <ScaleLoader />}
+            {/*</Form> {loadingUpload && <ScaleLoader />}
                 </div>
               </Form.Group>
-            ))}
-
-            {/* {images.map((img, index) => (
+            ))} */}
+            {images.map((img, index) => (
               <Form.Group
                 key={img._id}
                 controlId={`image-${index}`}
@@ -269,48 +281,15 @@ const VehiculeEditScreen = () => {
                 <Form.Label>{`Image ${index + 1}`}</Form.Label>
                 <div className='d-flex'>
                   <Form.Control
-                    type='text'
-                    placeholder={`Enter image ${index + 1} url`}
-                    value={img.original}
-                    onChange={(e) =>
-                      updateImageField(index, "original", e.target.value)
-                    }
-                  ></Form.Control>
-                  <Form.Control
                     type='file'
-                    onChange={(e) => uploadFileHandler(e, "thumbnail", index)}
+                    onChange={(e) => uploadFileHandler(e, "original", index)}
+                    disabled={loadingUpload}
+                    aria-label={`Upload original for Image ${index + 1}`}
                   ></Form.Control>
                   {loadingUpload && <ScaleLoader />}
                 </div>
               </Form.Group>
-            ))} */}
-
-            {/* <Form.Group controlId='image' className='my-2'>
-              <Form.Label>Images</Form.Label>
-              <Form.Control
-                name='image'
-                type='text'
-                placeholder='Enter image url'
-                value={images.map((img) => img.original).join(",")}
-                onChange={(e) => setImages(e.target.value)}
-              ></Form.Control>
-              <Form.Control
-                label='Choose Original Image'
-                type='file'
-                onChange={(e) => uploadFileHandler(e, "image")}
-              ></Form.Control>
-              {loadingUpload && <ScaleLoader />}
-            </Form.Group>
-
-            <Form.Group controlId='thumbnail' className='my-2'>
-              <Form.Label>Thumbnail</Form.Label>
-              <Form.Control
-                label='Choose Thumbnail'
-                type='file'
-                onChange={(e) => uploadFileHandler(e, "thumbnail")}
-              ></Form.Control>
-              {loadingUpload && <ScaleLoader />}
-            </Form.Group> */}
+            ))}
 
             <Form.Group controlId='brand'>
               <Form.Label>Brand</Form.Label>
