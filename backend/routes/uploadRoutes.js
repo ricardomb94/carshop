@@ -41,6 +41,7 @@ const upload = multer({
   },
 ]);
 
+// 
 router.post("/", (req, res) => {
   upload(req, res, async function (err) {
     if (err) {
@@ -80,15 +81,19 @@ router.post("/", (req, res) => {
           console.log("THUMBNAIL: " + thumbnailPath);
         }
 
-        await sharp(originalImage.path).resize(350, 250).toFile(thumbnailPath);
+        // Update the paths before saving to the database
+        const originalPath = originalImage.path;
+        const updatedThumbnailPath = thumbnailPath || ''; // Update with your logic for generating thumbnail path
+
+        await sharp(originalPath).resize(350, 250).toFile(updatedThumbnailPath);
 
         // Save result
         results.push({
           message: "Image uploaded successfully",
-          imagePath: originalImage.path, // This should now correctly reference the path
-          thumbnailPath: thumbnailPath,
+          originalPath: originalPath,  // Update with your logic for generating original path
+          thumbnailPath: updatedThumbnailPath,
         });
-        console.log("RESULT from UPLOADROUTES :", results)
+        console.log("RESULT from UPLOADROUTES :", results);
       } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "Error creating thumbnail" });

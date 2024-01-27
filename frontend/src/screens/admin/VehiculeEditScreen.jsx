@@ -10,12 +10,14 @@ import {
   useGetVehiculeDetailsQuery,
   useUploadVehiculeImageMutation,
 } from "../../slices/vehiculesApiSlice";
-import { UPLOADS_URL } from "../../constants";
+import { BASE_URL, UPLOADS_URL } from "../../constants";
+import ImageUpload from "./ImageUpload";
 
 const VehiculeEditScreen = () => {
   const { id: vehiculeId } = useParams();
 
   const [images, setImages] = useState([]);
+  console.log("INIT IMG STATE :", images);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
@@ -59,22 +61,27 @@ const VehiculeEditScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("VEHICULE - SUBMITHANDLER", vehicule);
+    console.log("VEHICULE-IMAGES - SUBMITHANDLER", vehicule.images);
+
     try {
       console.log("IMAGES IN SUBMITHANDLER :", images);
       // Map images to include the full URLs
       const updatedImages = images.map((image) => ({
+        images: console.log("IMAGES - IN MAP :", image),
         original: `${UPLOADS_URL}/${image.originalPath}`,
         thumbnail: `${UPLOADS_URL}/${image.thumbnailPath}`,
         _id: image._id,
       }));
 
       console.log("UPDATED-IMAGES :", updatedImages);
+      console.log("BASE_URL:", BASE_URL);
+      console.log("UPLOADS_URL:", UPLOADS_URL);
+      console.log("Constructed Image URLs:", updatedImages);
       //
       const updatedVehiculeData = {
         name,
         price,
-        images: images,
+        images: updatedImages,
         brand,
         category,
         description,
@@ -110,13 +117,15 @@ const VehiculeEditScreen = () => {
   };
 
   useEffect(() => {
-    console.log("V-EditScreen", vehicule);
-    console.log("Current Images in useEffect:", images);
+    console.log("V-EditScreen useEffect", vehicule);
+    // console.log("Current Images in useEffect:", vehicule.images);
     if (vehicule && vehiculeId === vehicule._id) {
+      console.log("API Response for Images:", vehicule.images);
       setName(vehicule.name || "");
       setImages(vehicule.images || []);
       setDescription(vehicule.description || "");
       setBrand(vehicule.brand || "");
+      setBrand(vehicule.name || "");
       setYear(vehicule.year || 1900);
       setCategory(vehicule.category || "");
       setColor(vehicule.color || "");
@@ -137,7 +146,7 @@ const VehiculeEditScreen = () => {
     } else {
       refetch();
     }
-  }, [vehicule, images, vehiculeId, refetch]);
+  }, [vehicule, vehiculeId, refetch]);
 
   if (loadingUpdate || isLoading) {
     return <ScaleLoader />;
@@ -155,48 +164,48 @@ const VehiculeEditScreen = () => {
   const uploadFileHandler = async (e, fileType, index) => {
     const file = e.target.files[0];
     console.log("Uploading file:", file);
-    const formData = new FormData();
-    formData.append(fileType, file);
 
     try {
+      const formData = new FormData();
+      formData.append(fileType, file);
+
       const response = await uploadVehiculeImage(formData);
-      console.log(
-        "Response uploadVehiculeImage before setting data:",
-        response
-      );
+      console.log("Response from uploadVehiculeImage:", response);
 
-      setImages((prevImages) => {
-        console.log("UPDATES IMAGES IN SETIMAGES");
-        const updatedImages = prevImages.map((img, i) =>
-          i === index
-            ? {
-                ...img,
-                original: response.data[0]?.imagePath || img.original,
-                thumbnail: response.data[0]?.thumbnailPath || img.thumbnail,
-                _id: response.data[0]?._id || img._id,
-              }
-            : img
-        );
-        console.log("UPDATED IMG IN SETIMAGES");
-        return updatedImages;
-      });
+      if (response) {
+        console.log("RESPONSE-DATA[0] :", response);
+        const { imagePath, thumbnailPath, _id } = response.data;
 
-      // Reset the file input value
-      // e.target.value = "";
+        setImages((prevImages) => {
+          const updatedImages = prevImages.map((img, i) =>
+            i === index
+              ? {
+                  ...img,
+                  original: imagePath || img.original,
+                  thumbnail: thumbnailPath || img.thumbnail,
+                  _id: _id || img._id,
+                }
+              : img
+          );
 
-      console.log("RESPONSE DATA _Id after sitting:", response.data[0]._id);
-      console.log(
-        "RESPONSE DATA ThumbnailPath after setting:",
-        response.data[0].thumbnailPath
-      );
-      console.log(
-        "RESPONSE DATA ImagePath after setting:",
-        response.data[0].imagePath
-      );
+          console.log(
+            "Updated Images in setImages:, UPDATES IMG",
+            updatedImages
+          );
+          return updatedImages;
+        });
 
-      toast.success("Image uploaded successfully");
+        // Reset the file input value
+        e.target.value = "";
+
+        toast.success("Image uploaded successfully");
+      } else {
+        console.error("Invalid response structure:", response);
+        toast.error("Error uploading image. Invalid response structure");
+      }
     } catch (err) {
-      toast.error(err?.data?.message || err.error);
+      console.error("Error uploading image:", err);
+      toast.error(err?.data?.message || err.error || "Error uploading image");
     }
   };
 
@@ -273,22 +282,13 @@ const VehiculeEditScreen = () => {
               </Form.Group>
             ))} */}
             {images.map((img, index) => (
-              <Form.Group
+              <ImageUpload
                 key={img._id}
-                controlId={`image-${index}`}
-                className='my-2'
-              >
-                <Form.Label>{`Image ${index + 1}`}</Form.Label>
-                <div className='d-flex'>
-                  <Form.Control
-                    type='file'
-                    onChange={(e) => uploadFileHandler(e, "original", index)}
-                    disabled={loadingUpload}
-                    aria-label={`Upload original for Image ${index + 1}`}
-                  ></Form.Control>
-                  {loadingUpload && <ScaleLoader />}
-                </div>
-              </Form.Group>
+                index={index}
+                img={img}
+                loadingUpload={loadingUpload}
+                uploadFileHandler={uploadFileHandler}
+              />
             ))}
 
             <Form.Group controlId='brand'>
