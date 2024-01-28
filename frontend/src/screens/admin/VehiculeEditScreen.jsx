@@ -58,13 +58,19 @@ const VehiculeEditScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("VEHICULE ID", vehiculeId);
+    // Format the images state
+    const formattedImages = images.map((image) => ({
+      original: image.original || "",
+      thumbnail: image.thumbnail || "",
+      _id: image._id,
+    }));
+    console.log("FORMATED IMAGES STATE :", formattedImages);
     try {
-      await updateVehicule({
+      const response = await updateVehicule({
         _id: vehiculeId,
         name,
         price,
-        images,
+        images: formattedImages,
         brand,
         category,
         description,
@@ -84,8 +90,35 @@ const VehiculeEditScreen = () => {
         seats,
         numReviews,
       });
+      // Assuming the response.data contains the updated vehicule data
+      const updatedVehicule = response ? response.data : null;
+      console.log("UPDATED VEICULE DATA :", updatedVehicule);
+
+      // Update the local state with the new data
+      setName(updatedVehicule.name || "");
+      setImages(updatedVehicule.images || []);
+      setDescription(updatedVehicule.description || "");
+      setBrand(updatedVehicule.brand || "");
+      setYear(updatedVehicule.year || 1900);
+      setCategory(updatedVehicule.category || "");
+      setColor(updatedVehicule.color || "");
+      setCountInStock(updatedVehicule.countInStock || 0);
+      setPrice(updatedVehicule.price || 0);
+      setRating(updatedVehicule.rating || 0);
+      setProvenance(updatedVehicule.provenance || "");
+      setRegistration(updatedVehicule.registration || "");
+      setVehiculeInspection(updatedVehicule.vehiculeInspection || "");
+      setOriginalOwner(updatedVehicule.originalOwner || "");
+      setOdometerReading(updatedVehicule.odometerReading || "");
+      setEnergy(updatedVehicule.energy || "");
+      setUpholstery(updatedVehicule.upholstery || "");
+      setTransmission(updatedVehicule.transmission || "");
+      setDoors(updatedVehicule.doors || 0);
+      setSeats(updatedVehicule.seats || 0);
+      setNumReviews(updatedVehicule.numReviews || 0);
+
       toast.success("Product updated");
-      refetch();
+      // refetch();
       navigate("/admin/vehiculeslist");
     } catch (err) {
       toast.error(err?.data?.message || err.error || "Error updating product");
@@ -96,7 +129,7 @@ const VehiculeEditScreen = () => {
     console.log("V-EditScreen", vehicule);
     if (vehicule && vehiculeId === vehicule._id) {
       setName(vehicule.name || "");
-      setImages(vehicule.images || "");
+      setImages(vehicule.images || []);
       setDescription(vehicule.description || "");
       setBrand(vehicule.brand || "");
       setYear(vehicule.year || 1900);
@@ -125,31 +158,29 @@ const VehiculeEditScreen = () => {
     return <ScaleLoader />;
   }
 
-  const uploadFileHandler = async (e, fileType) => {
+  const uploadFileHandler = async (e, fileType, index, imageId) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append(fileType, file);
 
     try {
       const response = await uploadVehiculeImage(formData);
+      console.log("RESPONSE UPLOADED-VEHICULE-IMG :", response);
+
       const newImage = {
         original: fileType === "image" ? response.data.imagePath : "",
-        thumbnail: fileType === "thumbnail" ? response.data.imagePath : "",
+        thumbnail: fileType === "thumbnail" ? response.data.thumbnailPath : "", // Check if thumbnailPath is defined
+        _id: imageId || undefined,
       };
+      console.log("NEW-IMG :", newImage);
 
-      // If this is a thumbnail, find the corresponding image and update it
-      if (fileType === "thumbnail") {
-        setImages((prevImages) =>
-          prevImages.map((img) =>
-            img.original === ""
-              ? { ...img, thumbnail: response.data.imagePath }
-              : img
-          )
-        );
-      } else {
-        // This is an original image, so add it to the array
-        setImages((prevImages) => [...prevImages, newImage]);
-      }
+      // Update the state immutably
+      setImages((prevImages) =>
+        prevImages.map((img, i) =>
+          i === index ? { ...img, ...newImage } : img
+        )
+      );
+
       toast.success("Image uploaded successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -168,7 +199,11 @@ const VehiculeEditScreen = () => {
         ) : error ? (
           <Message variant='danger'>{error.toString()}</Message>
         ) : (
-          <Form onSubmit={submitHandler} autoComplete='off'>
+          <Form
+            onSubmit={submitHandler}
+            autoComplete='off'
+            encType='multipart/form-data'
+          >
             <Form.Group controlId='name'>
               <Form.Label>Name</Form.Label>
               <Form.Control
