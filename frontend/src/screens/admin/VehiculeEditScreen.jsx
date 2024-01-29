@@ -237,7 +237,7 @@ const VehiculeEditScreen = () => {
                     }
                   />
                   <Form.Control
-                    name={`images[${index}].thumbnail`}
+                    name={`images[${index}].original`}
                     label='Choose File'
                     type='file'
                     onChange={(e) =>

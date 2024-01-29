@@ -87,7 +87,7 @@ router.post("/", (req, res) => {
       console.log(err);
       return res.status(500).send({ message: "Error uploading image" });
     }
-    console.log(req.file);
+    console.log("REQ FILE IN UPLOAD ROUTE :", req.file);
     const imagePath = req.file.path;
     const thumbnailPath = `thumbnails/${req.file.filename}`;
 

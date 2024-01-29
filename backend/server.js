@@ -44,12 +44,18 @@ app.get("/", (req, res) => {
   res.send("Bienvenue l'API est déployée avec succés ");
 });
 
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Resource-Policy', 'same-site'); // or 'cross-origin'
+  next();
+});
+
 app.use("/api/vehicules", vehiculeRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 const __dirname = path.resolve(); //Set __dirname to current directory
-app.use("/api/upload", express.static(path.join(__dirname, "/images")));
+app.use("/images", express.static(path.join(__dirname, "/images")));
+app.use("/thumbnails", express.static(path.join(__dirname, "/thumbnails")));
 // Define the admin routes before the notFound and errorHandler middleware
 app.use("/api/admin/vehiculeslist", vehiculeRoutes);
 app.use("/api/admin/vehicule/:id", vehiculeRoutes);
@@ -60,7 +66,7 @@ app.get("/api/config/paypal", (req, res) =>
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
-  app.use("/uploads", express.static("/var/data/uploads"));
+  app.use("/images", express.static("/var/data/images"));
   app.use(express.static(path.join(__dirname, "/frontend/build")));
 
   app.get("*", (req, res) =>
@@ -68,7 +74,7 @@ if (process.env.NODE_ENV === "production") {
   );
 } else {
   const __dirname = path.resolve();
-  app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+  app.use("/images", express.static(path.join(__dirname, "/images")));
   app.get("/", (req, res) => {
     res.send("API is running....");
   });
