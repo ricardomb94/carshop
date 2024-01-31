@@ -40,14 +40,14 @@ const CatalogueScreen = () => {
             <Row>
               {vehicules.map((vehicule) => {
                 const imageUrl = `http://localhost:5000/${vehicule.images[0].original}`;
-                const thumbnailUrl = `http://localhost:5000/${vehicule.images.thumbnail}`;
+                // const thumbnailUrl = `http://localhost:5000//${vehicule.images.thumbnail}`;
 
                 return (
                   <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>
                     <Vehicule
                       vehicule={vehicule}
                       imageUrl={imageUrl}
-                      thumbnailUrl={thumbnailUrl}
+                      // thumbnailUrl={thumbnailUrl}
                     />
                   </Col>
                 );

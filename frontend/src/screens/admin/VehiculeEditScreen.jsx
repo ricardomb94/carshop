@@ -167,9 +167,13 @@ const VehiculeEditScreen = () => {
       const response = await uploadVehiculeImage(formData);
       console.log("RESPONSE UPLOADED-VEHICULE-IMG :", response);
 
+      const thumbnailPath = response.data.thumbnailPath;
+      console.log("RESP.DATA.THUMBNAIL :", thumbnailPath);
+      console.log("THUMBNAIL PATH:", thumbnailPath);
+
       const newImage = {
         original: fileType === "image" ? response.data.imagePath : "",
-        thumbnail: fileType === "thumbnail" ? response.data.thumbnailPath : "", // Check if thumbnailPath is defined
+        thumbnail: thumbnailPath || "", // Check if thumbnailPath is defined
         _id: imageId || undefined,
       };
       console.log("NEW-IMG :", newImage);

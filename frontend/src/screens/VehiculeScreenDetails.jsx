@@ -43,7 +43,7 @@ const VehiculeScreenDetails = () => {
     dispatch(addToCart({ ...vehicule, qty }));
     navigate("/panier");
   };
-
+  console.log("VEHICULE IN DETAILS :", vehicule);
   // Check if vehicule is defined before rendering
   if (!vehicule) {
     return (
@@ -63,10 +63,10 @@ const VehiculeScreenDetails = () => {
   const images =
     vehicule.images &&
     vehicule.images.map((imageObj) => ({
-      original: imageObj.original,
-      thumbnail: imageObj.thumbnail,
+      original: `http://localhost:5000/${imageObj.original}`,
+      thumbnail: `http://localhost:5000/${imageObj.thumbnail}`,
     }));
-
+  console.log("IMAGES ARRAY :", images);
   return (
     <>
       <Link className='btn btn-light my-3' to='/'>
@@ -93,6 +93,7 @@ const VehiculeScreenDetails = () => {
               <Col md={6}>
                 <Card>
                   <ImageGallery
+                    msg={console.log("IMAGE IN IMAGEGALLERY :", images)}
                     items={images}
                     alt={vehicule.brand}
                     thumbnailPosition='left'
