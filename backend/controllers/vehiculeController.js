@@ -17,7 +17,7 @@ const getVehiculeById = asyncHandler(async (req, res) => {
   const vehicule = await Vehicule.findById(req.params.id);
 
   if (!vehicule) {
-    return res.status(404).json({ message: "No vehicle found" });
+    return res.status(404).json({ message: "No vehicule found" });
   }
 
   res.setHeader("Cache-Control", "no-store");
@@ -56,7 +56,7 @@ const updateVehicule = asyncHandler(async (req, res) => {
   //Let's get the data coming from the body by destructuring them from the req.body
   const {
     name,
-    image,
+    images,
     description,
     brand,
     year,
@@ -80,11 +80,11 @@ const updateVehicule = asyncHandler(async (req, res) => {
 
   //Here we are going to find the vehicule product
   const vehicule = await Vehicule.findById(req.params.id);
-  console.log("VEHICULE-CONTROLLER", vehicule);
+  console.log("VEHICULE-CONTROLLER", JSON.stringify(vehicule));
 
   if (vehicule) {
     vehicule.name = name || vehicule.name;
-    vehicule.images = image || vehicule.images;
+    // vehicule.images = images || vehicule.images;
     vehicule.description = description || vehicule.description;
     vehicule.brand = brand || vehicule.brand;
     vehicule.year = year || vehicule.year;
@@ -106,6 +106,32 @@ const updateVehicule = asyncHandler(async (req, res) => {
     vehicule.seats = seats || vehicule.seats;
     vehicule.numReviews = numReviews || vehicule.numReviews;
 
+    // Check if the images array is provided in the request body
+  if (images && Array.isArray(images)) {
+    // Update each image in the vehicule's images array
+    vehicule.images = images.map((newImage) => {
+      // Find the existing image in the vehicule's images array by _id
+      const existingImage = vehicule.images.find(
+        (img) => img._id && newImage._id && img._id.toString() === newImage._id.toString()
+      );
+
+      // If the existing image is found, update its properties
+      if (existingImage) {
+        return {
+          original: newImage.original || existingImage.original,
+          thumbnail: newImage.thumbnail || existingImage.thumbnail,
+          _id: existingImage._id,
+        };
+      }
+
+      // If the existing image is not found, add the new image to the array
+      return {
+        original: newImage.original || "",
+        thumbnail: newImage.thumbnail || "",
+        _id: newImage._id,
+      };
+    });
+  }
     const updatedVehicule = await vehicule.save();
     res.json(updatedVehicule);
   } else {

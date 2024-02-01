@@ -14,7 +14,7 @@ import {
 const VehiculeEditScreen = () => {
   const { id: vehiculeId } = useParams();
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState([{}]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
@@ -58,19 +58,13 @@ const VehiculeEditScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    // Format the images state
-    const formattedImages = images.map((image) => ({
-      original: image.original || "",
-      thumbnail: image.thumbnail || "",
-      _id: image._id,
-    }));
-    console.log("FORMATED IMAGES STATE :", formattedImages);
+    console.log("VEHICULE ID", vehiculeId);
     try {
-      const response = await updateVehicule({
+      await updateVehicule({
         _id: vehiculeId,
         name,
         price,
-        images: formattedImages,
+        images,
         brand,
         category,
         description,
@@ -90,35 +84,8 @@ const VehiculeEditScreen = () => {
         seats,
         numReviews,
       });
-      // Assuming the response.data contains the updated vehicule data
-      const updatedVehicule = response ? response.data : null;
-      console.log("UPDATED VEICULE DATA :", updatedVehicule);
-
-      // Update the local state with the new data
-      setName(updatedVehicule.name || "");
-      setImages(updatedVehicule.images || []);
-      setDescription(updatedVehicule.description || "");
-      setBrand(updatedVehicule.brand || "");
-      setYear(updatedVehicule.year || 1900);
-      setCategory(updatedVehicule.category || "");
-      setColor(updatedVehicule.color || "");
-      setCountInStock(updatedVehicule.countInStock || 0);
-      setPrice(updatedVehicule.price || 0);
-      setRating(updatedVehicule.rating || 0);
-      setProvenance(updatedVehicule.provenance || "");
-      setRegistration(updatedVehicule.registration || "");
-      setVehiculeInspection(updatedVehicule.vehiculeInspection || "");
-      setOriginalOwner(updatedVehicule.originalOwner || "");
-      setOdometerReading(updatedVehicule.odometerReading || "");
-      setEnergy(updatedVehicule.energy || "");
-      setUpholstery(updatedVehicule.upholstery || "");
-      setTransmission(updatedVehicule.transmission || "");
-      setDoors(updatedVehicule.doors || 0);
-      setSeats(updatedVehicule.seats || 0);
-      setNumReviews(updatedVehicule.numReviews || 0);
-
       toast.success("Product updated");
-      // refetch();
+      refetch();
       navigate("/admin/vehiculeslist");
     } catch (err) {
       toast.error(err?.data?.message || err.error || "Error updating product");
@@ -129,7 +96,7 @@ const VehiculeEditScreen = () => {
     console.log("V-EditScreen", vehicule);
     if (vehicule && vehiculeId === vehicule._id) {
       setName(vehicule.name || "");
-      setImages(vehicule.images || []);
+      setImages(vehicule.images || "");
       setDescription(vehicule.description || "");
       setBrand(vehicule.brand || "");
       setYear(vehicule.year || 1900);
@@ -158,33 +125,31 @@ const VehiculeEditScreen = () => {
     return <ScaleLoader />;
   }
 
-  const uploadFileHandler = async (e, fileType, index, imageId) => {
+  const uploadFileHandler = async (e, fileType) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append(fileType, file);
 
     try {
       const response = await uploadVehiculeImage(formData);
-      console.log("RESPONSE UPLOADED-VEHICULE-IMG :", response);
-
-      const thumbnailPath = response.data.thumbnailPath;
-      console.log("RESP.DATA.THUMBNAIL :", thumbnailPath);
-      console.log("THUMBNAIL PATH:", thumbnailPath);
-
       const newImage = {
         original: fileType === "image" ? response.data.imagePath : "",
-        thumbnail: thumbnailPath || "", // Check if thumbnailPath is defined
-        _id: imageId || undefined,
+        thumbnail: fileType === "thumbnail" ? response.data.imagePath : "",
       };
-      console.log("NEW-IMG :", newImage);
 
-      // Update the state immutably
-      setImages((prevImages) =>
-        prevImages.map((img, i) =>
-          i === index ? { ...img, ...newImage } : img
-        )
-      );
-
+      // If this is a thumbnail, find the corresponding image and update it
+      if (fileType === "thumbnail") {
+        setImages((prevImages) =>
+          prevImages.map((img) =>
+            img.original === ""
+              ? { ...img, thumbnail: response.data.imagePath }
+              : img
+          )
+        );
+      } else {
+        // This is an original image, so add it to the array
+        setImages((prevImages) => [...prevImages, newImage]);
+      }
       toast.success("Image uploaded successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -203,11 +168,7 @@ const VehiculeEditScreen = () => {
         ) : error ? (
           <Message variant='danger'>{error.toString()}</Message>
         ) : (
-          <Form
-            onSubmit={submitHandler}
-            autoComplete='off'
-            encType='multipart/form-data'
-          >
+          <Form onSubmit={submitHandler} autoComplete='off'>
             <Form.Group controlId='name'>
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -227,31 +188,44 @@ const VehiculeEditScreen = () => {
                 onChange={(e) => setPrice(Number(e.target.value))}
               ></Form.Control>
             </Form.Group>
+
             <Form.Group controlId='image' className='my-2'>
               <Form.Label>Image</Form.Label>
-              {images.map((image, index) => (
-                <div key={index}>
-                  <Form.Control
-                    name={`images[${index}].original`}
-                    type='text'
-                    placeholder='Enter image url'
-                    value={image.original}
-                    onChange={(e) =>
-                      uploadFileHandler(e, "original", index, image._id || "")
-                    }
-                  />
-                  <Form.Control
-                    name={`images[${index}].original`}
-                    label='Choose File'
-                    type='file'
-                    onChange={(e) =>
-                      uploadFileHandler(e, "image", index, image._id || "")
-                    }
-                  />
-                </div>
-              ))}
+              {Array.isArray(images) &&
+                images.map((image, index) => (
+                  <div key={index}>
+                    <Form.Control
+                      name={`images[${index}].original`}
+                      type='text'
+                      placeholder='Enter image url'
+                      value={image && image.original ? image.original : ""}
+                      onChange={(e) =>
+                        uploadFileHandler(
+                          e,
+                          "original",
+                          index,
+                          image ? image._id || "" : ""
+                        )
+                      }
+                    />
+                    <Form.Control
+                      name={`images[${index}].thumbnail`}
+                      label='Choose File'
+                      type='file'
+                      onChange={(e) =>
+                        uploadFileHandler(
+                          e,
+                          "image",
+                          index,
+                          image ? image._id || "" : ""
+                        )
+                      }
+                    />
+                  </div>
+                ))}
               {loadingUpload && <ScaleLoader />}
             </Form.Group>
+
             {/* <Form.Group controlId='image'>
               <Form.Label>Image</Form.Label> */}
             {/* <Form.Control
@@ -267,9 +241,42 @@ const VehiculeEditScreen = () => {
               ></Form.Control>
               {loadingUpload && <ScaleLoader />} */}
             {/* </Form.Group> */}
-            {/* <Form.Group controlId='image' className='my-2'>
-              <Form.Label>Image</Form.Label>
-              <Form.Control
+
+            {/* {Array.isArray(images) &&
+                images.map((image, index) => (
+                  <div key={index}>
+                    <Form.Control
+                      name={`images[${index}].original`}
+                      type='text'
+                      placeholder='Enter image url'
+                      value={image && image.original ? image.original : ""}
+                      onChange={(e) =>
+                        uploadFileHandler(
+                          e,
+                          "original",
+                          index,
+                          image ? image._id || "" : ""
+                        )
+                      }
+                    />
+                    <Form.Control
+                      name={`images[${index}].thumbnail`}
+                      label='Choose File'
+                      type='file'
+                      onChange={(e) =>
+                        uploadFileHandler(
+                          e,
+                          "image",
+                          index,
+                          image ? image._id || "" : ""
+                        )
+                      }
+                    />
+                  </div>
+                ))}
+              {loadingUpload && <ScaleLoader />}
+            </Form.Group> */}
+            {/* <Form.Control
                 name='image'
                 type='text'
                 placeholder='Enter image url'
