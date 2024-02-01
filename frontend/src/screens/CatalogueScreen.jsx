@@ -8,7 +8,6 @@ import Message from "../components/Message";
 
 const CatalogueScreen = () => {
   const { data: vehicules, isLoading, error } = useGetVehiculesQuery();
-  console.log("USE-GET-VEHICULES-QUERY CATALOGUE", useGetVehiculesQuery());
 
   return (
     <>
@@ -39,11 +38,22 @@ const CatalogueScreen = () => {
 
           <Fade triggerOnce cascade>
             <Row>
-              {vehicules.map((vehicule) => (
-                <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>
-                  <Vehicule vehicule={vehicule} />
-                </Col>
-              ))}
+
+              {vehicules.map((vehicule) => {
+                const imageUrl = `http://localhost:5000/${vehicule.images[0].original}`;
+                // const thumbnailUrl = `http://localhost:5000//${vehicule.images.thumbnail}`;
+
+                return (
+                  <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>
+                    <Vehicule
+                      vehicule={vehicule}
+                      imageUrl={imageUrl}
+                      // thumbnailUrl={thumbnailUrl}
+                    />
+                  </Col>
+                );
+              })}
+
             </Row>
           </Fade>
         </>
