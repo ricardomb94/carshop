@@ -20,24 +20,30 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
       query: (newVehicule) => ({
         url: `${VEHICULES_URL}/admin/vehiculeslist`,
         method: "POST",
-        body: { ...newVehicule },
+        // body: { ...newVehicule },
+        body: JSON.stringify(newVehicule),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.JWT_SECRET}`,
         },
       }),
+
       invalidatesTags: ["Vehicules"],
     }),
+
     updateVehicule: builder.mutation({
-      //
       query: (data) => {
-        const url = `${VEHICULES_URL}/${data._id}`;
+        const { _id, ...updatedData } = data;
+
+        // Ensure _id is present in updatedData
+        updatedData._id = _id;
+
+        const url = `${VEHICULES_URL}/${_id}`;
 
         return {
-          url: url,
+          url,
           method: "PUT",
-          body: data,
-          log: console.log("Update URL:", url),
+          body: updatedData, // Use updatedData without _id for the body
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.JWT_SECRET}`,
@@ -46,6 +52,26 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Vehicules"],
     }),
+
+    // updateVehicule: builder.mutation({
+    //   //
+    //   query: (data) => {
+    //     const url = `${VEHICULES_URL}/${data._id}`;
+
+    //     return {
+    //       url: url,
+    //       method: "PUT",
+    //       body: data,
+    //       log0: (data) => console.log("DATA FROM UPDATE MUTATION", data),
+    //       log1: (url) => console.log("Update URL:", url),
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer ${process.env.JWT_SECRET}`,
+    //       },
+    //     };
+    //   },
+    //   invalidatesTags: ["Vehicules"],
+    // }),
     // updateVehicule: builder.mutation({
     //   query: (data) => {
     //     const { _id, ...updatedData } = data;
