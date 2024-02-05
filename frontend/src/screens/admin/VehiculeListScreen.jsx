@@ -1,8 +1,14 @@
-import React from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button, Row, Col, Container } from "react-bootstrap";
-
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { useState } from "react";
+// import { LinkContainer } from "react-router-bootstrap";
+import {
+  Table,
+  Button,
+  Row,
+  Col,
+  // Container,
+  Pagination,
+} from "react-bootstrap";
+import { FaEdit } from "react-icons/fa";
 import { ScaleLoader } from "react-spinners";
 import Message from "../../components/Message";
 import {
@@ -10,10 +16,23 @@ import {
   useCreateVehiculeMutation,
 } from "../../slices/vehiculesApiSlice";
 import { toast } from "react-toastify";
+import VehiculeTableRow from "../../components/VehiculeTableRow";
+
+const ITEMS_PER_PAGE = 5; // Set the number of items per page
 
 const VehiculeListScreen = () => {
   const { data: vehicules, isLoading, error, refetch } = useGetVehiculesQuery();
   console.log("VehiculeSCREEN", vehicules);
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+  const currentItems = vehicules
+    ? vehicules.slice(indexOfFirstItem, indexOfLastItem)
+    : [];
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [
     createVehicule,
@@ -89,7 +108,7 @@ const VehiculeListScreen = () => {
 
   return (
     <>
-      <Container fluid></Container>
+      {/* <Container> */}
       <Row className='align-items-center'>
         <Col>
           <h2>Liste de véhicules</h2>
@@ -117,110 +136,62 @@ const VehiculeListScreen = () => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <Table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Marque</th>
-                <th>Année</th>
-                <th>Couleur</th>
-                <th>Prix(€)</th>
-                <th>Catégorie</th>
-                <th>Provenance</th>
-                <th>Circule depuis</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {vehicules.map((vehicule) => (
-                <tr key={vehicule._id}>
-                  <td className='text-lowercase'>{vehicule._id}</td>
-                  <td>{vehicule.brand}</td>
-                  <td>{vehicule.year}</td>
-                  <td>{vehicule.color}</td>
-                  <td>{vehicule.price}</td>
-                  <td>{vehicule.category}</td>
-                  <td>{vehicule.provenance}</td>
-                  <td>{vehicule.registration}</td>
-                  <td>
-                    <LinkContainer to={`/admin/vehicule/${vehicule._id}/edit`}>
-                      <Button variant='light' className='btn-sm mx-2'>
-                        <FaEdit />
-                      </Button>
-                    </LinkContainer>
-                    <Button
-                      variant='danger'
-                      className='btn-sm'
-                      onClick={() => deleteHandler(vehicule._id)}
-                    >
-                      <FaTrash style={{ color: "white" }} />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-          <Table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                {/* <th>Marque</th>
-                <th>Année</th>
-                <th>Couleur</th>
-                <th>Prix(€)</th>
-                <th>Catégorie</th>
-                <th>Provenance</th>
-                <th>Circule depuis</th> */}
-                <th>C tech</th>
-                <th>P main</th>
-                <th>km </th>
-                <th>Energie</th>
-                <th>Sellerie</th>
-                <th>Portes</th>
-                <th>Place</th>
-                <th>Transmission</th>
-              </tr>
-            </thead>
-            <tbody>
-              {vehicules.map((vehicule) => (
-                <tr key={vehicule._id}>
-                  <td className='text-lowercase'>{vehicule._id}</td>
-                  {/* <td>{vehicule.brand}</td>
-                  <td>{vehicule.year}</td>
-                  <td>{vehicule.color}</td>
-                  <td>{vehicule.price}</td>
-                  <td>{vehicule.category}</td>
-                  <td>{vehicule.provenance}</td>
-                  <td>{vehicule.registration}</td> */}
-                  <td>{vehicule.vehiculeInspection}</td>
-                  <td>{vehicule.originalOwner}</td>
-                  <td>{vehicule.odometerReading}</td>
-                  <td>{vehicule.energy}</td>
-                  <td>{vehicule.upholstery}</td>
-                  <td>{vehicule.doors}</td>
-                  <td>{vehicule.seats}</td>
-                  <td>{vehicule.transmission}</td>
-
-                  <td>
-                    <LinkContainer to={`/admin/vehicule/${vehicule._id}/edit`}>
-                      <Button variant='light' className='btn-sm mx-2'>
-                        <FaEdit />
-                      </Button>
-                    </LinkContainer>
-                    <Button
-                      variant='danger'
-                      className='btn-sm'
-                      onClick={() => deleteHandler(vehicule._id)}
-                    >
-                      <FaTrash style={{ color: "white" }} />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <Row className='justify-content-center'>
+            <Col>
+              <Table className='table table-sm table-hover' responsive>
+                <thead className='thead-dark'>
+                  <tr>
+                    <th>ID</th>
+                    <th>Marque</th>
+                    <th>Année</th>
+                    <th>Couleur</th>
+                    <th>Prix(€)</th>
+                    {/* <th>Catégorie</th> */}
+                    <th>Origine</th>
+                    <th>Circule depuis</th>
+                    <th>Ctl technique</th>
+                    <th>Première main</th>
+                    <th>km </th>
+                    <th>Energie</th>
+                    <th>Sellerie</th>
+                    <th>Portes</th>
+                    <th>Place</th>
+                    <th>Transmission</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentItems.map((vehicule) => (
+                    <VehiculeTableRow
+                      key={vehicule._id}
+                      vehicule={vehicule}
+                      deleteHandler={deleteHandler}
+                    />
+                  ))}
+                </tbody>
+              </Table>
+              <Row>
+                <Col>
+                  <Pagination>
+                    {Array.from({
+                      length: Math.ceil(vehicules.length / ITEMS_PER_PAGE),
+                    }).map((item, index) => (
+                      <Pagination.Item
+                        key={index + 1}
+                        active={index + 1 === currentPage}
+                        onClick={() => paginate(index + 1)}
+                      >
+                        {index + 1}
+                      </Pagination.Item>
+                    ))}
+                  </Pagination>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </>
       )}
+      {/* </Container> */}
     </>
   );
 };

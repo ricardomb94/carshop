@@ -21,6 +21,7 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
         url: `${VEHICULES_URL}/admin/vehiculeslist`,
         method: "POST",
         body: { ...newVehicule },
+        logs: console.log("NEWVEHICULE IN CREATE BUILDER :", newVehicule),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.JWT_SECRET}`,
@@ -46,24 +47,7 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Vehicules"],
     }),
-    // updateVehicule: builder.mutation({
-    //   query: (data) => {
-    //     const { _id, ...updatedData } = data;
-    //     const url = `${VEHICULES_URL}/${_id}`;
-
-    //     return {
-    //       url,
-    //       method: "PUT",
-    //       body: updatedData, // Use updatedData without _id for the body
-    //       log: console.log("PUT REQUEST UPDATE VEHICULE:", updatedData),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${process.env.JWT_SECRET}`,
-    //       },
-    //     };
-    //   },
-    //   invalidatesTags: ["Vehicules"],
-    // }),
+    
     uploadVehiculeImage: builder.mutation({
       query: (data) => ({
         url: `${UPLOADS_URL}`,
