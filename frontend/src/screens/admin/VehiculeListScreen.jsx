@@ -118,7 +118,7 @@ const VehiculeListScreen = () => {
           <h2>Liste de véhicules</h2>
         </Col>
         <Col className='text-end'>
-          <Link to='/admin/createvehicule' className='btn-sm m-3'>
+          <Link to='/admin/vehicule/create' className='btn-sm m-3'>
             <FaEdit />
             Créez votre produit
           </Link>
