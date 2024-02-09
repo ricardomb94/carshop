@@ -136,7 +136,6 @@ const VehiculeCreateScreen = () => {
 
   return (
     <>
-      {/* ... (other JSX code) */}
       <FormContainer>
         <h1>Creez un nouveau produit</h1>
         {loadingCreate && <ScaleLoader />}
@@ -169,7 +168,7 @@ const VehiculeCreateScreen = () => {
               placeholder='Brève description'
               value={formData.description}
               onChange={handleChange}
-              name='description' // Add name attribute
+              name='description'
             />
           </Form.Group>
           {/* Render image fields */}
