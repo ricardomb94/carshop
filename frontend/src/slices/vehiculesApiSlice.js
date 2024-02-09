@@ -53,43 +53,6 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Vehicules"],
     }),
 
-    // updateVehicule: builder.mutation({
-    //   //
-    //   query: (data) => {
-    //     const url = `${VEHICULES_URL}/${data._id}`;
-
-    //     return {
-    //       url: url,
-    //       method: "PUT",
-    //       body: data,
-    //       log0: (data) => console.log("DATA FROM UPDATE MUTATION", data),
-    //       log1: (url) => console.log("Update URL:", url),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${process.env.JWT_SECRET}`,
-    //       },
-    //     };
-    //   },
-    //   invalidatesTags: ["Vehicules"],
-    // }),
-    // updateVehicule: builder.mutation({
-    //   query: (data) => {
-    //     const { _id, ...updatedData } = data;
-    //     const url = `${VEHICULES_URL}/${_id}`;
-
-    //     return {
-    //       url,
-    //       method: "PUT",
-    //       body: updatedData, // Use updatedData without _id for the body
-    //       log: console.log("PUT REQUEST UPDATE VEHICULE:", updatedData),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${process.env.JWT_SECRET}`,
-    //       },
-    //     };
-    //   },
-    //   invalidatesTags: ["Vehicules"],
-    // }),
     uploadVehiculeImage: builder.mutation({
       query: (data) => ({
         url: `${UPLOADS_URL}`,

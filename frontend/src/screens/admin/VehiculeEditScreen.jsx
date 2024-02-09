@@ -249,7 +249,7 @@ const VehiculeEditScreen = () => {
             encType='multipart/form-data'
           >
             <Form.Group controlId='name'>
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Nom</Form.Label>
               <Form.Control
                 type='name'
                 placeholder='Enter name'
@@ -293,76 +293,7 @@ const VehiculeEditScreen = () => {
               ))}
               {loadingUpload && <ScaleLoader />}
             </Form.Group>
-            {/* <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label> */}
-            {/* <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control> */}
-            {/* <Form.Control
-                label='Choose File'
-                onChange={uploadFileHandler}
-                type='file'
-              ></Form.Control>
-              {loadingUpload && <ScaleLoader />} */}
-            {/* </Form.Group> */}
-            {/* <Form.Group controlId='image' className='my-2'>
-
-              <Form.Label>Image</Form.Label>
-              {Array.isArray(images) &&
-                images.map((image, index) => (
-                  <div key={index}>
-                    <Form.Control
-                      name={`images[${index}].original`}
-                      type='text'
-                      placeholder='Enter image url'
-                      value={image && image.original ? image.original : ""}
-                      onChange={(e) =>
-                        uploadFileHandler(
-                          e,
-                          "original",
-                          index,
-                          image ? image._id || "" : ""
-                        )
-                      }
-                    />
-                    <Form.Control
-                      name={`images[${index}].thumbnail`}
-                      label='Choose File'
-                      type='file'
-                      onChange={(e) =>
-                        uploadFileHandler(
-                          e,
-                          "image",
-                          index,
-                          image ? image._id || "" : ""
-                        )
-                      }
-                    />
-                  </div>
-                ))}
-              {loadingUpload && <ScaleLoader />}
-            </Form.Group>
-
-            {/* <Form.Group controlId='image' className='my-2'>
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                name='image'
-                type='text'
-                placeholder='Enter image url'
-                value={JSON.stringify(images.join(","))} // Display the current value of the images state
-                onChange={(e) => setImages(e.target.value.split(","))}
-              ></Form.Control>
-              <Form.Control
-                label='Choose File'
-                type='file'
-                onChange={(e) => uploadFileHandler(e, "image")} // Pass the correct fileType
-              ></Form.Control>
-              {loadingUpload && <ScaleLoader />}
-            </Form.Group> */}
-
+            
             <Form.Group controlId='brand'>
               <Form.Label>Brand</Form.Label>
               <Form.Control

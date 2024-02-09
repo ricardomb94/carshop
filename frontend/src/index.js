@@ -31,6 +31,7 @@ import OrderScreen from "./screens/OrderScreen";
 import OrderListScreen from "./screens/admin/OrderListScreen";
 import VehiculeListScreen from "./screens/admin/VehiculeListScreen";
 import VehiculeEditScreen from "./screens/admin/VehiculeEditScreen";
+import VehiculeCreateScreen from "./screens/admin/VehiculeCreateScreen";
 
 // import OrdersScreen from "./screens/OrdersScreen";
 // import OrderDetailsScreen from "./screens/OrderDetailsScreen";
@@ -60,6 +61,10 @@ const router = createBrowserRouter(
         <Route
           path='/admin/vehicule/:id/edit'
           element={<VehiculeEditScreen />}
+        />
+         <Route
+          path='/admin/vehicule/create'
+          element={<VehiculeCreateScreen />}
         />
       </Route>
     </Route>
