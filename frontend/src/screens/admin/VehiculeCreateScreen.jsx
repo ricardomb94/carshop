@@ -70,6 +70,7 @@ const VehiculeCreateScreen = () => {
     e.preventDefault();
 
     // Format the images state
+    console.log("FORMDATA.IMAGE in CREATE :", formData.images);
     const formattedImages = formData.images.map((image) => ({
       original: image.original || "",
       thumbnail: image.thumbnail || "",
