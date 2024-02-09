@@ -39,13 +39,14 @@ const VehiculeEditScreen = () => {
 
   const {
     data: vehicule,
+    user,
     isLoading,
     refetch,
     error,
   } = useGetVehiculeDetailsQuery(vehiculeId);
 
   const [
-    updateVehicule,
+    { mutate: updateVehicule },
     { isLoading: loadingUpdate },
   ] = useUpdateVehiculeMutation();
 
@@ -56,8 +57,11 @@ const VehiculeEditScreen = () => {
 
   const navigate = useNavigate();
 
+  // const userId = user._id;
+
   const submitHandler = async (e) => {
     e.preventDefault();
+
     // Format the images state
     const formattedImages = images.map((image) => ({
       original: image.original || "",
@@ -65,9 +69,11 @@ const VehiculeEditScreen = () => {
       _id: image._id,
     }));
     console.log("FORMATED IMAGES STATE :", formattedImages);
+
     try {
       const response = await updateVehicule({
         _id: vehiculeId,
+        // user: userId,
         name,
         price,
         images: formattedImages,
@@ -90,6 +96,7 @@ const VehiculeEditScreen = () => {
         seats,
         numReviews,
       });
+
       // Assuming the response.data contains the updated vehicule data
       const updatedVehicule = response ? response.data : null;
       console.log("UPDATED VEICULE DATA :", updatedVehicule);
@@ -160,11 +167,42 @@ const VehiculeEditScreen = () => {
 
   const uploadFileHandler = async (e, fileType, index, imageId) => {
     const file = e.target.files[0];
+
+    if (!file) {
+      toast.error("Please select a file.");
+      return;
+    }
+
     const formData = new FormData();
-    formData.append(fileType, file);
+    // formData.append(fileType, file);
+    formData.append("image", file); // Assuming "image" is the field name for the file
+
+    // Append other fields as strings
+    formData.append("images", images.toString());
+    formData.append("name", name.toString());
+    formData.append("price", Number(price));
+    formData.append("brand", brand.toString());
+    formData.append("category", category.toString());
+    formData.append("description", description.toString());
+    formData.append("countInStock", Number(countInStock));
+    formData.append("year", Number(year));
+    formData.append("color", color.toString());
+    formData.append("rating", Number(rating));
+    formData.append("provenance", provenance.toString());
+    formData.append("registration", registration.toString());
+    formData.append("vehiculeInspection", vehiculeInspection.toString());
+    formData.append("originalOwner", originalOwner.toString());
+    formData.append("odometerReading", odometerReading.toString());
+    formData.append("energy", energy.toString());
+    formData.append("transmission", transmission.toString());
+    formData.append("upholstery", upholstery.toString());
+    formData.append("doors", Number(doors));
+    formData.append("seats", Number(seats));
+    formData.append("numReviews", Number(numReviews));
 
     try {
       const response = await uploadVehiculeImage(formData);
+
       console.log("RESPONSE UPLOADED-VEHICULE-IMG :", response);
 
       const thumbnailPath = response.data.thumbnailPath;
@@ -175,6 +213,7 @@ const VehiculeEditScreen = () => {
         original: fileType === "image" ? response.data.imagePath : "",
         thumbnail: thumbnailPath || "", // Check if thumbnailPath is defined
         _id: imageId || undefined,
+
       };
       console.log("NEW-IMG :", newImage);
 
@@ -190,6 +229,7 @@ const VehiculeEditScreen = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
+
   return (
     <>
       <Link to='/admin/vehiculeslist' className='btn btn-light my-3'>
@@ -227,6 +267,7 @@ const VehiculeEditScreen = () => {
                 onChange={(e) => setPrice(Number(e.target.value))}
               ></Form.Control>
             </Form.Group>
+
             <Form.Group controlId='image' className='my-2'>
               <Form.Label>Image</Form.Label>
               {images.map((image, index) => (
@@ -252,7 +293,7 @@ const VehiculeEditScreen = () => {
               ))}
               {loadingUpload && <ScaleLoader />}
             </Form.Group>
-
+            
             <Form.Group controlId='brand'>
               <Form.Label>Brand</Form.Label>
               <Form.Control

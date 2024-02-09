@@ -1,19 +1,40 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Vehicule from "../models/vehiculeModel.js";
+import User from "../models/userModel.js";
 
 // @desc Fetch all vehicules
 // @routes GET /api/vehicules
 // @access Public
 const getVehicules = asyncHandler(async (req, res) => {
   const vehicules = await Vehicule.find({});
-  console.log("ALL-VEHICULES", vehicules);
   res.json(vehicules);
+  console.log("ALL-VEHICULES", vehicules);
 });
 
 // @desc Fetch a vehicule by Id
 // @routes GET /api/vehicules/:id
 // @access Public
 const getVehiculeById = asyncHandler(async (req, res) => {
+  //const vehiculeId = req.params.id;
+
+//   try {
+//     // Fetch vehicule details from the database
+//     const vehicule = await Vehicule.findById(vehiculeId);
+
+//     // Fetch user details associated with the vehicule
+//     const user = await User.findById(vehicule.user);
+
+//     // Combine vehicule and user details in the response
+//     res.json({
+//       vehicule,
+//       user,
+//     });
+//     console.log("RES-IN VEHICULE-CTLER", vehicule);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
   const vehicule = await Vehicule.findById(req.params.id);
 
   if (!vehicule) {
@@ -139,5 +160,7 @@ const updateVehicule = asyncHandler(async (req, res) => {
     throw new Error("Resource not found");
   }
 });
+console.log("UPDATED-VEHICULE", updateVehicule);
+console;
 
 export { getVehicules, getVehiculeById, createVehicule, updateVehicule };

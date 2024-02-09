@@ -38,6 +38,7 @@ const CatalogueScreen = () => {
 
           <Fade triggerOnce cascade>
             <Row>
+
               {vehicules.map((vehicule) => {
                 const imageUrl = `http://localhost:5000/${vehicule.images[0].original}`;
                 // const thumbnailUrl = `http://localhost:5000//${vehicule.images.thumbnail}`;
@@ -52,6 +53,7 @@ const CatalogueScreen = () => {
                   </Col>
                 );
               })}
+
             </Row>
           </Fade>
         </>

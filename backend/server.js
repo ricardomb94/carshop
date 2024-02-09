@@ -22,7 +22,7 @@ app.use(helmet());
 //Cors
 app.use(
   cors({
-    origin: "http://localhost:3000", // Allow requests from this origin
+    origin: "http://localhost:3050", // Allow requests from this origin
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)
   })
 );
