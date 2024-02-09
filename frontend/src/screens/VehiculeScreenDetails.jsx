@@ -147,7 +147,7 @@ const VehiculeScreenDetails = () => {
                     {vehicule.countInStock > 0 && (
                       <ListGroup.Item>
                         <Row>
-                          <Col>qty</Col>
+                          <Col>qté</Col>
                           <Col>
                             <FormControl
                               as='select'
