@@ -209,7 +209,7 @@ const VehiculeEditScreen = () => {
             encType='multipart/form-data'
           >
             <Form.Group controlId='name'>
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Nom</Form.Label>
               <Form.Control
                 type='name'
                 placeholder='Enter name'
