@@ -68,7 +68,7 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
         url: `${VEHICULES_URL}/${vehiculeId}`,
         method: "DELETE",
       }),
-      providesTags: ["Vehicule"],
+      providesTags: ["Vehicules"],
     }),
     createReview: builder.mutation({
       query: (data) => ({
@@ -76,7 +76,7 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Vehicule"],
+      invalidatesTags: ["Vehicules"],
     }),
     getTopVehicules: builder.query({
       query: () => `${VEHICULES_URL}/top`,

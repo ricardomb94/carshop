@@ -15,26 +15,7 @@ const getVehicules = asyncHandler(async (req, res) => {
 // @routes GET /api/vehicules/:id
 // @access Public
 const getVehiculeById = asyncHandler(async (req, res) => {
-  //const vehiculeId = req.params.id;
-
-//   try {
-//     // Fetch vehicule details from the database
-//     const vehicule = await Vehicule.findById(vehiculeId);
-
-//     // Fetch user details associated with the vehicule
-//     const user = await User.findById(vehicule.user);
-
-//     // Combine vehicule and user details in the response
-//     res.json({
-//       vehicule,
-//       user,
-//     });
-//     console.log("RES-IN VEHICULE-CTLER", vehicule);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// });
+ 
   const vehicule = await Vehicule.findById(req.params.id);
 
   if (!vehicule) {
@@ -161,6 +142,24 @@ const updateVehicule = asyncHandler(async (req, res) => {
   }
 });
 console.log("UPDATED-VEHICULE", updateVehicule);
-console;
 
-export { getVehicules, getVehiculeById, createVehicule, updateVehicule };
+
+// @desc Delete a vehicule
+// @routes POST /api/vehicules/:id
+// @access Private/admin
+const deleteVehicule = asyncHandler(async (req, res) => {
+
+  //Here we are going to find the vehicule product
+  const vehicule = await Vehicule.findById(req.params.id);
+  console.log("VEHICULE-CONTROLLER", JSON.stringify(vehicule));
+
+  if (vehicule) {
+    await vehicule.deleteOne({_id: vehicule._id});
+    res.status(200).json({message: 'Le véhicule a été supprimé'})
+  } else {
+    res.status(404);
+    throw new Error("Resource not found");
+  }
+});
+
+export { getVehicules, getVehiculeById, createVehicule, updateVehicule, deleteVehicule };

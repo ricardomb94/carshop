@@ -163,6 +163,16 @@ const VehiculeCreateScreen = () => {
               name='name' // Add name attribute
             />
           </Form.Group>
+          <Form.Group controlId='price'>
+            <Form.Label>Le prix:</Form.Label>
+            <Form.Control
+              type='number'
+              placeholder='Renseigner le prix'
+              value={formData.price}
+              onChange={handleChange}
+              name='price' // Add name attribute
+            />
+          </Form.Group>
           <Form.Group controlId='description'>
             <Form.Label>Description:</Form.Label>
             <Form.Control
@@ -181,7 +191,7 @@ const VehiculeCreateScreen = () => {
                 <Form.Control
                   name={`images[${index}].original`}
                   type='text'
-                  placeholder='Enter image url'
+                  placeholder="Renseigner l\'url de l\'image"
                   value={image.original}
                   onChange={(e) =>
                     uploadFileHandler(e, "original", index, image._id || "")
@@ -189,7 +199,7 @@ const VehiculeCreateScreen = () => {
                 />
                 <Form.Control
                   name={`images[${index}].file`}
-                  label='Choose File'
+                  label='Choisir un fichier'
                   type='file'
                   onChange={(e) =>
                     uploadFileHandler(e, "image", index, image._id || "")
@@ -199,7 +209,7 @@ const VehiculeCreateScreen = () => {
             ))}
             {loadingUpload && <ScaleLoader />}
             <button type='button' onClick={addImageField}>
-              Add Image Field
+              Ajouter une autre image
             </button>
           </Form.Group>
           <Form.Group controlId='brand'>
@@ -253,7 +263,7 @@ const VehiculeCreateScreen = () => {
             ></Form.Control>
           </Form.Group>
           <Form.Group controlId='rating'>
-            <Form.Label>Avis</Form.Label>
+            <Form.Label>Nombre d'étoile</Form.Label>
             <Form.Control
               type='number'
               placeholder='Votre avis'

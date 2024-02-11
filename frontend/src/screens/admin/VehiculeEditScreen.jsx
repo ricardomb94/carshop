@@ -39,14 +39,13 @@ const VehiculeEditScreen = () => {
 
   const {
     data: vehicule,
-    user,
     isLoading,
     refetch,
     error,
   } = useGetVehiculeDetailsQuery(vehiculeId);
 
   const [
-    { mutate: updateVehicule },
+    updateVehicule,
     { isLoading: loadingUpdate },
   ] = useUpdateVehiculeMutation();
 
@@ -56,8 +55,6 @@ const VehiculeEditScreen = () => {
   ] = useUploadVehiculeImageMutation();
 
   const navigate = useNavigate();
-
-  // const userId = user._id;
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -73,7 +70,6 @@ const VehiculeEditScreen = () => {
     try {
       const response = await updateVehicule({
         _id: vehiculeId,
-        // user: userId,
         name,
         price,
         images: formattedImages,
@@ -128,6 +124,7 @@ const VehiculeEditScreen = () => {
       // refetch();
       navigate("/admin/vehiculeslist");
     } catch (err) {
+      console.error("Error updating product:", err);
       toast.error(err?.data?.message || err.error || "Error updating product");
     }
   };
@@ -213,7 +210,6 @@ const VehiculeEditScreen = () => {
         original: fileType === "image" ? response.data.imagePath : "",
         thumbnail: thumbnailPath || "", // Check if thumbnailPath is defined
         _id: imageId || undefined,
-
       };
       console.log("NEW-IMG :", newImage);
 
@@ -293,7 +289,7 @@ const VehiculeEditScreen = () => {
               ))}
               {loadingUpload && <ScaleLoader />}
             </Form.Group>
-            
+
             <Form.Group controlId='brand'>
               <Form.Label>Brand</Form.Label>
               <Form.Control
