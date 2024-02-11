@@ -163,10 +163,9 @@ const VehiculeEditScreen = () => {
   }
 
   const uploadFileHandler = async (e, fileType, index, imageId) => {
-    const file = e.target.files[0];
-
+    const file = e.target.files && e.target.files[0];
     if (!file) {
-      toast.error("Please select a file.");
+      toast.error("Choisir un fichier");
       return;
     }
 
@@ -266,27 +265,28 @@ const VehiculeEditScreen = () => {
 
             <Form.Group controlId='image' className='my-2'>
               <Form.Label>Image</Form.Label>
-              {images.map((image, index) => (
-                <div key={index}>
-                  <Form.Control
-                    name={`images[${index}].original`}
-                    type='text'
-                    placeholder='Enter image url'
-                    value={image.original}
-                    onChange={(e) =>
-                      uploadFileHandler(e, "original", index, image._id || "")
-                    }
-                  />
-                  <Form.Control
-                    name={`images[${index}].original`}
-                    label='Choose File'
-                    type='file'
-                    onChange={(e) =>
-                      uploadFileHandler(e, "image", index, image._id || "")
-                    }
-                  />
-                </div>
-              ))}
+              {images.length > 0 &&
+                images.map((image, index) => (
+                  <div key={index}>
+                    <Form.Control
+                      name={`images[${index}].original`}
+                      type='text'
+                      placeholder='Enter image url'
+                      value={image.original}
+                      onChange={(e) =>
+                        uploadFileHandler(e, "original", index, image._id || "")
+                      }
+                    />
+                    <Form.Control
+                      name={`images[${index}].original`}
+                      label='Choose File'
+                      type='file'
+                      onChange={(e) =>
+                        uploadFileHandler(e, "image", index, image._id || "")
+                      }
+                    />
+                  </div>
+                ))}
               {loadingUpload && <ScaleLoader />}
             </Form.Group>
 
