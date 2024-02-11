@@ -39,14 +39,13 @@ const VehiculeEditScreen = () => {
 
   const {
     data: vehicule,
-    user,
     isLoading,
     refetch,
     error,
   } = useGetVehiculeDetailsQuery(vehiculeId);
 
   const [
-    { mutate: updateVehicule },
+    updateVehicule,
     { isLoading: loadingUpdate },
   ] = useUpdateVehiculeMutation();
 
@@ -56,8 +55,6 @@ const VehiculeEditScreen = () => {
   ] = useUploadVehiculeImageMutation();
 
   const navigate = useNavigate();
-
-  // const userId = user._id;
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -73,7 +70,6 @@ const VehiculeEditScreen = () => {
     try {
       const response = await updateVehicule({
         _id: vehiculeId,
-        // user: userId,
         name,
         price,
         images: formattedImages,
@@ -128,6 +124,7 @@ const VehiculeEditScreen = () => {
       // refetch();
       navigate("/admin/vehiculeslist");
     } catch (err) {
+      console.error("Error updating product:", err);
       toast.error(err?.data?.message || err.error || "Error updating product");
     }
   };
@@ -166,10 +163,9 @@ const VehiculeEditScreen = () => {
   }
 
   const uploadFileHandler = async (e, fileType, index, imageId) => {
-    const file = e.target.files[0];
-
+    const file = e.target.files && e.target.files[0];
     if (!file) {
-      toast.error("Please select a file.");
+      toast.error("Choisir un fichier");
       return;
     }
 
@@ -213,7 +209,6 @@ const VehiculeEditScreen = () => {
         original: fileType === "image" ? response.data.imagePath : "",
         thumbnail: thumbnailPath || "", // Check if thumbnailPath is defined
         _id: imageId || undefined,
-
       };
       console.log("NEW-IMG :", newImage);
 
@@ -270,30 +265,31 @@ const VehiculeEditScreen = () => {
 
             <Form.Group controlId='image' className='my-2'>
               <Form.Label>Image</Form.Label>
-              {images.map((image, index) => (
-                <div key={index}>
-                  <Form.Control
-                    name={`images[${index}].original`}
-                    type='text'
-                    placeholder='Enter image url'
-                    value={image.original}
-                    onChange={(e) =>
-                      uploadFileHandler(e, "original", index, image._id || "")
-                    }
-                  />
-                  <Form.Control
-                    name={`images[${index}].original`}
-                    label='Choose File'
-                    type='file'
-                    onChange={(e) =>
-                      uploadFileHandler(e, "image", index, image._id || "")
-                    }
-                  />
-                </div>
-              ))}
+              {images.length > 0 &&
+                images.map((image, index) => (
+                  <div key={index}>
+                    <Form.Control
+                      name={`images[${index}].original`}
+                      type='text'
+                      placeholder='Enter image url'
+                      value={image.original}
+                      onChange={(e) =>
+                        uploadFileHandler(e, "original", index, image._id || "")
+                      }
+                    />
+                    <Form.Control
+                      name={`images[${index}].original`}
+                      label='Choose File'
+                      type='file'
+                      onChange={(e) =>
+                        uploadFileHandler(e, "image", index, image._id || "")
+                      }
+                    />
+                  </div>
+                ))}
               {loadingUpload && <ScaleLoader />}
             </Form.Group>
-            
+
             <Form.Group controlId='brand'>
               <Form.Label>Brand</Form.Label>
               <Form.Control

@@ -70,6 +70,7 @@ const VehiculeCreateScreen = () => {
     e.preventDefault();
 
     // Format the images state
+    console.log("FORMDATA.IMAGE in CREATE :", formData.images);
     const formattedImages = formData.images.map((image) => ({
       original: image.original || "",
       thumbnail: image.thumbnail || "",
@@ -136,7 +137,6 @@ const VehiculeCreateScreen = () => {
 
   return (
     <>
-      {/* ... (other JSX code) */}
       <FormContainer>
         <h1>Creez un nouveau produit</h1>
         {loadingCreate && <ScaleLoader />}
@@ -162,6 +162,16 @@ const VehiculeCreateScreen = () => {
               name='name' // Add name attribute
             />
           </Form.Group>
+          <Form.Group controlId='price'>
+            <Form.Label>Le prix:</Form.Label>
+            <Form.Control
+              type='number'
+              placeholder='Renseigner le prix'
+              value={formData.price}
+              onChange={handleChange}
+              name='price' // Add name attribute
+            />
+          </Form.Group>
           <Form.Group controlId='description'>
             <Form.Label>Description:</Form.Label>
             <Form.Control
@@ -169,7 +179,7 @@ const VehiculeCreateScreen = () => {
               placeholder='Brève description'
               value={formData.description}
               onChange={handleChange}
-              name='description' // Add name attribute
+              name='description'
             />
           </Form.Group>
           {/* Render image fields */}
@@ -180,7 +190,7 @@ const VehiculeCreateScreen = () => {
                 <Form.Control
                   name={`images[${index}].original`}
                   type='text'
-                  placeholder='Enter image url'
+                  placeholder="Renseigner l\'url de l\'image"
                   value={image.original}
                   onChange={(e) =>
                     uploadFileHandler(e, "original", index, image._id || "")
@@ -188,7 +198,7 @@ const VehiculeCreateScreen = () => {
                 />
                 <Form.Control
                   name={`images[${index}].file`}
-                  label='Choose File'
+                  label='Choisir un fichier'
                   type='file'
                   onChange={(e) =>
                     uploadFileHandler(e, "image", index, image._id || "")
@@ -198,7 +208,7 @@ const VehiculeCreateScreen = () => {
             ))}
             {loadingUpload && <ScaleLoader />}
             <button type='button' onClick={addImageField}>
-              Add Image Field
+              Ajouter une autre image
             </button>
           </Form.Group>
           <Form.Group controlId='brand'>
@@ -252,7 +262,7 @@ const VehiculeCreateScreen = () => {
             ></Form.Control>
           </Form.Group>
           <Form.Group controlId='rating'>
-            <Form.Label>Avis</Form.Label>
+            <Form.Label>Nombre d'étoile</Form.Label>
             <Form.Control
               type='number'
               placeholder='Votre avis'
