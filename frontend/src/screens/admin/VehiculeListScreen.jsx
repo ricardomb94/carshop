@@ -1,32 +1,26 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import { LinkContainer } from "react-router-bootstrap";
-import {
-  Table,
-  // Button,
-  Row,
-  Col,
-  // Container,
-  Pagination,
-} from "react-bootstrap";
+import { Table, Row, Col, Pagination } from "react-bootstrap";
+import { toast } from "react-toastify";
 import { FaEdit } from "react-icons/fa";
 import { ScaleLoader } from "react-spinners";
 import Message from "../../components/Message";
 import {
+  useDeleteVehiculeMutation,
   useGetVehiculesQuery,
-  // useCreateVehiculeMutation,
 } from "../../slices/vehiculesApiSlice";
-// import { toast } from "react-toastify";
 import VehiculeTableRow from "../../components/VehiculeTableRow";
-// import VehiculeCreateScreen from "./VehiculeCreateScreen";
 
 const ITEMS_PER_PAGE = 5; // Set the number of items per page
 
 const VehiculeListScreen = () => {
-  // const navigate = useNavigate();
-
-  const { data: vehicules, isLoading, error } = useGetVehiculesQuery();
+  const { data: vehicules, isLoading, refresh, error } = useGetVehiculesQuery();
   console.log("VehiculeSCREEN", vehicules);
+
+  const [
+    deleteVehicule,
+    { isLoading: loadingDelete },
+  ] = useDeleteVehiculeMutation();
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -38,11 +32,20 @@ const VehiculeListScreen = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const deleteHandler = (id) => {};
+  const deleteHandler = async (id) => {
+    console.log("DELETE :", id);
+    if (window.confirm("Êtes vous sûre de vouloir supprimer cet item ?")) {
+      try {
+        await deleteVehicule(id);
+        refresh();
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
+  };
 
   return (
     <>
-      {/* <Container> */}
       <Row className='align-items-center'>
         <Col>
           <h2>Liste de véhicules</h2>
@@ -50,12 +53,21 @@ const VehiculeListScreen = () => {
         <Col className='text-end'>
           <Link to='/admin/vehicule/create' className='btn-sm m-3'>
             <FaEdit />
-            Créez votre produit
+            Créez un nouveau produit
           </Link>
         </Col>
       </Row>
-      {/* {loadingCreate && <ScaleLoader />} */}
-      {/* {loadingDelete && <ScaleLoader />} */}
+      {loadingDelete && (
+        <ScaleLoader
+          visible={+true}
+          height={40}
+          width={5}
+          color='#36d7b7'
+          aria-label='scale-loading'
+          wrapperstyle={{}}
+          wrapperclass='scale-wrapper'
+        />
+      )}
       {isLoading ? (
         <ScaleLoader
           visible={+true}
@@ -125,7 +137,6 @@ const VehiculeListScreen = () => {
           </Row>
         </>
       )}
-      {/* </Container> */}
     </>
   );
 };

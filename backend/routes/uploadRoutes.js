@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
     cb(null, "images/");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    return cb(null, file.originalname);
   },
 });
 
@@ -87,3 +87,7 @@ router.post("/", (req, res) => {
 });
 
 export default router;
+
+
+
+

@@ -1,19 +1,21 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Vehicule from "../models/vehiculeModel.js";
+import User from "../models/userModel.js";
 
 // @desc Fetch all vehicules
 // @routes GET /api/vehicules
 // @access Public
 const getVehicules = asyncHandler(async (req, res) => {
   const vehicules = await Vehicule.find({});
-  console.log("ALL-VEHICULES", vehicules);
   res.json(vehicules);
+  console.log("ALL-VEHICULES", vehicules);
 });
 
 // @desc Fetch a vehicule by Id
 // @routes GET /api/vehicules/:id
 // @access Public
 const getVehiculeById = asyncHandler(async (req, res) => {
+ 
   const vehicule = await Vehicule.findById(req.params.id);
 
   if (!vehicule) {
@@ -139,5 +141,25 @@ const updateVehicule = asyncHandler(async (req, res) => {
     throw new Error("Resource not found");
   }
 });
+console.log("UPDATED-VEHICULE", updateVehicule);
 
-export { getVehicules, getVehiculeById, createVehicule, updateVehicule };
+
+// @desc Delete a vehicule
+// @routes POST /api/vehicules/:id
+// @access Private/admin
+const deleteVehicule = asyncHandler(async (req, res) => {
+
+  //Here we are going to find the vehicule product
+  const vehicule = await Vehicule.findById(req.params.id);
+  console.log("VEHICULE-CONTROLLER", JSON.stringify(vehicule));
+
+  if (vehicule) {
+    await vehicule.deleteOne({_id: vehicule._id});
+    res.status(200).json({message: 'Le véhicule a été supprimé'})
+  } else {
+    res.status(404);
+    throw new Error("Resource not found");
+  }
+});
+
+export { getVehicules, getVehiculeById, createVehicule, updateVehicule, deleteVehicule };

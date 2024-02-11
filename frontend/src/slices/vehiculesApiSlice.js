@@ -20,25 +20,30 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
       query: (newVehicule) => ({
         url: `${VEHICULES_URL}/admin/vehiculeslist`,
         method: "POST",
-        body: { ...newVehicule },
-        logs: console.log("NEWVEHICULE IN CREATE BUILDER :", newVehicule),
+        // body: { ...newVehicule },
+        body: JSON.stringify(newVehicule),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.JWT_SECRET}`,
         },
       }),
+
       invalidatesTags: ["Vehicules"],
     }),
+
     updateVehicule: builder.mutation({
-      //
       query: (data) => {
-        const url = `${VEHICULES_URL}/${data._id}`;
+        const { _id, ...updatedData } = data;
+
+        // Ensure _id is present in updatedData
+        updatedData._id = _id;
+
+        const url = `${VEHICULES_URL}/${_id}`;
 
         return {
-          url: url,
+          url,
           method: "PUT",
-          body: data,
-          log: console.log("Update URL:", url),
+          body: updatedData, // Use updatedData without _id for the body
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.JWT_SECRET}`,
@@ -47,7 +52,7 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Vehicules"],
     }),
-    
+
     uploadVehiculeImage: builder.mutation({
       query: (data) => ({
         url: `${UPLOADS_URL}`,
@@ -63,7 +68,7 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
         url: `${VEHICULES_URL}/${vehiculeId}`,
         method: "DELETE",
       }),
-      providesTags: ["Vehicule"],
+      providesTags: ["Vehicules"],
     }),
     createReview: builder.mutation({
       query: (data) => ({
@@ -71,7 +76,7 @@ export const vehiculesApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Vehicule"],
+      invalidatesTags: ["Vehicules"],
     }),
     getTopVehicules: builder.query({
       query: () => `${VEHICULES_URL}/top`,

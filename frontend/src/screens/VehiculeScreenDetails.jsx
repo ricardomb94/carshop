@@ -67,6 +67,7 @@ const VehiculeScreenDetails = () => {
       thumbnail: `http://localhost:5000/${imageObj.thumbnail}`,
     }));
   console.log("IMAGES ARRAY :", images);
+
   return (
     <>
       <Link className='btn btn-light my-3' to='/'>
