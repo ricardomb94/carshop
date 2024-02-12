@@ -8,6 +8,7 @@ import vehiculeRoutes from "./routes/vehiculeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import serviceRoutes from "./routes/serviceRoutes.js";
 import morgan from "morgan";
 import dotenv from "dotenv";
 dotenv.config();
@@ -53,6 +54,7 @@ app.use("/api/vehicules", vehiculeRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/services", serviceRoutes)
 const __dirname = path.resolve(); //Set __dirname to current directory
 app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/thumbnails", express.static(path.join(__dirname, "/thumbnails")));

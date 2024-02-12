@@ -32,6 +32,7 @@ import OrderListScreen from "./screens/admin/OrderListScreen";
 import VehiculeListScreen from "./screens/admin/VehiculeListScreen";
 import VehiculeEditScreen from "./screens/admin/VehiculeEditScreen";
 import VehiculeCreateScreen from "./screens/admin/VehiculeCreateScreen";
+import ServiceScreen from "./screens/ServiceScreen";
 
 // import OrdersScreen from "./screens/OrdersScreen";
 // import OrderDetailsScreen from "./screens/OrderDetailsScreen";
@@ -40,7 +41,8 @@ import VehiculeCreateScreen from "./screens/admin/VehiculeCreateScreen";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
-      <Route index={true} path='/' element={<CatalogueScreen />} />
+      <Route index={true} path='/' element={<ServiceScreen />} />
+      <Route  path='/vehicules/all' element={<CatalogueScreen />} />
       <Route path='/vehicules/:id' element={<VehiculeScreenDetails />} />
       <Route path='/panier' element={<CartScreen />} />
       <Route path='/connexion' element={<LoginScreen />} />
