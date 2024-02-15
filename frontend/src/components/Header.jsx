@@ -88,6 +88,9 @@ const Header = () => {
                     <LinkContainer to='/admin/vehicule/create'>
                       <NavDropdown.Item>Ajouter un produit</NavDropdown.Item>
                     </LinkContainer>
+                    <LinkContainer to='/admin/service/create'>
+                      <NavDropdown.Item>Ajouter des services</NavDropdown.Item>
+                    </LinkContainer>
                   </NavDropdown>
                 )}
               </Reveal>

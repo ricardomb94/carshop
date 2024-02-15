@@ -8,6 +8,7 @@ import vehiculeRoutes from "./routes/vehiculeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import uploadServiceImageRoutes from "./routes/uploadServiceImageRoute.js"
 import serviceRoutes from "./routes/serviceRoutes.js";
 import morgan from "morgan";
 import dotenv from "dotenv";
@@ -23,7 +24,7 @@ app.use(helmet());
 //Cors
 app.use(
   cors({
-    origin: "http://localhost:3050", // Allow requests from this origin
+    origin: "http://localhost:3000", // Allow requests from this origin
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)
   })
 );
@@ -55,12 +56,16 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/services", serviceRoutes)
+app.use("/api/services/image", uploadServiceImageRoutes);
 const __dirname = path.resolve(); //Set __dirname to current directory
 app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/thumbnails", express.static(path.join(__dirname, "/thumbnails")));
 // Define the admin routes before the notFound and errorHandler middleware
 app.use("/api/admin/vehiculeslist", vehiculeRoutes);
 app.use("/api/admin/vehicule/:id", vehiculeRoutes);
+app.use("/api/services/admin/servicelist", serviceRoutes);
+
+
 
 app.get("/api/config/paypal", (req, res) =>
   res.send({ clientId: process.env.PAYPAL_client_ID })

@@ -10,26 +10,39 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
       providesTags: ["Services"],
     }),
-    getServiceDetails: builder.query({
-      query: (serviceId) => ({
-        url: `${SERVICES_URL}/${serviceId}`,
-      }),
-      keepUnusedDataFor: 5,
-    }),
+    // getServiceDetails: builder.query({
+    //   query: (serviceId) => ({
+    //     url: `${SERVICES_URL}/${serviceId}`,
+    //   }),
+    //   keepUnusedDataFor: 5,
+    // }),
     createService: builder.mutation({
       query: (newService) => ({
-        url: `${SERVICES_URL}/admin/serviceslist`,
+        url: `${SERVICES_URL}/admin/servicelist`,
         method: "POST",
-        // body: { ...newVehicule },
-        body: JSON.stringify(newService),
+        body: {...newService}, // use newService directly, without JSON.stringify
+        log: console.log("CreateServiceApi :", newService),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.JWT_SECRET}`,
         },
       }),
-
       invalidatesTags: ["Services"],
     }),
+    // createService: builder.mutation({
+    //   query: (newService) => ({
+    //     url: `${SERVICES_URL}/admin/servicelist`,
+    //     method: "POST",
+    //     // body: { ...newVehicule },
+    //     body: JSON.stringify(newService),
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${process.env.JWT_SECRET}`,
+    //     },
+    //   }),
+
+    //   invalidatesTags: ["Services"],
+    // }),
 
     updateService: builder.mutation({
       query: (data) => {
@@ -38,7 +51,7 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
         // Ensure _id is present in updatedData
         updatedData._id = _id;
 
-        const url = `${SERVICES_URLES_URL}/${_id}`;
+        const url = `${SERVICES_URL}/${_id}`;
 
         return {
           url,
@@ -63,23 +76,21 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
-    deleteVehicule: builder.mutation({
-      query: (vehiculeId) => ({
-        url: `${VEHICULES_URL}/${vehiculeId}`,
+    deleteService: builder.mutation({
+      query: (serviceId) => ({
+        url: `${SERVICES_URL}/${serviceId}`,
         method: "DELETE",
       }),
-      providesTags: ["Vehicules"],
+      providesTags: ["Services"],
     }),
   }),
 });
 
 export const {
   useGetServicesQuery,
-  useGetServiceDetailsQuery,
+//   useGetServiceDetailsQuery,
   useCreateServiceMutation,
   useUpdateServiceMutation,
   useUploadServiceImageMutation,
   useDeleteServiceMutation,
-  useCreateReviewMutation,
-  useGetTopServicesQuery,
 } = servicesApiSlice;

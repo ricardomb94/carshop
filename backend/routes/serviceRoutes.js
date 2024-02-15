@@ -9,7 +9,7 @@ import { admin, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.route("/").get(getServices).post(protect, admin, createService);
+router.route("/").get(getServices).post(createService, protect, admin, );
 router.route("/:id").get(getServiceById).put(protect, admin, updateService);
 
 export default router;
