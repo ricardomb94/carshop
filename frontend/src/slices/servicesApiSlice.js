@@ -1,4 +1,4 @@
-import { SERVICES_URL } from "../constants";
+import { SERVICES_URL, UPLOADS_URL } from "../constants";
 import { apiSlice } from "./apiSlice";
 
 export const servicesApiSlice = apiSlice.injectEndpoints({
@@ -20,10 +20,10 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
       query: (newService) => ({
         url: `${SERVICES_URL}/admin/servicelist`,
         method: "POST",
-        body: {...newService}, // use newService directly, without JSON.stringify
+        body: newService, // use newService directly, without JSON.stringify
         log: console.log("CreateServiceApi :", newService),
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${process.env.JWT_SECRET}`,
         },
       }),
@@ -43,7 +43,7 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
 
     //   invalidatesTags: ["Services"],
     // }),
-
+  
     updateService: builder.mutation({
       query: (data) => {
         const { _id, ...updatedData } = data;
@@ -68,7 +68,7 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
 
     uploadServiceImage: builder.mutation({
       query: (data) => ({
-        url: `${SERVICES_URL}`,
+        url: `${UPLOADS_URL}`,
         method: "POST",
         body: data,
         headers: {
