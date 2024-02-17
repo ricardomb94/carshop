@@ -151,7 +151,7 @@ const ServiceListScreen = () => {
                     <th>ID</th>
                     <th>Titre</th>
                     <th>Description</th>
-                    <th>Prix(€)</th>
+                    <th>Image</th>
                     <th></th>
                   </tr>
                 </thead>

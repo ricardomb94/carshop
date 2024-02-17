@@ -27,25 +27,23 @@ const getServiceById = asyncHandler(async (req, res) => {
 // @route   POST /api/services
 // @access  Private/Admin
 const createService = asyncHandler(async (req, res) => {
-  // try {
-  // Create a new service instance based on the request body
-  const newService = new Service(req.body);
+  try {
+    // Create a new service instance based on the request body
+    const newService = new Service(req.body);
 
-  // Save the new service to the database
-  const createdService = await newService.save();
+    // Save the new service to the database
+    const createdService = await newService.save();
 
-  // Respond with a success message and the created service data
-  const response = {
-    success: true,
-    data: createdService,
-  };
-  res.status(201).json(response);
-  // } catch (error) {
-  console.error("Error creating vehicule:", error);
-  res
-    .status(500)
-    .json({ error: "Internal Server Error", message: error.message });
-  // }
+    // Respond with a success message and the created service data
+    const response = {
+      success: true,
+      data: createdService,
+    };
+    res.status(201).json(response);
+  } catch (error) {
+    console.error("Error creating service:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  }
 });
 
 // @desc    Update a service

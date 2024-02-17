@@ -20,7 +20,7 @@ const ServiceTableRow = ({ service, deleteHandler }) => {
       </td>
       <td>{service.title}</td>
       <td>{service.description}</td>
-      <td>{service.price}</td>
+      <td>{service.image}</td>
       <td>
         <LinkContainer to={`/admin/service/${service._id}/edit`}>
           <Button variant='light' className='btn-sm mx-2'>

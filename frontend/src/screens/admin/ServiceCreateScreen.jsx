@@ -50,57 +50,61 @@ const ServiceCreateScreen = () => {
     }
 
     // Create a FormData object for the image upload
-    const formDataForImage = new FormData();
-    formDataForImage.append("image", image);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("image", image);
 
     try {
-      const responseImage = await uploadServiceImage(formDataForImage).unwrap();
-      console.log("RESPONSE IN UPLOAD SERVICE IMAGE:", responseImage);
+      // Upload the image
+      const response = await uploadServiceImage(formData).unwrap();
+      console.log("UPLOAD RESPONSE:", response);
 
       // Check if the upload was successful
-      if (responseImage.error) {
-        toast.error(
-          responseImage.error?.data?.message || "Image upload failed"
-        );
+      if (response.error) {
+        toast.error(response.error?.data?.message || "Image upload failed");
         return;
       }
 
-      // Proceed to create the service after the image is successfully uploaded
-      const formDataForService = new FormData();
-      formDataForService.append("title", title);
-      formDataForService.append("description", description);
-      formDataForService.append("image", responseImage.data.imagePath);
+      // Image uploaded successfully, now create the service
+      const serviceData = {
+        title,
+        description,
+        imagePath: response.imagePath,
+      };
+      console.log("SERVICE DATA :", serviceData);
 
       try {
-        const response = await createService(formDataForService).unwrap();
-        console.log("RESPONSE IN CREATE FORM SERVICE:", response);
+        const createResponse = await createService(serviceData).unwrap();
+        console.log("CREATE SERVICE RESPONSE:", createResponse);
 
-        if (response.error) {
+        if (createResponse.error) {
           // Handle validation errors specifically
-          if (response.error?.data?.message) {
-            toast.error(response.error.data.message);
+          if (createResponse.error?.data?.message) {
+            toast.error(createResponse.error.data.message);
           } else {
-            console.error("Error creating service:", response.error);
-            toast.error(response.error.error || "An error occurred");
+            console.error("Error creating service:", createResponse.error);
+            toast.error(createResponse.error.error || "An error occurred");
           }
-        } else if (response.data) {
-          console.log("Service created successfully!", response.data);
+        } else if (createResponse.data) {
+          console.log("Service created successfully!", createResponse.data);
           toast.success("Service created successfully!");
         } else {
-          console.warn("Unexpected response:", response);
+          console.warn("Unexpected response:", createResponse);
         }
-      } catch (err) {
-        console.error("Unhandled error:", err);
-        toast.error(err?.data?.message || err.error || "An error occurred");
+      } catch (createError) {
+        console.error("Error creating service:", createError);
+        toast.error(
+          createError?.data?.message || createError.error || "An error occurred"
+        );
       }
-    } catch (err) {
-      console.error("Error uploading image:", err);
+    } catch (uploadError) {
+      console.error("Error uploading image:", uploadError);
       toast.error(
-        err?.data?.message || "An error occurred during image upload"
+        uploadError?.data?.message || "An error occurred during image upload"
       );
     }
   };
-
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
 
