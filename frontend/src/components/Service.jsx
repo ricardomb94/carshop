@@ -15,11 +15,11 @@ const Service = ({ service, imagePath }) => {
             <strong>{service.title}</strong>
           </Card.Title>
         </Link>
-        <Card.Text className='text-justify text-truncate' as='p'>
+        <Card.Text className='text-justify' as='p'>
           {service.description}
         </Card.Text>
-        <a href='#' class='btn btn-primary'>
-          Go somewhere
+        <a href='#' className='btn btn-primary'>
+          en savoir +
         </a>
       </Card.Body>
     </Card>

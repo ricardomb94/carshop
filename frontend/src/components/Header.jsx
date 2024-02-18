@@ -29,8 +29,14 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <Navbar bg='primary' variant='primary' expand='lg' collapseOnSelect>
+    <header style={{ paddingBottom: "8rem" }}>
+      <Navbar
+        bg='primary'
+        variant='primary'
+        expand='lg'
+        collapseOnSelect
+        fixed='top'
+      >
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand className='text-white'>
@@ -89,6 +95,9 @@ const Header = () => {
                       <NavDropdown.Item>Ajouter un produit</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to='/admin/service/create'>
+                      <NavDropdown.Item>Ajouter des services</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/admin/servicelist'>
                       <NavDropdown.Item>Ajouter des services</NavDropdown.Item>
                     </LinkContainer>
                   </NavDropdown>
