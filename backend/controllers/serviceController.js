@@ -76,10 +76,11 @@ const updateService = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const deleteService = asyncHandler(async (req, res) => {
   const service = await Service.findById(req.params.id);
-
+console.log("SERVICE IN DELETE :", service)
+console.log("REQ IN DELETE :", req)
   if (service) {
     await Service.deleteOne({ _id: service._id });
-    res.json({ message: 'Service removed' });
+    res.status(200).json({ message: 'Service removed' });
   } else {
     res.status(404);
     throw new Error('Service not found');

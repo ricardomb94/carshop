@@ -64,7 +64,7 @@ app.use("/thumbnails", express.static(path.join(__dirname, "/thumbnails")));
 app.use("/api/admin/vehiculeslist", vehiculeRoutes);
 app.use("/api/admin/vehicule/:id", vehiculeRoutes);
 app.use("/api/services/admin/servicelist", serviceRoutes);
-// app.use("/api/admin/servicelist", serviceRoutes)
+app.use("/api/admin/service/:id", serviceRoutes)
 
 
 

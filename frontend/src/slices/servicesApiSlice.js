@@ -81,7 +81,8 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
         url: `${SERVICES_URL}/${serviceId}`,
         method: "DELETE",
       }),
-      providesTags: ["Services"],
+      // Invalidate the cache for "Services" tag
+      invalidatesTags: ["Services"],
     }),
   }),
 });

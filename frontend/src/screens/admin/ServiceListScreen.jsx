@@ -1,64 +1,3 @@
-// // ServiceList.jsx
-// import React from "react";
-// import { Row, Col, Pagination, Card } from "react-bootstrap";
-// import { Fade } from "react-awesome-reveal";
-
-// const ServiceList = ({ services, currentPage, paginate }) => {
-//   const ITEMS_PER_PAGE = 6;
-
-//   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
-//   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-//   const currentItems = services
-//     ? services.slice(indexOfFirstItem, indexOfLastItem)
-//     : [];
-
-//   return (
-//     <>
-//       <h2 className='text-center'>
-//         <Fade cascade damping={0.1}>
-//           Garage Services
-//         </Fade>
-//       </h2>
-
-//       <Fade triggerOnce cascade>
-//         <Row>
-//           {currentItems.map((service) => (
-//             <Col key={service._id} sm={12} md={6} lg={4} xl={4}>
-//               <Card style={{ width: "18rem" }}>
-//                 <Card.Img variant='top' src={service.imageUrl} />
-//                 <Card.Body>
-//                   <Card.Title>{service.title}</Card.Title>
-//                   <Card.Text>{service.description}</Card.Text>
-//                 </Card.Body>
-//               </Card>
-//             </Col>
-//           ))}
-//         </Row>
-//       </Fade>
-
-//       <Row className='justify-content-center'>
-//         <Col>
-//           <Pagination>
-//             {Array.from({
-//               length: Math.ceil(services.length / ITEMS_PER_PAGE),
-//             }).map((_, index) => (
-//               <Pagination.Item
-//                 key={index + 1}
-//                 active={index + 1 === currentPage}
-//                 onClick={() => paginate(index + 1)}
-//               >
-//                 {index + 1}
-//               </Pagination.Item>
-//             ))}
-//           </Pagination>
-//         </Col>
-//       </Row>
-//     </>
-//   );
-// };
-
-// export default ServiceList;
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Table, Row, Col, Pagination } from "react-bootstrap";
@@ -95,10 +34,11 @@ const ServiceListScreen = () => {
 
   const deleteHandler = async (id) => {
     console.log("DELETE :", id);
-    if (window.confirm("Êtes vous sûre de vouloir supprimer cet item ?")) {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer cet item ?")) {
       try {
         await deleteService(id);
-        refresh();
+        // Invalidate the cache for "Services" tag after deletion
+        refresh({ tags: ["Services"] });
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
