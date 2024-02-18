@@ -17,7 +17,7 @@ const ServiceCreateScreen = () => {
 
   const [
     uploadServiceImage,
-    // { loading: loadingUpload, error: errorUpload },
+    { loading: loadingUpload, error: errorUpload },
   ] = useUploadServiceImageMutation();
 
   const [title, setTitle] = useState("");
@@ -67,10 +67,12 @@ const ServiceCreateScreen = () => {
       }
 
       // Image uploaded successfully, now create the service
+      const imagePath = response.imagePath;
+      console.log("IMAGEPATH :", imagePath);
       const serviceData = {
         title,
         description,
-        imagePath: response.imagePath,
+        image: imagePath,
       };
       console.log("SERVICE DATA :", serviceData);
 
@@ -118,6 +120,7 @@ const ServiceCreateScreen = () => {
     <FormContainer>
       <h1>Create a new service</h1>
       {loadingCreate && <ScaleLoader />}
+      {loadingUpload && <ScaleLoader />}
       {errorCreate && (
         <Message variant='danger'>{errorCreate.toString()}</Message>
       )}

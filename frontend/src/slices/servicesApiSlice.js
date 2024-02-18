@@ -23,7 +23,7 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
         body: newService, // use newService directly, without JSON.stringify
         log: console.log("CreateServiceApi :", newService),
         headers: {
-          // "Content-Type": "multipart/form-data",
+           "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.JWT_SECRET}`,
         },
       }),
