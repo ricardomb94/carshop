@@ -29,8 +29,14 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <Navbar bg='primary' variant='primary' expand='lg' collapseOnSelect>
+    <header style={{ paddingBottom: "8rem" }}>
+      <Navbar
+        bg='primary'
+        variant='primary'
+        expand='lg'
+        collapseOnSelect
+        fixed='top'
+      >
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand className='text-white'>
@@ -43,6 +49,12 @@ const Header = () => {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
               <Reveal cascade>
+                <LinkContainer to='/'>
+                  <Nav.Link className='text-white'>Accueil</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/vehicules/all'>
+                  <Nav.Link className='text-white'>Catalogue</Nav.Link>
+                </LinkContainer>
                 <LinkContainer to='/panier'>
                   <Nav.Link className='text-white'>
                     <FaShoppingCart />
@@ -60,25 +72,37 @@ const Header = () => {
                       <NavDropdown.Item>Profile</NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Item onClick={logoutHandler}>
-                      Deconnexion
+                      Se deconnecter
                     </NavDropdown.Item>
                   </NavDropdown>
                 ) : (
                   <LinkContainer to='/connexion'>
-                    <Nav.Link href='/connexion' className='text-white'>
+                    <Nav.Link className='text-white'>
                       <FaUser />
-                      Connexion
+                      Se connecter
                     </Nav.Link>
                   </LinkContainer>
                 )}
+                {userInfo && userInfo.isAdmin && (
+                  <NavDropdown title='Admin' id='adminmenu'>
+                    <LinkContainer to='/admin/vehiculeslist'>
+                      <NavDropdown.Item>Liste de Véhicules</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/admin/orderList'>
+                      <NavDropdown.Item>List de Commandes</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/admin/vehicule/create'>
+                      <NavDropdown.Item>Ajouter un produit</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/admin/service/create'>
+                      <NavDropdown.Item>Ajouter des services</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/admin/servicelist'>
+                      <NavDropdown.Item>Ajouter des services</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
+                )}
               </Reveal>
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title='Admin, '>
-                  <LinkContainer to='admin/orderlist'>
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
-              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
