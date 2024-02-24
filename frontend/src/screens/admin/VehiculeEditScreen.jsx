@@ -51,7 +51,7 @@ const VehiculeEditScreen = () => {
 
   const [
     uploadVehiculeImage,
-    { loading: loadingUpload },
+    { isLoading: loadingUpload },
   ] = useUploadVehiculeImageMutation();
 
   const navigate = useNavigate();

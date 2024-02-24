@@ -1,13 +1,18 @@
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Service = ({ service, imagePath }) => {
-  console.log("SERVICE COMPONENT", service, "IMAGE-PAATH :", imagePath);
+const Service = ({ service, thumbnailPath }) => {
+  console.log("SERVICE COMPONENT", service, "IMAGE-PAATH :", thumbnailPath);
 
   return (
     <Card className='my-3 p-3 rounded'>
       <Link to={`/services/${service._id}`}>
-        <Card.Img src={imagePath} variant='top' />
+        <Card.Img
+          src={thumbnailPath}
+          className='service-image'
+          variant='top'
+          style={{ objectFit: "contain" }}
+        />
       </Link>
       <Card.Body>
         <Link to={`/services/${service._id}`}>
