@@ -1,9 +1,22 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-style: italic;
+}
+
+* {
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+
 .adamologo {
     width: 10em;
 }
 
 main {
-    min-height: 80vh;
+    min-height: 70vh;
 }
 
 .rating span {
@@ -108,3 +121,9 @@ table th {
     font-weight: 200;
     color: aliceblue;
 }
+
+/* .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 1rem;
+} */
