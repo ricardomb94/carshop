@@ -38,7 +38,7 @@ const Header = () => {
   const isHomePage = window.location.pathname === "/";
   return (
     <>
-      <header style={{ paddingBottom: "8rem" }}>
+      <header style={{ paddingBottom: "6.5rem" }}>
         <Navbar
           bg='primary'
           variant='primary'
@@ -98,20 +98,16 @@ const Header = () => {
                         <NavDropdown.Item>Liste de Véhicules</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to='/admin/orderList'>
-                        <NavDropdown.Item>List de Commandes</NavDropdown.Item>
+                        <NavDropdown.Item>Liste de Commandes</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to='/admin/vehicule/create'>
                         <NavDropdown.Item>Ajouter un produit</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to='/admin/service/create'>
-                        <NavDropdown.Item>
-                          Ajouter des services
-                        </NavDropdown.Item>
+                        <NavDropdown.Item>Ajouter un service</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to='/admin/servicelist'>
-                        <NavDropdown.Item>
-                          Ajouter des services
-                        </NavDropdown.Item>
+                        <NavDropdown.Item>Liste des services</NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   )}
@@ -120,12 +116,9 @@ const Header = () => {
             </Navbar.Collapse>
           </Container>
         </Navbar>
+        {/* {isHomePage && <ImageSlider />} */}
       </header>
-      {isHomePage && (
-        <Card>
-          <ImageSlider />
-        </Card>
-      )}
+      {isHomePage && <ImageSlider />}
     </>
   );
 };
