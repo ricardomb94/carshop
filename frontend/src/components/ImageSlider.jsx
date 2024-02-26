@@ -20,12 +20,12 @@ const ImageSlider = () => {
     infinite: true,
     autoplay: true,
     speed: 1500,
-    centerPadding: "1.5rem",
+    // centerPadding: "1.rem",
     autoplaySpeed: 5000,
     slidesToShow: 3,
     slidesToScroll: 1,
     // centerMode: true,
-    width: "100%",
+
     responsive: [
       {
         breakpoint: 1024,
@@ -52,7 +52,7 @@ const ImageSlider = () => {
   };
 
   return (
-    <div className='image-slider'>
+    <div>
       {isLoading ? (
         <div className='loading-container'>
           <ScaleLoader
@@ -75,7 +75,7 @@ const ImageSlider = () => {
                   <LazyLoadImage
                     style={{
                       height: "25rem",
-                      objectFit: "cover", // Fill the card while maintaining aspect ratio
+                      objectFit: "cover",
                     }}
                     alt={`${vehicule.brand}`}
                     src={imagesUrl}

@@ -4,6 +4,7 @@
  * Bootstrap  v5.3.0-alpha1 (https://getbootstrap.com/)
  * Copyright 2011-2022 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ #202c45
  */
 :root,
 [data-bs-theme='light'] {
@@ -30,7 +31,7 @@
     --bs-gray-700: #7b8a8b;
     --bs-gray-800: #7b8a8b;
     --bs-gray-900: #7b8a8b;
-    --bs-primary: #3c4c5d;
+    --bs-primary: #202c45;
     --bs-secondary: #7b8a8b;
     --bs-success: #18bc9c;
     --bs-info: #3498db;
@@ -38,7 +39,7 @@
     --bs-danger: #e74c3c;
     --bs-light: #f4f4f4;
     --bs-dark: #7b8a8b;
-    --bs-primary-rgb: 60, 76, 93;
+    --bs-primary-rgb: 32, 44, 69;
     --bs-secondary-rgb: 123, 138, 139;
     --bs-success-rgb: 24, 188, 156;
     --bs-info-rgb: 52, 152, 219;
@@ -99,8 +100,8 @@
     --bs-tertiary-bg-rgb: 244, 244, 244;
     --bs-body-bg: #fff;
     --bs-body-bg-rgb: 255, 255, 255;
-    --bs-link-color: #3c4c5d;
-    --bs-link-color-rgb: 60, 76, 93;
+    --bs-link-color: #202c45;
+    --bs-link-color-rgb: 32, 44, 69;
     --bs-link-decoration: underline;
     --bs-link-hover-color: #303d4a;
     --bs-link-hover-color-rgb: 48, 61, 74;
@@ -3461,7 +3462,7 @@ fieldset:disabled .btn {
 
 .btn-primary {
     --bs-btn-color: #fff;
-    --bs-btn-bg: #3c4c5d;
+    --bs-btn-bg: #202c45;
     --bs-btn-border-color: #3c4c5d;
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #33414f;

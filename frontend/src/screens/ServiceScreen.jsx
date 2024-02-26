@@ -1,4 +1,4 @@
-import { Row, Col, Pagination } from "react-bootstrap";
+import { Row, Col, Pagination, Card } from "react-bootstrap";
 import { Fade, Slide } from "react-awesome-reveal";
 import { useGetServicesQuery } from "../slices/servicesApiSlice";
 import Service from "../components/Service";
@@ -7,6 +7,7 @@ import { ScaleLoader } from "react-spinners";
 import { useState } from "react";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
+import ImageSlider from "../components/ImageSlider";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -43,11 +44,11 @@ const ServiceScreen = () => {
 
   return (
     <>
-      {/* <Container fluid>
-        <Card style={{ marginTop: "-2.8rem" }}>
-          <ImageSlider />
-        </Card>
-      </Container> */}
+      {/* <Container fluid> */}
+      {/* <Card style={{ marginTop: "-2.8rem" }}>
+        <ImageSlider />
+      </Card> */}
+      {/* </Container> */}
       <h2 className='text-center mt-5'>
         <Slide cascade damping={0.1}>
           Nos services

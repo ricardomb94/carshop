@@ -116,12 +116,9 @@ const Header = () => {
             </Navbar.Collapse>
           </Container>
         </Navbar>
+        {/* {isHomePage && <ImageSlider />} */}
       </header>
-      {isHomePage && (
-        <Card style={{ backgroundColor: "grey" }}>
-          <ImageSlider />
-        </Card>
-      )}
+      {isHomePage && <ImageSlider />}
     </>
   );
 };
