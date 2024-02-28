@@ -79,7 +79,7 @@ const router = createBrowserRouter(
         element={<ServiceListScreen />} />
       </Route>
       <Route
-          path='/admin/vehicule/:id/edit'
+          path='/admin/service/:id/edit'
           element={<ServiceEdithScreen />}
         />
     </Route>

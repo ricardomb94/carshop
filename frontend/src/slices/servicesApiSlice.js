@@ -10,12 +10,12 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
       providesTags: ["Services"],
     }),
-    // getServiceDetails: builder.query({
-    //   query: (serviceId) => ({
-    //     url: `${SERVICES_URL}/${serviceId}`,
-    //   }),
-    //   keepUnusedDataFor: 5,
-    // }),
+    getServiceDetails: builder.query({
+      query: (serviceId) => ({
+        url: `${SERVICES_URL}/${serviceId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
     createService: builder.mutation({
       query: (newService) => ({
         url: `${SERVICES_URL}/admin/servicelist`,
@@ -89,7 +89,7 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetServicesQuery,
-//   useGetServiceDetailsQuery,
+  useGetServiceDetailsQuery,
   useCreateServiceMutation,
   useUpdateServiceMutation,
   useUploadServiceImageMutation,

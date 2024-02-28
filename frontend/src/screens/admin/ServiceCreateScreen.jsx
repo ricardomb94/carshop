@@ -1,4 +1,7 @@
-import { Button, Form } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 import {
   useCreateServiceMutation,
   useUploadServiceImageMutation,
@@ -6,10 +9,10 @@ import {
 import FormContainer from "../../components/FormContainer";
 import Message from "../../components/Message";
 import { toast } from "react-toastify";
-import { ScaleLoader } from "react-spinners";
-import { useState } from "react";
 
 const ServiceCreateScreen = () => {
+  const navigate = useNavigate();
+
   const [
     createService,
     { isLoading: loadingCreate, error: errorCreate },
@@ -20,162 +23,169 @@ const ServiceCreateScreen = () => {
     { loading: loadingUpload, error: errorUpload },
   ] = useUploadServiceImageMutation();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
+  const [formData, setFormData] = useState({
+    user: "654722623f69c2fc934a77d7",
+    title: "",
+    description: "",
+    images: [{ original: "", thumbnail: "", _id: "" }],
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
-    if (name === "image" && e.target.files[0]) {
-      // Update the state for file uploads
-      setImage(e.target.files[0]);
-    } else {
-      // Update the state for text inputs
-      if (name === "title") {
-        setTitle(value);
-      } else if (name === "description") {
-        setDescription(value);
-      }
-    }
+  const addImageField = () => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      images: [
+        ...prevFormData.images,
+        { original: "", thumbnail: "", _id: "" },
+      ],
+    }));
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    // Check for missing required fields
-    if (!title || !description || !image) {
-      toast.error("Title, description, and image are required");
-      return;
-    }
+    const formattedImages = formData.images.map((image) => ({
+      original: image.original || "",
+      thumbnail: image.thumbnail || "",
+      _id: image._id,
+    }));
 
-    // Create a FormData object for the image upload
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("image", image);
+    const newService = { ...formData, images: formattedImages };
 
-    try {
-      // Upload the image
-      const response = await uploadServiceImage(formData).unwrap();
-      console.log("UPLOAD RESPONSE:", response);
-
-      // Check if the upload was successful
-      if (response.error) {
-        toast.error(response.error?.data?.message || "Image upload failed");
-        return;
-      }
-
-      // Image uploaded successfully, now create the service
-      const imagePath = response.imagePath;
-      console.log("IMAGEPATH :", imagePath);
-      const serviceData = {
-        title,
-        description,
-        image: imagePath,
-      };
-      console.log("SERVICE DATA :", serviceData);
-
+    if (window.confirm("Are you sure you want to create a new service?")) {
       try {
-        const createResponse = await createService(serviceData).unwrap();
-        console.log("CREATE SERVICE RESPONSE:", createResponse);
+        const response = await createService(newService);
 
-        if (createResponse.error) {
-          // Handle validation errors specifically
-          if (createResponse.error?.data?.message) {
-            toast.error(createResponse.error.data.message);
-          } else {
-            console.error("Error creating service:", createResponse.error);
-            toast.error(createResponse.error.error || "An error occurred");
-          }
-        } else if (createResponse.data) {
-          console.log("Service created successfully!", createResponse.data);
+        if (response.error) {
+          console.error("Error creating service:", response.error);
+          toast.error(response.error?.data?.message || response.error.error);
+        } else if (response.data) {
+          console.log("Service created successfully!", response.data);
           toast.success("Service created successfully!");
+          navigate("/admin/servicelist");
         } else {
-          console.warn("Unexpected response:", createResponse);
+          console.warn("Unexpected response:", response);
         }
-      } catch (createError) {
-        console.error("Error creating service:", createError);
-        toast.error(
-          createError?.data?.message || createError.error || "An error occurred"
-        );
+      } catch (err) {
+        console.error("Unhandled error:", err);
+        toast.error(err?.data?.message || err.error);
       }
-    } catch (uploadError) {
-      console.error("Error uploading image:", uploadError);
-      toast.error(
-        uploadError?.data?.message || "An error occurred during image upload"
-      );
     }
   };
-  const uploadFileHandler = async (e) => {
+
+  const uploadFileHandler = async (e, fileType, index, imageId) => {
     const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append(fileType, file);
 
-    // Update the state
-    setImage(file);
+    try {
+      const response = await uploadServiceImage(formData);
+      console.log("RESPONSE UPLOADED-SERVICE-IMG :", response);
 
-    toast.success("Image uploaded successfully");
+      const thumbnailPath = response.data.thumbnailPath;
+      console.log("RESP.DATA.THUMBNAIL :", thumbnailPath);
+      console.log("THUMBNAIL PATH:", thumbnailPath);
+
+      const newImage = {
+        original: fileType === "image" ? response.data.imagePath : "",
+        thumbnail: thumbnailPath || "", // Check if thumbnailPath is defined
+        _id: imageId || undefined,
+      };
+      console.log("NEW-IMG :", newImage);
+
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        images: prevFormData.images.map((img, i) =>
+          i === index ? { ...img, ...newImage } : img
+        ),
+      }));
+
+      toast.success("Image uploaded successfully");
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
   };
 
   return (
-    <FormContainer>
-      <h1>Create a new service</h1>
-      {loadingCreate && <ScaleLoader />}
-      {loadingUpload && <ScaleLoader />}
-      {errorCreate && (
-        <Message variant='danger'>{errorCreate.toString()}</Message>
-      )}
-      <Form
-        onSubmit={submitHandler}
-        autoComplete='off'
-        encType='multipart/form-data'
-      >
-        {/* Form fields for title and description */}
-        <Form.Group controlId='title'>
-          <Form.Label>Title</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Enter title'
-            value={title}
-            onChange={handleChange}
-            name='title'
-          />
-        </Form.Group>
-
-        <Form.Group controlId='description'>
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as='textarea'
-            rows={3}
-            type='text'
-            placeholder='Enter description'
-            value={description}
-            onChange={handleChange}
-            name='description'
-          />
-        </Form.Group>
-
-        {/* Form field for image upload */}
-        <Form.Group
-          controlId='image'
-          className='my-2'
-          accept='image/*'
-          required
+    <>
+      <FormContainer>
+        <h1>Créez un nouveau service</h1>
+        {loadingCreate && <ScaleLoader />}
+        {loadingUpload && <ScaleLoader />}
+        {errorCreate && (
+          <Message variant='danger'>{errorCreate.toString()}</Message>
+        )}
+        {errorUpload && (
+          <Message variant='danger'>{errorUpload.toString()}</Message>
+        )}
+        <Form
+          onSubmit={submitHandler}
+          autoComplete='off'
+          encType='multipart/form-data'
         >
-          <Form.Label>Ajoutez une image </Form.Label>
-          <Form.Control
-            name='image'
-            label='Choose a file'
-            type='file'
-            onChange={uploadFileHandler}
-          />
-        </Form.Group>
+          <Form.Group controlId='title'>
+            <Form.Label>Titre:</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Renseignez le titre'
+              value={formData.title}
+              onChange={handleChange}
+              name='title'
+            />
+          </Form.Group>
 
-        {/* Submit button */}
-        <Button type='submit' variant='primary' style={{ marginTop: "1rem" }}>
-          Create Service
-        </Button>
-      </Form>
-    </FormContainer>
+          <Form.Group controlId='description'>
+            <Form.Label>Description:</Form.Label>
+            <Form.Control
+              as='textarea'
+              row={6}
+              type='text'
+              placeholder='Noter la Description'
+              value={formData.description}
+              onChange={handleChange}
+              name='description'
+            />
+          </Form.Group>
+          {/* Render image fields */}
+          <Form.Group controlId='image' className='my-2'>
+            <Form.Label>Ajoutez une Image</Form.Label>
+            {formData.images.map((image, index) => (
+              <div key={index}>
+                <Form.Control
+                  name={`images[${index}].original`}
+                  type='text'
+                  placeholder="Renseigner l'Url de l'image"
+                  value={image.original}
+                  onChange={(e) =>
+                    uploadFileHandler(e, "original", index, image._id || "")
+                  }
+                />
+                <Form.Control
+                  name={`images[${index}].file`}
+                  label='Choose File'
+                  type='file'
+                  onChange={(e) =>
+                    uploadFileHandler(e, "image", index, image._id || "")
+                  }
+                />
+              </div>
+            ))}
+            {loadingUpload && <ScaleLoader />}
+            <button type='button' onClick={addImageField}>
+              Ajouter une autre image
+            </button>
+          </Form.Group>
+
+          <Button type='submit' variant='primary' style={{ marginTop: "1rem" }}>
+            Validez
+          </Button>
+        </Form>
+      </FormContainer>
+    </>
   );
 };
 

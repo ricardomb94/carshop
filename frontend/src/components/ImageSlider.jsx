@@ -82,7 +82,13 @@ const ImageSlider = () => {
                     effect='blur'
                   />
                 </Link>
-                {/* Removed brand overlay for cleaner design */}
+                {/* Add caption container here */}
+                <div className='caption-container'>
+                  {/* Add your caption content here */}
+                  <p>
+                    {vehicule.brand} - {vehicule.model}
+                  </p>
+                </div>
               </Card>
             );
           })}
