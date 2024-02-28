@@ -127,3 +127,73 @@ table th {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 1rem;
 } */
+
+.caption-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* background-color: rgba(3, 0, 0, 0.5); */
+    background-color: hsla(226, 86%, 6%, 0.555);
+    /* Semi-transparent background */
+    color: #fff;
+    /* White text color */
+    padding: 1rem;
+    display: flex;
+    /* Center content horizontally */
+    justify-content: center;
+    align-items: center;
+}
+
+div.information-banner {
+    /* Base styles */
+    width: 100%;
+    position: absolute;
+    /* bottom: 1rem; */
+    top: 14rem;
+    left: 50%;
+    right: 3rem;
+    transform: translateX(-50%);
+    padding: 1rem;
+    /* background-color: rgba(3, 0, 0, 0.5); */
+    background-color: hsla(226, 86%, 6%, 0.555);
+    color: white;
+    /* Light gray background */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    border-radius: 5px;
+    /* Rounded corners */
+    width: fit-content;
+    /* Adjust width as needed */
+    /* max-width: 80%; */
+    /* Limit maximum width */
+    display: flex;
+    /* Allow horizontal layout */
+    flex-direction: row;
+    /* Stack elements vertically */
+    align-items: center;
+    /* Center content horizontally */
+    justify-content: space-evenly;
+    /* Distribute content vertically with spacing */
+
+    /* Animation overrides (optional) */
+    transition: transform 0.5s ease-in-out;
+    /* Smooth transition */
+    z-index: 99;
+
+    h2 {
+        margin: 0;
+        /* Remove top margin */
+        font-size: 1rem;
+        /* Smaller heading size */
+        font-weight: bold;
+        /* Bold text */
+    }
+
+    p {
+        margin: 0.5rem 0;
+        /* Small margin between paragraphs */
+        font-size: 0.8rem;
+        /* Smaller paragraph size */
+    }
+}

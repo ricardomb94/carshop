@@ -17,6 +17,7 @@ import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 // import logo2 from "../assets/adamologo1.png";
 import { Reveal, Fade } from "react-awesome-reveal";
+import InformationBox from "./InformationBox";
 import ImageSlider from "./ImageSlider";
 
 const Header = () => {
@@ -116,9 +117,15 @@ const Header = () => {
             </Navbar.Collapse>
           </Container>
         </Navbar>
-        {/* {isHomePage && <ImageSlider />} */}
+
+        {/* Secondary header (InformationBox) */}
+        {/* <Navbar expand='lg'> */}
+        {isHomePage && <InformationBox />}
+
+        {/* </Navbar> */}
       </header>
-      {isHomePage && <ImageSlider />}
+
+      <Container fluid>{isHomePage && <ImageSlider />}</Container>
     </>
   );
 };

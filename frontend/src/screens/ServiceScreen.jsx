@@ -1,4 +1,4 @@
-import { Row, Col, Pagination, Card } from "react-bootstrap";
+import { Row, Col, Pagination } from "react-bootstrap";
 import { Fade, Slide } from "react-awesome-reveal";
 import { useGetServicesQuery } from "../slices/servicesApiSlice";
 import Service from "../components/Service";
@@ -7,7 +7,6 @@ import { ScaleLoader } from "react-spinners";
 import { useState } from "react";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
-import ImageSlider from "../components/ImageSlider";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -16,7 +15,7 @@ const ServiceScreen = () => {
   console.log("SERVICELIST", services);
 
   const { data: vehicules } = useGetVehiculesQuery();
-  console.log("VEHICULELIST IN SERVICE SCREEN", vehicules);
+  console.log("SERVICELIST IN SERVICE SCREEN", vehicules);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -39,16 +38,11 @@ const ServiceScreen = () => {
         wrapperstyle={{}}
         wrapperclass='scale-wrapper'
       />
-    ); // or other loading indicator;
+    );
   }
 
   return (
     <>
-      {/* <Container fluid> */}
-      {/* <Card style={{ marginTop: "-2.8rem" }}>
-        <ImageSlider />
-      </Card> */}
-      {/* </Container> */}
       <h2 className='text-center mt-5'>
         <Slide cascade damping={0.1}>
           Nos services
@@ -82,20 +76,17 @@ const ServiceScreen = () => {
         </Message>
       ) : (
         <>
-          {/* <h2 className='text-center'>
-            <Fade cascade damping={0.1}>
-              Véhicules à vendre
-            </Fade>
-          </h2> */}
-
           <Fade triggerOnce cascade>
             <Row>
               {currentItems.map((service) => {
-                const thumbnailPath = `http://localhost:5000/${service.image}`;
-
+                const imageUrl =
+                  service.images.length > 0
+                    ? `http://localhost:5000/${service.images[0].thumbnail}`
+                    : "";
+                console.log("SERVICE IMAGES IN S-SCREEN :", service.image);
                 return (
                   <Col key={service._id} sm={12} md={6} lg={4} xl={4}>
-                    <Service service={service} thumbnailPath={thumbnailPath} />
+                    <Service service={service} imageUrl={imageUrl} />
                   </Col>
                 );
               })}

@@ -54,15 +54,17 @@ const createService = asyncHandler(async (req, res) => {
 // @route   PUT /api/services/:id
 // @access  Private/Admin
 const updateService = asyncHandler(async (req, res) => {
-  const { title, description, image } =
-    req.body;
+  const { title, description, images } = req.body;
 
   const service = await Service.findById(req.params.id);
 
   if (service) {
     service.title = title;
     service.description = description;
-    service.image = image;
+
+    // Assuming 'images' is an array of image objects
+    service.images = images;
+
     const updatedService = await service.save();
     res.json(updatedService);
   } else {

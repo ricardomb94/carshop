@@ -79,6 +79,7 @@ router.post("/", (req, res) => {
               message: "Image uploaded successfully",
               imagePath,
               thumbnailPath,
+              originalPath: resizedImagePath, // Include the original path in the response
             });
           });
       });
