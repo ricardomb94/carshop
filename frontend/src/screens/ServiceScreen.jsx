@@ -77,20 +77,22 @@ const ServiceScreen = () => {
       ) : (
         <>
           <Fade triggerOnce cascade>
-            <Row>
-              {currentItems.map((service) => {
-                const imageUrl =
-                  service.images.length > 0
-                    ? `http://localhost:5000/${service.images[0].thumbnail}`
-                    : "";
-                console.log("SERVICE IMAGES IN S-SCREEN :", service.image);
-                return (
-                  <Col key={service._id} sm={12} md={6} lg={4} xl={4}>
-                    <Service service={service} imageUrl={imageUrl} />
-                  </Col>
-                );
-              })}
-            </Row>
+            <div className='service-grid'>
+              <Row>
+                {currentItems.map((service) => {
+                  const imageUrl =
+                    service.images.length > 0
+                      ? `http://localhost:5000/${service.images[0].thumbnail}`
+                      : "";
+                  console.log("SERVICE IMAGES IN S-SCREEN :", service.image);
+                  return (
+                    <Col key={service._id} sm={12} md={6} lg={4} xl={4}>
+                      <Service service={service} imageUrl={imageUrl} />
+                    </Col>
+                  );
+                })}
+              </Row>
+            </div>
           </Fade>
 
           <Row className='justify-content-center'>

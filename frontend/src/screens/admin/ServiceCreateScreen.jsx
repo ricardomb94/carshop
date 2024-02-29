@@ -109,7 +109,12 @@ const ServiceCreateScreen = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
-
+  const handleImageUpload = (formData) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      images: [...prevFormData.images, { original: formData }],
+    }));
+  };
   return (
     <>
       <FormContainer>

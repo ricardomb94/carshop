@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const Service = ({ service, imageUrl }) => {
   console.log("SERVICE", service, "IMAGE-URL :", imageUrl);
   return (
-    <div className='service-card'>
-      <Card className='my-3 p-3'>
+    <div>
+      <Card className='my-3 p-3 service-card'>
         <Link to={`/services/${service._id}`}>
           <Card.Img
             src={imageUrl}
