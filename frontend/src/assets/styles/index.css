@@ -225,3 +225,7 @@ div.information-banner {
     margin-top: 1rem;
     cursor: pointer;
 }
+
+footer.goldenrod {
+    background-color: #df0e0e;
+}

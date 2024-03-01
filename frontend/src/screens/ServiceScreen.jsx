@@ -8,6 +8,7 @@ import { useState } from "react";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
 import CookiePolicyPopup from "../components/CookiePolicyPopup";
+// import Footer from "../components/Footer-2";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -93,6 +94,7 @@ const ServiceScreen = () => {
                   );
                 })}
               </Row>
+              {/* <Footer /> */}
             </div>
           </Fade>
 
