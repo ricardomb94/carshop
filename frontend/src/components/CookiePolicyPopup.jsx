@@ -18,21 +18,25 @@ const CookiePolicyPopup = () => {
     cookies.set("cookiePolicyAccepted", true, { path: "/" });
     setShowPopup(false);
   };
+
   const handleRefuse = () => {
     cookies.set("cookiePolicyAccepted", false, { path: "/" });
     setShowPopup(false);
   };
+
   return (
     showPopup && (
       <div
         className='cookie-policy-popup'
         style={{
-          backgroundColor: "#fff",
-          border: "1px solid #ccc",
-          padding: "20px",
           position: "fixed",
-          bottom: "20px",
-          left: "20px",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: "#fff",
+          padding: "1rem",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          textAlign: "center",
           zIndex: 1000,
         }}
       >
@@ -45,11 +49,12 @@ const CookiePolicyPopup = () => {
         <button
           onClick={handleAccept}
           style={{
-            backgroundColor: "#4caf50",
+            backgroundColor: "#007bff",
             color: "#fff",
             border: "none",
-            padding: "10px 20px",
-            marginRight: "10px",
+            borderRadius: "3px",
+            padding: "0.5rem 1rem",
+            marginTop: "1rem",
             cursor: "pointer",
           }}
         >
@@ -61,7 +66,8 @@ const CookiePolicyPopup = () => {
             backgroundColor: "#f44336",
             color: "#fff",
             border: "none",
-            padding: "10px 20px",
+            borderRadius: "3px",
+            padding: "0.5rem 1rem",
             cursor: "pointer",
           }}
         >

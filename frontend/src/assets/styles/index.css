@@ -12,11 +12,11 @@ body {
 
 
 .adamologo {
-    width: 10em;
+    width: 5em;
 }
 
 main {
-    min-height: 70vh;
+    min-height: 50vh;
 }
 
 .rating span {
@@ -76,11 +76,13 @@ table th {
 .role {
     /* background-color: #0978dd; */
     /* background-color: #18bc9c; */
-    background: #3498db;
+    background: #e6e9eb;
+    /* background-color: #3498db; */
     color: #ddd;
     /* color: #f8e825; */
     border-radius: 17px;
-    margin: auto
+    margin: auto;
+    color: "black"
 }
 
 .features {
@@ -133,8 +135,9 @@ table th {
     bottom: 0;
     left: 0;
     width: 100%;
+    background-color: #02134a8e;
     /* background-color: rgba(3, 0, 0, 0.5); */
-    background-color: hsla(226, 86%, 6%, 0.555);
+    /* background-color: hsla(226, 86%, 6%, 0.555); */
     /* Semi-transparent background */
     color: #fff;
     /* White text color */
@@ -227,5 +230,5 @@ div.information-banner {
 }
 
 footer.goldenrod {
-    background-color: #df0e0e;
+    background-color: crimson;
 }

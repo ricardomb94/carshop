@@ -14,7 +14,9 @@ const Service = ({ service, imageUrl }) => {
             style={{ objectFit: "cover" }}
           />
         </Link>
-        <Card.Body style={{ backgroundColor: "#016FB9", color: "white" }}>
+        <Card.Body
+          style={{ backgroundColor: "rgb(200 201 221)", color: "black" }}
+        >
           <Link to={`/services/${service._id}`}>
             <Card.Title as='div' className='service-title'>
               <strong>{service.title}</strong>

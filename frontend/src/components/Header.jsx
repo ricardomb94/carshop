@@ -9,9 +9,14 @@ import {
 } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
-import logo from "../assets/adamologo01.png";
-// import logo from '../assets/adamo-logo-3.jpeg'
-// import logo from '../assets/adamo-logo-7.jpeg'
+// import logo from "../assets/adamoauto-jaune.jpeg";
+import logo from "../assets/adamoauto-bleu.jpeg";
+//import logo from "../assets/adamoautos-rouge.jpeg";
+// import logo from "../assets/adamologo01.png";
+// import logo from "../assets/adamo-logo-3.jpeg";
+// import logo from "../assets/adamo-logo-7.jpeg";
+// import logo from "../assets/adamo-logo.jpeg";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
