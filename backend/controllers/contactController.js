@@ -34,13 +34,12 @@ const submitContactForm = asyncHandler(async (req, res) => {
 
     // Create a Nodemailer transporter using the Ethereal credentials
     const transporter = nodemailer.createTransport({
-      host: testAccount.smtp.host,
-      port: testAccount.smtp.port,
-      secure: testAccount.smtp.secure,
+      host: 'smtp.ethereal.email',
+      port: 587,
       auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
+          user: 'katherine.ohara@ethereal.email',
+          pass: 'gN5xB6bH36VZwP1kHf'
+      }
     });
 
     // Send email to the admin
