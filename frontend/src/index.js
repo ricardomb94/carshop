@@ -36,6 +36,7 @@ import ServiceScreen from "./screens/ServiceScreen";
 import ServiceCreateScreen from "./screens/admin/ServiceCreateScreen";
 import ServiceListScreen from "./screens/admin/ServiceListScreen";
 import ServiceEdithScreen from "./screens/admin/ServiceEdithScreen";
+import ContactFormScreen from "./screens/ContactFormScreen";
 
 // import OrdersScreen from "./screens/OrdersScreen";
 // import OrderDetailsScreen from "./screens/OrderDetailsScreen";
@@ -51,6 +52,8 @@ const router = createBrowserRouter(
       <Route path='/connexion' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
       <Route path='/profile' element={<ProfileScreen />} />
+      <Route path='/contact' element={<ContactFormScreen />} />
+
 
       <Route path='' element={<PrivateRoute />}>
         <Route path='/envoie' element={<ShippingScreen />} />
