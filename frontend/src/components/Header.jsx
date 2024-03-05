@@ -44,7 +44,7 @@ const Header = () => {
   const isHomePage = window.location.pathname === "/";
   return (
     <>
-      <header style={{ paddingBottom: "6.5rem" }}>
+      <header style={{ paddingBottom: "6.5rem", marginBottom: "3rem" }}>
         <Navbar
           bg='primary'
           variant='primary'
