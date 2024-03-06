@@ -1,12 +1,13 @@
+// CatalogueScreen.js
 import React, { useState } from "react";
 import { Row, Col, Pagination } from "react-bootstrap";
-import Vehicule from "../components/Vehicule";
+import Vehicule from "../components/Vehicule"; // Updated import
 import { Fade } from "react-awesome-reveal";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
 import { ScaleLoader } from "react-spinners";
 import Message from "../components/Message";
 
-const ITEMS_PER_PAGE = 6; // Set the number of items per page
+const ITEMS_PER_PAGE = 6;
 
 const CatalogueScreen = () => {
   const { data: vehicules, isLoading, error } = useGetVehiculesQuery();

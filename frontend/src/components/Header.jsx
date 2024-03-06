@@ -130,7 +130,9 @@ const Header = () => {
         {/* </Navbar> */}
       </header>
 
-      <Container fluid>{isHomePage && <ImageSlider />}</Container>
+      <Container className='image-slider' fluid>
+        {isHomePage && <ImageSlider />}
+      </Container>
     </>
   );
 };
