@@ -42,9 +42,9 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.get("/", (req, res) => {
-  res.send("Bienvenue l'API est déployée avec succés ");
-});
+// app.get("/", (req, res) => {
+//   res.send("Bienvenue l'API est déployée avec succés ");
+// });
 
 app.use((req, res, next) => {
   res.setHeader('Cross-Origin-Resource-Policy', 'same-site'); // or 'cross-origin'
