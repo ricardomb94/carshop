@@ -1,12 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  Nav,
-  Container,
-  Badge,
-  NavDropdown,
-  Card,
-} from "react-bootstrap";
+import { Navbar, Nav, Container, Badge, NavDropdown } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 // import logo from "../assets/adamoauto-jaune.jpeg";
@@ -44,7 +37,14 @@ const Header = () => {
   const isHomePage = window.location.pathname === "/";
   return (
     <>
-      <header style={{ paddingBottom: "6.5rem", marginBottom: "3rem" }}>
+      <header
+        style={{
+          // backgroundColor: "#161926 !important",
+          backgroundColor: "#DD3845",
+          paddingBottom: "6.5rem",
+          marginBottom: "3rem",
+        }}
+      >
         <Navbar
           bg='primary'
           variant='primary'
