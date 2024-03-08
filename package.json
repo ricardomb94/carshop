@@ -1,6 +1,9 @@
 {
   "name": "carshop",
   "version": "2.0.0",
+  "engines": {
+    "node": "18.18.2"
+  },
   "description": "\"E-commerce project - MERN stack\"",
   "main": "server.js",
   "type": "module",
@@ -10,7 +13,8 @@
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder.js",
-    "data:destroy": "node backend/seeder.js -d"
+    "data:destroy": "node backend/seeder.js -d",
+    "build": "npm install && npm install --prefix frontend && npm build --prefix frontend"
   },
   "author": "Ricardo MBK",
   "license": "MIT",
