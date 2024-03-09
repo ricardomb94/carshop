@@ -42,10 +42,6 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// app.get("/", (req, res) => {
-//   res.send("Bienvenue l'API est déployée avec succés ");
-// });
-
 app.use((req, res, next) => {
   res.setHeader('Cross-Origin-Resource-Policy', 'same-site'); // or 'cross-origin'
   next();
@@ -68,21 +64,17 @@ app.use("/api/admin/vehicule/:id", vehiculeRoutes);
 app.use("/api/services/admin/servicelist", serviceRoutes);
 app.use("/api/admin/service/:id", serviceRoutes)
 
-
-
 app.get("/api/config/paypal", (req, res) =>
   res.send({ clientId: process.env.PAYPAL_client_ID })
 );
 
 if (process.env.NODE_ENV === "production") {
-  app.use("/images", express.static(path.join(__dirname, "/var/data/images")));
   app.use(express.static(path.join(__dirname, "/frontend/build")));
 
   app.get("*", (req, res) =>
     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
   );
 } else {
-  app.use("/images", express.static(path.join(__dirname, "/images")));
   app.get("/", (req, res) => {
     res.send("API is running....");
   });
