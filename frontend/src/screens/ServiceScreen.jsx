@@ -85,7 +85,7 @@ const ServiceScreen = () => {
                 {currentItems.map((service) => {
                   const imageUrl =
                     service.images.length > 0
-                      ? `https://adamo-7mrk.onrender.com/${service.images[0].thumbnail}`
+                      ? `https://adamo-7mrk.onrender.com/thumbnails/${service.images[0].thumbnail}`
                       : "";
                   console.log("SERVICE IMAGES IN S-SCREEN :", service.image);
                   return (
