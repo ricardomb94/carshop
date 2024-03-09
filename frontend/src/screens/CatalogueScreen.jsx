@@ -48,7 +48,7 @@ const CatalogueScreen = () => {
           <Fade triggerOnce cascade>
             <Row>
               {currentItems.map((vehicule) => {
-                const imageUrl = `http://localhost:5000/${vehicule.images[0].original}`;
+                const imageUrl = `https://adamo-7mrk.onrender.com/${vehicule.images[0].original}`;
 
                 return (
                   <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>

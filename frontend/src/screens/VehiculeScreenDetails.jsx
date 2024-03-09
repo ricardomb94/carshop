@@ -63,8 +63,8 @@ const VehiculeScreenDetails = () => {
   const images =
     vehicule.images &&
     vehicule.images.map((imageObj) => ({
-      original: `http://localhost:5000/${imageObj.original}`,
-      thumbnail: `http://localhost:5000/${imageObj.thumbnail}`,
+      original: `https://adamo-7mrk.onrender.com/${imageObj.original}`,
+      thumbnail: `https://adamo-7mrk.onrender.com/${imageObj.thumbnail}`,
     }));
   console.log("IMAGES ARRAY :", images);
 

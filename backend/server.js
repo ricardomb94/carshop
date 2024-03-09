@@ -60,6 +60,8 @@ app.use("/api/services", serviceRoutes)
 const __dirname = path.resolve(); //Set __dirname to current directory
 app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/thumbnails", express.static(path.join(__dirname, "/thumbnails")));
+app.use("/resized", express.static(path.join(__dirname, "/resized")));
+
 // Define the admin routes before the notFound and errorHandler middleware
 app.use("/api/admin/vehiculeslist", vehiculeRoutes);
 app.use("/api/admin/vehicule/:id", vehiculeRoutes);
