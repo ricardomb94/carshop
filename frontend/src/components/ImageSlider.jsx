@@ -68,7 +68,7 @@ const ImageSlider = () => {
       ) : (
         <Slider {...sliderSettings} className='vehicle-carousel'>
           {vehicules.map((vehicule) => {
-            const imagesUrl = `http://localhost:5000/${vehicule.images[0].original}`;
+            const imagesUrl = `https://adamo-7mrk.onrender.com/${vehicule.images[0].original}`;
             return (
               <Card key={vehicule._id} className='vehicle-card'>
                 <Link to={`/vehicules/${vehicule._id}`}>

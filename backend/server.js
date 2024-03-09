@@ -24,7 +24,7 @@ app.use(helmet());
 //Cors
 app.use(
   cors({
-    origin: "http://localhost:3000", // Allow requests from this origin
+    origin: "https://adamo-7mrk.onrender.com/", // Allow requests from this origin
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)
   })
 );
