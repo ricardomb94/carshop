@@ -1,6 +1,7 @@
 // CatalogueScreen.js
 import React, { useState } from "react";
 import { Row, Col, Pagination } from "react-bootstrap";
+import { baseUrl } from "../config";
 import Vehicule from "../components/Vehicule"; // Updated import
 import { Fade } from "react-awesome-reveal";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
@@ -48,7 +49,7 @@ const CatalogueScreen = () => {
           <Fade triggerOnce cascade>
             <Row>
               {currentItems.map((vehicule) => {
-                const imageUrl = `https://adamo-7mrk.onrender.com/${vehicule.images[0].original}`;
+                const imageUrl = `${baseUrl}${vehicule.images[0].original}`;
 
                 return (
                   <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>

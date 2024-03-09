@@ -24,7 +24,7 @@ app.use(helmet());
 //Cors
 app.use(
   cors({
-    origin: "https://adamo-7mrk.onrender.com/", // Allow requests from this origin
+    origin: "process.env.BASE_URL", // Allow requests from this origin
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)
   })
 );

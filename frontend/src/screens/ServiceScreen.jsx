@@ -1,5 +1,6 @@
 import { Row, Col, Pagination } from "react-bootstrap";
 import { Fade, Slide } from "react-awesome-reveal";
+import { baseUrl } from "./config";
 import { useGetServicesQuery } from "../slices/servicesApiSlice";
 import Service from "../components/Service";
 import Message from "../components/Message";
@@ -85,7 +86,7 @@ const ServiceScreen = () => {
                 {currentItems.map((service) => {
                   const imageUrl =
                     service.images.length > 0
-                      ? `https://adamo-7mrk.onrender.com/${service.images[0].thumbnail}`
+                      ? `${baseUrl}${service.images[0].thumbnail}`
                       : "";
                   console.log("SERVICE IMAGES IN S-SCREEN :", service.image);
                   return (

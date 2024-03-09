@@ -9,7 +9,7 @@ import {
   Button,
   FormControl,
 } from "react-bootstrap";
-
+import { baseUrl } from "./config";
 import Rating from "../components/Rating";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -63,8 +63,8 @@ const VehiculeScreenDetails = () => {
   const images =
     vehicule.images &&
     vehicule.images.map((imageObj) => ({
-      original: `https://adamo-7mrk.onrender.com/${imageObj.original}`,
-      thumbnail: `https://adamo-7mrk.onrender.com/${imageObj.thumbnail}`,
+      original: `${baseUrl}${imageObj.original}`,
+      thumbnail: `${baseUrl}${imageObj.thumbnail}`,
     }));
   console.log("IMAGES ARRAY :", images);
 

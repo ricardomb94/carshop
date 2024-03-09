@@ -15,6 +15,21 @@ body {
     width: 5em;
 }
 
+/* Nav-link */
+.nav-link {
+    color: aqua;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .show>.nav-link {
+    /* color: var(--bs-navbar-active-color); */
+    color: cyan;
+}
+
+.dropdown-item {
+    background-color: indigo;
+}
+
 main {
     min-height: 80vh;
 }
