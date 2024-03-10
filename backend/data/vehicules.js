@@ -6,22 +6,7 @@ const vehicules = [
         original: "/images/yarris-1.jpeg",
         thumbnail: "/thumbnails/yarris-t1.jpeg",
       },
-      {
-        original: "/images/yarris-2.jpeg",
-        thumbnail: "/thumbnails/yarris-t2.jpeg",
-      },
-      {
-        original: "/images/yarris-3.jpeg",
-        thumbnail: "/thumbnails/yarris-t3.jpeg",
-      },
-      {
-        original: "/images/yarris-5.jpeg",
-        thumbnail: "/thumbnails/yarris-t5.jpeg",
-      },
-      {
-        original: "/images/yarris-6.jpeg",
-        thumbnail: "/thumbnails/yarris-t6.jpeg",
-      },
+     
     ],
     description:
       "La Toyota IQ est une voiture à hayon élégante et compacte qui respire la sophistication et la modernité. Elle présente un design extérieur élégant caractérisé par des lignes nettes, une calandre avant agressive et des phares à LED. Sa taille compacte en fait une voiture idéale pour la ville, permettant une maniabilité et un stationnement faciles.",

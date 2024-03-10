@@ -21,7 +21,7 @@ const reviewSchema = new mongoose.Schema(
     },
     comment: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {
@@ -43,11 +43,11 @@ const vehiculeSchema = new mongoose.Schema({
     {
       original: {
         type: String,
-        required: true,
+        required: false,
       },
       thumbnail: {
         type: String,
-        required: true,
+        required: false,
       },
     },
   ],
@@ -83,7 +83,7 @@ const vehiculeSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: true,
+    required: fale,
   },
   provenance: {
     type: String,
