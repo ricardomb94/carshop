@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import path from "path";
 import express from "express";
 import helmet from "helmet";
@@ -11,8 +13,7 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import serviceRoutes from "./routes/serviceRoutes.js";
 import morgan from "morgan";
-import dotenv from "dotenv";
-dotenv.config();
+
 
 import cookieParser from "cookie-parser";
 
@@ -32,6 +33,7 @@ app.use(
 //Body parser middleware
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('config'));
 
 //Cookies middleware
 app.use(cookieParser());

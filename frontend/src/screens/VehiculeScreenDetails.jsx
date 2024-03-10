@@ -9,7 +9,7 @@ import {
   Button,
   FormControl,
 } from "react-bootstrap";
-import { baseUrl } from "./config";
+
 import Rating from "../components/Rating";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -21,6 +21,8 @@ import { useGetVehiculeDetailsQuery } from "../slices/vehiculesApiSlice";
 import Message from "../components/Message";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import fallback from "../assets/fallback.jpg";
 
 // const override = css`
 //   display: block;
@@ -56,21 +58,33 @@ const VehiculeScreenDetails = () => {
         wrapperstyle={{}}
         wrapperclass='scale-wrapper'
       />
-    ); // or other loading indicator;
+    );
   }
-
+  const baseUrl = process.env.BASE_URL || "";
   // Check if vehicule.images is defined before mapping
   const images =
     vehicule.images &&
     vehicule.images.map((imageObj) => ({
-      original: `${baseUrl}${imageObj.original}`,
-      thumbnail: `${baseUrl}${imageObj.thumbnail}`,
+      original: `${baseUrl}/${imageObj.original}`,
+      thumbnail: `${baseUrl}/${imageObj.thumbnail}`,
     }));
   console.log("IMAGES ARRAY :", images);
 
+  const handleImageError = () => {
+    // Display error message or a different fallback image
+    toast.error("Image failed to load!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+    console.error("Image failed to load");
+  };
+
   return (
     <>
-      <Link className='btn btn-light my-3' to='/'>
+      <Link className='btn btn-light my-3' to='/vehicules/all'>
         Retour au Catalogue
       </Link>
       {isLoading ? (
@@ -95,10 +109,19 @@ const VehiculeScreenDetails = () => {
                 <Card>
                   <ImageGallery
                     msg={console.log("IMAGE IN IMAGEGALLERY :", images)}
-                    items={images}
+                    items={
+                      images && images.length > 0 ? (
+                        images // Display text message otherwise
+                      ) : (
+                        <div key={vehicule._id} className='fallback-message'>
+                          <img src={fallback} alt='fallback' />
+                        </div>
+                      )
+                    }
                     alt={vehicule.brand}
                     thumbnailPosition='left'
                     fluid
+                    onError={handleImageError}
                   />
                 </Card>
               </Col>

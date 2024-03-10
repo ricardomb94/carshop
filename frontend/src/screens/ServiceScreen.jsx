@@ -1,6 +1,5 @@
 import { Row, Col, Pagination } from "react-bootstrap";
 import { Fade, Slide } from "react-awesome-reveal";
-import { baseUrl } from "./config";
 import { useGetServicesQuery } from "../slices/servicesApiSlice";
 import Service from "../components/Service";
 import Message from "../components/Message";
@@ -13,6 +12,7 @@ import CookiePolicyPopup from "../components/CookiePolicyPopup";
 // import Footer from "../components/Footer-2";
 
 const ITEMS_PER_PAGE = 6;
+const baseUrl = process.env.BASE_URL || "";
 
 const ServiceScreen = () => {
   const { data: services, isLoading, error } = useGetServicesQuery();

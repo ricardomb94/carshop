@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
-import { baseUrl } from "./config";
 import Vehicule from "./Vehicule";
 import { Card, Row, Col } from "react-bootstrap"; // Using a grid layout
 import { Link } from "react-router-dom";
@@ -11,6 +10,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { ScaleLoader } from "react-spinners";
 // import "./ImageSlider.css"; // Add custom CSS for styling
+
+const baseUrl = process.env.BASE_URL || "";
 
 const ImageSlider = () => {
   const { data: vehicules, isLoading, error } = useGetVehiculesQuery();
