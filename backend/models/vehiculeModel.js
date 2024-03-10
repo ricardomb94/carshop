@@ -74,7 +74,7 @@ const vehiculeSchema = new mongoose.Schema({
   },
   countInStock: {
     type: Number,
-    required: true,
+    required: false,
     default: 0,
   },
   price: {
@@ -83,7 +83,7 @@ const vehiculeSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: fale,
+    required: false,
   },
   provenance: {
     type: String,
@@ -127,7 +127,7 @@ const vehiculeSchema = new mongoose.Schema({
   },
   numReviews: {
     type: Number,
-    required: true,
+    required: false,
   },
 });
 
