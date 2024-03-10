@@ -8,6 +8,7 @@ import { useState } from "react";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
 import CookiePolicyPopup from "../components/CookiePolicyPopup";
+import FlipCard from "../components/FlipCard";
 // import ContactFormScreen from "./ContactFormScreen";
 // import Footer from "../components/Footer-2";
 
@@ -47,22 +48,29 @@ const ServiceScreen = () => {
 
   return (
     <>
-      <h2 className='text-center mt-5'>
-        <Slide cascade damping={0.1}>
-          Nos services
-        </Slide>
-      </h2>
-
-      <p className='text-center mt-5'>
-        Bienvenue vous trouverez sur cete page et sur l'ensemble du site, une
-        variété de services que nous proposons. Que vous cherchiez à acheter une
-        nouvelle voiture, à faire réparer votre véhicule actuel ou à obtenir des
-        conseils d'experts sur l'entretien de votre voiture, nous sommes là pour
-        vous aider. Nos services sont conçus pour répondre à vos besoins
-        spécifiques et nous nous efforçons toujours de dépasser vos attentes.
-        N'hésitez pas à parcourir nos offres et à sélectionner celle qui répond
-        à vos besoins.
-      </p>
+      <div className='servicetitle' style={{ marginBottom: "2rem" }}>
+        <h2 className='text-center '>
+          <Slide cascade damping={0.1}>
+            Nos services
+          </Slide>
+        </h2>
+      </div>
+      <div style={{ margin: "0rem" }}>
+        <Row>
+          <Col sm={12} md={6} lg={6} className='mb-5'>
+            <FlipCard
+              front="Bienvenue nous proposons une variété de service. Que vous cherchiez à acheter une nouvelle voiture, à faire réparer votre véhicule actuel ou à obtenir des conseils d'experts sur l'entretien de votre voiture, nous sommes là pour vous aider."
+              back="Nos services sont conçus pour répondre à vos besoins spécifiques et nous nous efforçons toujours de dépasser vos attentes. N'hésitez pas à parcourir nos offres et à sélectionner celle qui répond à vos besoins."
+            />
+          </Col>
+          <Col sm={12} md={6} lg={6} className='mb-5'>
+            <FlipCard
+              front="Nous proposons une large gamme de services pour répondre à tous vos besoins automobiles. De l'entretien régulier aux réparations majeures,nous sommes là pour vous aider à chaque étape du processus."
+              back='Notre équipe de professionnels expérimentés est dédiée à fournir un service de qualité supérieure à chaque client. Nous sommes fiers de notre travail et nous nous engageons à vous offrir une expérience exceptionnelle.'
+            />
+          </Col>
+        </Row>
+      </div>
 
       {isLoading ? (
         <ScaleLoader

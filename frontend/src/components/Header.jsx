@@ -70,7 +70,7 @@ const Header = () => {
                   <LinkContainer to='/vehicules/all'>
                     <Nav.Link className='text-white'>Catalogue</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to='/panier'>
+                  {/* <LinkContainer to='/panier'>
                     <Nav.Link className='text-white'>
                       <FaShoppingCart />
                       Panier
@@ -80,7 +80,7 @@ const Header = () => {
                         </Badge>
                       )}
                     </Nav.Link>
-                  </LinkContainer>
+                  </LinkContainer> */}
                   {userInfo ? (
                     <NavDropdown title={userInfo.name} id='username'>
                       <LinkContainer to='/profile'>

@@ -194,7 +194,7 @@ const VehiculeScreenDetails = () => {
 
                     <ListGroup.Item>
                       <Button
-                        className='btn-block'
+                        className='btn-block ajouter'
                         type='button'
                         disabled={vehicule.countInStock === 0}
                         onClick={addToCartHandler}
