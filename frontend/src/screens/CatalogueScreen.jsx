@@ -40,11 +40,13 @@ const CatalogueScreen = () => {
         </Message>
       ) : (
         <>
-          <h2 className='text-center'>
-            <Fade cascade damping={0.1}>
-              Véhicules à vendre
-            </Fade>
-          </h2>
+          <div className='servicetitle' style={{ marginBottom: "2rem" }}>
+            <h2 className='text-center'>
+              <Fade cascade damping={0.1}>
+                Véhicules à vendre
+              </Fade>
+            </h2>
+          </div>
 
           <Fade triggerOnce cascade>
             <Row>

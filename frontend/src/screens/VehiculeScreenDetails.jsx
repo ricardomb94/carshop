@@ -103,6 +103,13 @@ const VehiculeScreenDetails = () => {
         </Message>
       ) : (
         <>
+          <div className='servicetitle' style={{ marginBottom: "2rem" }}>
+            <h2 className='text-center'>
+              <Fade cascade damping={0.1}>
+                Détails Techniques
+              </Fade>
+            </h2>
+          </div>
           <Fade>
             <Row>
               <Col md={6}>
