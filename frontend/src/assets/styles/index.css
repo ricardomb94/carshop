@@ -188,7 +188,7 @@ table th {
     border: 0.03em dashed rgb(2, 2, 32);
     color: rgb(2, 2, 32);
     padding: 1em;
-    width: 30%;
+    width: 36%;
     margin: auto;
 }
 
@@ -196,7 +196,7 @@ table th {
     width: 100%;
     perspective: 1000px;
     padding: 0.7em;
-    min-height: 15rem;
+    min-height: 9rem;
     /* border: 0.03em solid rgb(2, 2, 32); */
     color: rgb(2, 2, 32);
 }
