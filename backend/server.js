@@ -71,6 +71,9 @@ app.get("/api/config/paypal", (req, res) =>
 );
 
 if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "images")));
+  app.use(express.static(path.join(__dirname, "thumbnails")));
+  app.use(express.static(path.join(__dirname, "resized")))
   app.use(express.static(path.join(__dirname, "/frontend/build")));
 
   app.get("*", (req, res) =>
@@ -85,4 +88,4 @@ if (process.env.NODE_ENV === "production") {
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Le Server écoute sur le port ${port}`));
+app.listen(port, () => console.log(`The Server is listening on ${port} port in ${process.env.NODE_ENV} mode`));
