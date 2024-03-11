@@ -30,6 +30,11 @@ import fallback from "../assets/fallback.jpg";
 //   border-color: red;
 // `;
 
+const baseUrl =
+  (process.env.BASE_URL.endsWith("/")
+    ? process.env.BASE_URL
+    : process.env.BASE_URL + "/") || "";
+
 const VehiculeScreenDetails = () => {
   const { id: vehiculeId } = useParams();
 
@@ -60,7 +65,7 @@ const VehiculeScreenDetails = () => {
       />
     );
   }
-  const baseUrl = process.env.BASE_URL || "";
+
   // Check if vehicule.images is defined before mapping
   const images =
     vehicule.images &&

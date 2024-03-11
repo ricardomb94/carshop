@@ -25,7 +25,7 @@ app.use(helmet());
 //Cors
 app.use(
   cors({
-    origin: process.env.BASE_URL, // Allow requests from this origin
+    origin:"*", // Allow requests from this origin
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)
   })
 );
@@ -56,7 +56,8 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/services", serviceRoutes)
 const __dirname = path.resolve(); //Set __dirname to current directoryme
-console.log("CURRENT DIRECTORY __dirna :", __dirname)
+console.log("CURRENT DIRECTORY __dirname :", __dirname + "/images")
+console.log("Thumbnails directory: ", path.join(__dirname, "/thumbnails"));
 app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/thumbnails", express.static(path.join(__dirname, "/thumbnails")));
 app.use("/resized", express.static(path.join(__dirname, "/resized")));
