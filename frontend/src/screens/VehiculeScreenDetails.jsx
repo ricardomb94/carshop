@@ -65,8 +65,8 @@ const VehiculeScreenDetails = () => {
   const images =
     vehicule.images &&
     vehicule.images.map((imageObj) => ({
-      original: `${baseUrl}/${imageObj.original}`,
-      thumbnail: `${baseUrl}/${imageObj.thumbnail}`,
+      original: `${baseUrl}${imageObj.original}`,
+      thumbnail: `${baseUrl}${imageObj.thumbnail}`,
     }));
   console.log("IMAGES ARRAY :", images);
 

@@ -53,7 +53,7 @@ const CatalogueScreen = () => {
               {currentItems.map((vehicule) => {
                 const imageUrl =
                   vehicule.images && vehicule.images.length > 0
-                    ? `${baseUrl}/${vehicule.images[0].original}`
+                    ? `${baseUrl}${vehicule.images[0].original}`
                     : null;
 
                 return (
