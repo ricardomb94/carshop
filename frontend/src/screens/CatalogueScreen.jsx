@@ -61,11 +61,13 @@ const CatalogueScreen = () => {
 
                 return (
                   <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>
-                    {imageUrl ? (
+                    {/* {imageUrl ? (
                       <Vehicule vehicule={vehicule} imageUrl={imageUrl} />
                     ) : (
-                      <p className='text-center'>Image non disponible</p>
-                    )}
+                      <p classNa
+                      me='text-center'>Image non disponible</p>
+                    )} */}
+                    <Vehicule vehicule={vehicule} imageUrl={imageUrl} />
                   </Col>
                 );
               })}
