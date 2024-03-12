@@ -53,8 +53,11 @@ const CatalogueScreen = () => {
               {currentItems.map((vehicule) => {
                 const imageUrl =
                   vehicule.images && vehicule.images.length > 0
-                    ? `${baseUrl}${vehicule.images[0].original}`
+                    ? `${baseUrl}/images/${vehicule.images[0].original}`
                     : null;
+                // vehicule.images && vehicule.images.length > 0
+                //   ? `${baseUrl}${vehicule.images[0].original}`
+                //   : null;
 
                 return (
                   <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>

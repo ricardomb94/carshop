@@ -11,10 +11,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { ScaleLoader } from "react-spinners";
 // import "./ImageSlider.css"; // Add custom CSS for styling
 
-const baseUrl =
-  (process.env.BASE_URL.endsWith("/")
-    ? process.env.BASE_URL
-    : process.env.BASE_URL + "/") || "";
+const baseUrl = process.env.BASE_URL || "";
 
 const ImageSlider = () => {
   const { data: vehicules, isLoading, error } = useGetVehiculesQuery();
