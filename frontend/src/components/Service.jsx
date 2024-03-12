@@ -15,14 +15,14 @@ const Service = ({ service, imageUrl }) => {
   return (
     <div>
       <Card className='my-3 p-3 service-card'>
-        <Link to={`/services/${service._id}`}>
-          <Card.Img
-            src={imageUrl}
-            className='service-image'
-            variant='top'
-            style={{ objectFit: "cover" }}
-          />
-        </Link>
+        {/* <Link to={`/services/${service._id}`}> */}
+        <Card.Img
+          src={imageUrl}
+          className='service-image'
+          variant='top'
+          style={{ objectFit: "cover" }}
+        />
+        {/* </Link> */}
         <Card.Body style={{ backgroundColor: randomColor(), color: "black" }}>
           <Link to={`/services/${service._id}`}>
             <Card.Title as='div' className='service-title'>

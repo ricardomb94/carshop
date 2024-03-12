@@ -13,10 +13,7 @@ import FlipCard from "../components/FlipCard";
 // import Footer from "../components/Footer-2";
 
 const ITEMS_PER_PAGE = 6;
-const baseUrl =
-  (process.env.BASE_URL.endsWith("/")
-    ? process.env.BASE_URL
-    : process.env.BASE_URL + "/") || "";
+const baseUrl = process.env.BASE_URL || "";
 
 const ServiceScreen = () => {
   const { data: services, isLoading, error } = useGetServicesQuery();

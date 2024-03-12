@@ -8,10 +8,7 @@ import { ScaleLoader } from "react-spinners";
 import Message from "../components/Message";
 
 const ITEMS_PER_PAGE = 6;
-const baseUrl =
-  (process.env.BASE_URL.endsWith("/")
-    ? process.env.BASE_URL
-    : process.env.BASE_URL + "/") || "";
+const baseUrl = process.env.BASE_URL || "";
 
 const CatalogueScreen = () => {
   const { data: vehicules, isLoading, error } = useGetVehiculesQuery();

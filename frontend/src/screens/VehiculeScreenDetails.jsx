@@ -24,16 +24,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import fallback from "../assets/fallback.jpg";
 
-// const override = css`
-//   display: block;
-//   margin: 0 auto;
-//   border-color: red;
-// `;
-
-const baseUrl =
-  (process.env.BASE_URL.endsWith("/")
-    ? process.env.BASE_URL
-    : process.env.BASE_URL + "/") || "";
+const baseUrl = process.env.BASE_URL || "";
 
 const VehiculeScreenDetails = () => {
   const { id: vehiculeId } = useParams();
