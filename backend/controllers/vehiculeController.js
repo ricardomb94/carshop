@@ -30,7 +30,7 @@ const getVehiculeById = asyncHandler(async (req, res) => {
 // @routes POST /api/vehicules
 // @access Private, Admin
 const createVehicule = asyncHandler(async (req, res) => {
-  // try {
+  
   // Create a new vehicle instance based on the request body
   const newVehicule = new Vehicule(req.body);
 
@@ -43,12 +43,11 @@ const createVehicule = asyncHandler(async (req, res) => {
     data: createdVehicule,
   };
   res.status(201).json(response);
-  // } catch (error) {
+
   console.error("Error creating vehicule:", error);
   res
     .status(500)
     .json({ error: "Internal Server Error", message: error.message });
-  // }
 });
 
 // @desc Update a vehicule

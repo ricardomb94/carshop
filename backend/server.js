@@ -17,7 +17,7 @@ import morgan from "morgan";
 
 import cookieParser from "cookie-parser";
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 const app = express();
 
 //helmet

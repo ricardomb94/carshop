@@ -24,7 +24,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import fallback from "../assets/fallback.jpg";
 
-const baseUrl = process.env.BASE_URL || "";
+// const baseUrl = process.env.BASE_URL || "";
 
 const VehiculeScreenDetails = () => {
   const { id: vehiculeId } = useParams();
@@ -61,8 +61,8 @@ const VehiculeScreenDetails = () => {
   const images =
     vehicule.images &&
     vehicule.images.map((imageObj) => ({
-      original: `${baseUrl}${imageObj.original}`,
-      thumbnail: `${baseUrl}${imageObj.thumbnail}`,
+      original: `${imageObj.original}`,
+      thumbnail: `${imageObj.thumbnail}`,
     }));
   console.log("IMAGES ARRAY :", images);
 
