@@ -56,13 +56,22 @@ const VehiculeScreenDetails = () => {
       />
     );
   }
+<<<<<<< HEAD
 
+=======
+  // const baseUrl = process.env.BASE_URL || "";
+>>>>>>> staging2
   // Check if vehicule.images is defined before mapping
   const images =
     vehicule.images &&
     vehicule.images.map((imageObj) => ({
+<<<<<<< HEAD
       original: `${imageObj.original}`,
       thumbnail: `${imageObj.thumbnail}`,
+=======
+      original: `/${imageObj.original}`,
+      thumbnail: `/${imageObj.thumbnail}`,
+>>>>>>> staging2
     }));
   console.log("IMAGES ARRAY :", images);
 
