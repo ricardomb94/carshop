@@ -13,7 +13,7 @@ import FlipCard from "../components/FlipCard";
 // import Footer from "../components/Footer-2";
 
 const ITEMS_PER_PAGE = 6;
-const baseUrl = process.env.BASE_URL || "";
+// const baseUrl = process.env.BASE_URL || "";
 
 const ServiceScreen = () => {
   const { data: services, isLoading, error } = useGetServicesQuery();
@@ -94,12 +94,16 @@ const ServiceScreen = () => {
                 {currentItems.map((service) => {
                   const imageUrl =
                     service.images.length > 0
-                      ? `${baseUrl}${service.images[0].thumbnail}`
+                      ? `${service.images[0].thumbnail}`
                       : "";
                   console.log("SERVICE IMAGES IN S-SCREEN :", service.image);
                   return (
                     <Col key={service._id} sm={12} md={6} lg={4} xl={4}>
-                      <Service service={service} imageUrl={imageUrl} />
+                      <Service
+                        service={service}
+                        imageUrl={imageUrl}
+                        alt={service.title}
+                      />
                     </Col>
                   );
                 })}

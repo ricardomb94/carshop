@@ -8,7 +8,8 @@ import { ScaleLoader } from "react-spinners";
 import Message from "../components/Message";
 
 const ITEMS_PER_PAGE = 6;
-const baseUrl = process.env.BASE_URL || "";
+// const baseUrl = process.env.BASE_URL || "";
+// console.log("BASE_URL in CATALOGUE :", baseUrl);
 
 const CatalogueScreen = () => {
   const { data: vehicules, isLoading, error } = useGetVehiculesQuery();
@@ -40,29 +41,30 @@ const CatalogueScreen = () => {
         </Message>
       ) : (
         <>
-          <div className='servicetitle' style={{ marginBottom: "2rem" }}>
-            <h2 className='text-center'>
-              <Fade cascade damping={0.1}>
-                Véhicules à vendre
-              </Fade>
-            </h2>
-          </div>
+          <h2 className='text-center'>
+            <Fade cascade damping={0.1}>
+              Véhicules à vendre
+            </Fade>
+          </h2>
 
           <Fade triggerOnce cascade>
             <Row>
               {currentItems.map((vehicule) => {
                 const imageUrl =
-                  vehicule.images && vehicule.images.length > 0
-                    ? `${baseUrl}${vehicule.images[0].original}`
-                    : null;
-
+                  vehicule.images.length > 0
+                    ? `/${vehicule.images[0].original}`
+                    : "";
+                console.log(
+                  "VEHICULE IMAGES IN CATALG-SCREEN :",
+                  vehicule.image
+                );
                 return (
                   <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>
-                    {imageUrl ? (
-                      <Vehicule vehicule={vehicule} imageUrl={imageUrl} />
-                    ) : (
-                      <p className='text-center'>Image non disponible</p>
-                    )}
+                    <Vehicule
+                      vehicule={vehicule}
+                      imageUrl={imageUrl}
+                      alt={vehicule.brand}
+                    />
                   </Col>
                 );
               })}
