@@ -56,13 +56,12 @@ const VehiculeScreenDetails = () => {
       />
     );
   }
-
   // Check if vehicule.images is defined before mapping
   const images =
     vehicule.images &&
     vehicule.images.map((imageObj) => ({
-      original: `${imageObj.original}`,
-      thumbnail: `${imageObj.thumbnail}`,
+      original: `/${imageObj.original}`,
+      thumbnail: `/${imageObj.thumbnail}`,
     }));
   console.log("IMAGES ARRAY :", images);
 

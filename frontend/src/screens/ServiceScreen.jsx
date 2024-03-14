@@ -99,7 +99,11 @@ const ServiceScreen = () => {
                   console.log("SERVICE IMAGES IN S-SCREEN :", service.image);
                   return (
                     <Col key={service._id} sm={12} md={6} lg={4} xl={4}>
-                      <Service service={service} imageUrl={imageUrl} />
+                      <Service
+                        service={service}
+                        imageUrl={imageUrl}
+                        alt={service.title}
+                      />
                     </Col>
                   );
                 })}

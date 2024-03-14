@@ -8,6 +8,9 @@ import { ScaleLoader } from "react-spinners";
 import Message from "../components/Message";
 
 const ITEMS_PER_PAGE = 6;
+// const baseUrl = process.env.BASE_URL || "";
+// console.log("BASE_URL in CATALOGUE :", baseUrl);
+
 
 const CatalogueScreen = () => {
   const { data: vehicules, isLoading, error } = useGetVehiculesQuery();
@@ -49,11 +52,21 @@ const CatalogueScreen = () => {
           <Fade triggerOnce cascade>
             <Row>
               {currentItems.map((vehicule) => {
-                const imageUrl = `${vehicule.images[0].original}`;
-
+                const imageUrl =
+                  vehicule.images.length > 0
+                    ? `/${vehicule.images[0].original}`
+                    : "";
+                console.log(
+                  "VEHICULE IMAGES IN CATALG-SCREEN :",
+                  vehicule.image
+                );
                 return (
                   <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>
-                    <Vehicule imageUrl={imageUrl} alt={vehicule.name} />
+                    <Vehicule
+                      vehicule={vehicule}
+                      imageUrl={imageUrl}
+                      alt={vehicule.brand}
+                    />
                   </Col>
                 );
               })}
