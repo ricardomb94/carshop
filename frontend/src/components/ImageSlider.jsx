@@ -11,7 +11,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { ScaleLoader } from "react-spinners";
 // import "./ImageSlider.css"; // Add custom CSS for styling
 
-const baseUrl = process.env.BASE_URL || "";
+// const baseUrl = process.env.BASE_URL || "";
 
 const ImageSlider = () => {
   const { data: vehicules, isLoading, error } = useGetVehiculesQuery();
@@ -70,7 +70,7 @@ const ImageSlider = () => {
       ) : (
         <Slider {...sliderSettings} className='vehicle-carousel'>
           {vehicules.map((vehicule) => {
-            const imagesUrl = `${baseUrl}${vehicule.images[0].original}`;
+            const imagesUrl = `/images/${vehicule.images[0].original}`;
             return (
               <Card key={vehicule._id} className='vehicle-card'>
                 <Link to={`/vehicules/${vehicule._id}`}>

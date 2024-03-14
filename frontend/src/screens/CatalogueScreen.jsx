@@ -11,6 +11,7 @@ const ITEMS_PER_PAGE = 6;
 // const baseUrl = process.env.BASE_URL || "";
 // console.log("BASE_URL in CATALOGUE :", baseUrl);
 
+
 const CatalogueScreen = () => {
   const { data: vehicules, isLoading, error } = useGetVehiculesQuery();
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +23,8 @@ const CatalogueScreen = () => {
     : [];
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+  console.log("VEHICLE IMAGE ORIGINAL", vehicules.images[0].original);
+  console.log("IMAGE_URL IN CATALOUE", imageUrl);
   return (
     <>
       {isLoading ? (
