@@ -22,7 +22,7 @@ const CatalogueScreen = () => {
     : [];
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  console.log("VEHICLE IMAGE ORIGINAL", vehicules.images[0].original);
+  // console.log("VEHICLE IMAGE ORIGINAL", vehicules.images[0].original);
   return (
     <>
       {isLoading ? (
