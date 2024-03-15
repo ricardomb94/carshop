@@ -13,6 +13,7 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import serviceRoutes from "./routes/serviceRoutes.js";
 import morgan from "morgan";
+import renderStatic from "render-static"
 
 
 import cookieParser from "cookie-parser";

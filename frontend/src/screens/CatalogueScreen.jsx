@@ -52,10 +52,7 @@ const CatalogueScreen = () => {
               {currentItems.map((vehicule) => {
                 const imageUrl =
                   vehicule.images.length > 0
-                    ? `/images/${vehicule.images[0].original.replace(
-                        /^images\//,
-                        ""
-                      )}`
+                    ? `/${vehicule.images[0].original}`
                     : "";
                 console.log(
                   "VEHICULE IMAGES IN CATALG-SCREEN :",
