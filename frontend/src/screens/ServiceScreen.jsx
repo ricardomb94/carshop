@@ -19,8 +19,8 @@ const ServiceScreen = () => {
   const { data: services, isLoading, error } = useGetServicesQuery();
   console.log("SERVICELIST", services);
 
-  const { data: vehicules } = useGetVehiculesQuery();
-  console.log("SERVICELIST IN SERVICE SCREEN", vehicules);
+  // const { data: vehicules } = useGetVehiculesQuery();
+  // console.log("SERVICELIST IN SERVICE SCREEN", services);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -32,7 +32,7 @@ const ServiceScreen = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  if (!vehicules) {
+  if (!services) {
     return (
       <ScaleLoader
         visible={+true}
@@ -92,7 +92,10 @@ const ServiceScreen = () => {
             <div className='service-grid'>
               <Row>
                 {currentItems.map((service) => {
-                  service.images.length > 0 ? service.images[0].thumbnail : "";
+                  const imageUrl =
+                    service.images.length > 0
+                      ? service.images[0].thumbnail
+                      : "";
                   // const imageUrl =
                   //   service.images.length > 0
                   //     ? `/${service.images[0].thumbnail}`

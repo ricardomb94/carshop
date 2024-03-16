@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Pagination } from "react-bootstrap";
 import Vehicule from "../components/Vehicule";
 import { Fade } from "react-awesome-reveal";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
 import { ScaleLoader } from "react-spinners";
 import Message from "../components/Message";
+import CookiePolicyPopup from "../components/CookiePolicyPopup";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -65,7 +66,7 @@ const CatalogueScreen = () => {
             <Col>
               <Pagination>
                 {Array.from({
-                  length: Math.ceil(services.length / ITEMS_PER_PAGE),
+                  length: Math.ceil(vehicules.length / ITEMS_PER_PAGE),
                 }).map((_, index) => (
                   <Pagination.Item
                     key={index + 1}
