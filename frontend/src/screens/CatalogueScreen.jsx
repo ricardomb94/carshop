@@ -1,15 +1,12 @@
-// CatalogueScreen.js
 import React, { useState } from "react";
-import { Row, Col, Pagination } from "react-bootstrap";
-import Vehicule from "../components/Vehicule"; // Updated import
+import { Row, Col } from "react-bootstrap";
+import Vehicule from "../components/Vehicule";
 import { Fade } from "react-awesome-reveal";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
 import { ScaleLoader } from "react-spinners";
 import Message from "../components/Message";
 
 const ITEMS_PER_PAGE = 6;
-// const baseUrl = process.env.BASE_URL || "";
-// console.log("BASE_URL in CATALOGUE :", baseUrl);
 
 const CatalogueScreen = () => {
   const { data: vehicules, isLoading, error } = useGetVehiculesQuery();
@@ -22,12 +19,16 @@ const CatalogueScreen = () => {
     : [];
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  // console.log("VEHICLE IMAGE ORIGINAL", vehicules.images[0].original);
+
+  const getImageUrl = (vehicule) => {
+    return vehicule.images.length > 0 ? vehicule.images[0].original : "";
+  };
+
   return (
     <>
       {isLoading ? (
         <ScaleLoader
-          visible={+true}
+          visible={true}
           height={40}
           width={5}
           color='#36d7b7'
@@ -49,33 +50,22 @@ const CatalogueScreen = () => {
 
           <Fade triggerOnce cascade>
             <Row>
-              {currentItems.map((vehicule) => {
-                const imageUrl =
-                  vehicule.images.length > 0
-                    ? `/${vehicule.images[0].original}`
-                    : "";
-                console.log(
-                  "VEHICULE IMAGES IN CATALG-SCREEN :",
-                  vehicule.image
-                );
-                return (
-                  <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>
-                    <Vehicule
-                      vehicule={vehicule}
-                      imageUrl={imageUrl}
-                      alt={vehicule.brand}
-                    />
-                  </Col>
-                );
-              })}
+              {currentItems.map((vehicule) => (
+                <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>
+                  <Vehicule
+                    vehicule={vehicule}
+                    imageUrl={getImageUrl(vehicule)}
+                    alt={vehicule.brand}
+                  />
+                </Col>
+              ))}
             </Row>
           </Fade>
-
           <Row className='justify-content-center'>
             <Col>
               <Pagination>
                 {Array.from({
-                  length: Math.ceil(vehicules.length / ITEMS_PER_PAGE),
+                  length: Math.ceil(services.length / ITEMS_PER_PAGE),
                 }).map((_, index) => (
                   <Pagination.Item
                     key={index + 1}
@@ -86,6 +76,8 @@ const CatalogueScreen = () => {
                   </Pagination.Item>
                 ))}
               </Pagination>
+              {/* <ContactFormScreen /> */}
+              <CookiePolicyPopup />
             </Col>
           </Row>
         </>

@@ -92,10 +92,11 @@ const ServiceScreen = () => {
             <div className='service-grid'>
               <Row>
                 {currentItems.map((service) => {
-                  const imageUrl =
-                    service.images.length > 0
-                      ? `/${service.images[0].thumbnail}`
-                      : "";
+                  service.images.length > 0 ? service.images[0].thumbnail : "";
+                  // const imageUrl =
+                  //   service.images.length > 0
+                  //     ? `/${service.images[0].thumbnail}`
+                  //     : "";
                   console.log("SERVICE IMAGES IN S-SCREEN :", service.image);
                   return (
                     <Col key={service._id} sm={12} md={6} lg={4} xl={4}>
