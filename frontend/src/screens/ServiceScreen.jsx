@@ -6,7 +6,6 @@ import Message from "../components/Message";
 import { ScaleLoader } from "react-spinners";
 import { useState } from "react";
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
 import CookiePolicyPopup from "../components/CookiePolicyPopup";
 import FlipCard from "../components/FlipCard";
 // import ContactFormScreen from "./ContactFormScreen";
@@ -51,7 +50,7 @@ const ServiceScreen = () => {
       <div className='servicetitle' style={{ marginBottom: "2rem" }}>
         <h2 className='text-center '>
           <Slide cascade damping={0.1}>
-            Nos services
+            Adamo Autos
           </Slide>
         </h2>
       </div>
