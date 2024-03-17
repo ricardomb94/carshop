@@ -206,7 +206,7 @@ div.information-banner {
     width: 100%;
     position: absolute;
     /* bottom: 1rem; */
-    top: 14rem;
+    top: 10rem;
     left: 50%;
     right: 3rem;
     transform: translateX(-50%);
@@ -375,7 +375,7 @@ div.information-banner {
         position: absolute;
         border: 1px purple dashed;
         right: 3rem;
-        top: 12rem;
+        top: 9rem;
         transform: translateX(-50%);
         transition: transform .5s ease-in-out;
         width: 100%;
