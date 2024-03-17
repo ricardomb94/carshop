@@ -13,9 +13,6 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import serviceRoutes from "./routes/serviceRoutes.js";
 import morgan from "morgan";
-import renderStatic from "render-static"
-
-
 import cookieParser from "cookie-parser";
 
 const port = process.env.PORT || 8080;
@@ -57,8 +54,6 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/services", serviceRoutes)
 const __dirname = path.resolve(); //Set __dirname to current directoryme
-console.log("CURRENT DIRECTORY __dirname :", __dirname + "/images")
-console.log("Thumbnails directory: ", path.join(__dirname, "/thumbnails"));
 app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/thumbnails", express.static(path.join(__dirname, "/thumbnails")));
 app.use("/resized", express.static(path.join(__dirname, "/resized")));
@@ -74,15 +69,15 @@ app.get("/api/config/paypal", (req, res) =>
 );
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/images")));
-  app.use(express.static(path.join(__dirname, "/thumbnails")));
-  app.use(express.static(path.join(__dirname, "/resized")))
-  app.use(express.static(path.join(__dirname, "/frontend/build")));
+  // Serve static files from the specified directories
+    app.use(express.static(path.join(__dirname, '/frontend/build')))
 
+  // For any other route, serve the index.html file
   app.get("*", (req, res) =>
     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
   );
 } else {
+  // In development mode, respond with a simple message
   app.get("/", (req, res) => {
     res.send("API is running....");
   });
