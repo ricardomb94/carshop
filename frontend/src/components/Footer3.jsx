@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { LiaFacebookF, LiaWhatsapp } from "react-icons/lia";
 import "../assets/styles/footer3.css";
-import logo from "../assets/adamologo01.png";
+import logo from "../assets/adamoauto-jaune.jpeg";
 
 export const Footer3 = (props) => {
   const ClickHandler = () => {
