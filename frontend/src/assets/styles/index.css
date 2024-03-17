@@ -347,6 +347,13 @@ footer.goldenrod {
     background-color: #10374D;
 }
 
+.gotop-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    /* Adjust as needed */
+}
 
 @media (max-width: 768px) {
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { LiaFacebookF, LiaWhatsapp } from "react-icons/lia";
 import "../assets/styles/footer3.css";
 import logo from "../assets/adamologo01.png";
 
@@ -16,7 +17,11 @@ export const Footer3 = (props) => {
             <div className='col-lg-3 col-md-6 col-sm-6 footer-t'>
               <div className='hx-site-logo'>
                 <Link to='/'>
-                  <img src={logo} alt='adamo-logo' />
+                  <img
+                    style={{ width: "-webkit-fill-available" }}
+                    src={logo}
+                    alt='adamo-logo'
+                  />
                 </Link>
               </div>
               <p>Votre garage de référence.</p>
@@ -24,22 +29,12 @@ export const Footer3 = (props) => {
                 <ul className='d-flex'>
                   <li>
                     <Link onClick={ClickHandler} to='/'>
-                      <i className='fa fa-facebook' aria-hidden='true'></i>
+                      <LiaFacebookF />
                     </Link>
                   </li>
                   <li>
                     <Link onClick={ClickHandler} to='/'>
-                      <i className='fa fa-twitter' aria-hidden='true'></i>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={ClickHandler} to='/'>
-                      <i className='fa fa-instagram' aria-hidden='true'></i>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={ClickHandler} to='/'>
-                      <i className='fa fa-google-plus' aria-hidden='true'></i>
+                      <LiaWhatsapp />
                     </Link>
                   </li>
                 </ul>
@@ -74,12 +69,11 @@ export const Footer3 = (props) => {
             </div>
             <div className='col-lg-3 col-md-6 col-sm-6 footer-t'>
               <div className='hx-site-footer-adress'>
-                <h3>Address</h3>
+                <h3>Adresse</h3>
                 <div className='adress-section'>
                   <ul>
                     <li>Adresse</li>
                     <li>14 chemin des closeaux, 94440 Villecresnes </li>
-                    <li></li>
                   </ul>
                   <ul className='ad'>
                     <li>
@@ -150,9 +144,9 @@ export const Footer3 = (props) => {
             <div className='row'>
               <div className='col-12'>
                 <span>
-                  Privacy Policy | © {currentYear}
+                  Privacy Policy | © {currentYear}{" "}
                   <Link onClick={ClickHandler} to='/'>
-                    Adamo Autos.
+                    Adamo Autos
                   </Link>{" "}
                   All rights reserved
                 </span>
