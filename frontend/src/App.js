@@ -5,7 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import ContactFormScreen from "./screens/ContactFormScreen"
 import Footer from "./components/Footer";
+import Footer2 from "./components/Footer2";
 import Footer3 from "./components/Footer3";
+import GotoTopButton from "./components/GotoTopButton";
 
 
 const App = () => {
@@ -22,6 +24,7 @@ const App = () => {
       <Footer2/>
       <Footer3/>
       <ToastContainer />
+      <GotoTopButton />
     </>
   );
 };

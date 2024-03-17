@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import "../assets/styles/footer3.css";
 import logo from "../assets/adamologo01.png";
 
-export const Footer3 = () => {
+export const Footer3 = (props) => {
+  const ClickHandler = () => {
+    window.scrollTo(10, 0);
+  };
+  const currentYear = new Date().getUTCFullYear();
   return (
     <footer className='hx-site-footer-area'>
       <div className='hx-site-footer-top'>
@@ -146,8 +150,8 @@ export const Footer3 = () => {
             <div className='row'>
               <div className='col-12'>
                 <span>
-                  Privacy Policy | © 2024{" "}
-                  <Link onClick={ClickHandler} to='/home'>
+                  Privacy Policy | © {currentYear}
+                  <Link onClick={ClickHandler} to='/'>
                     Adamo Autos.
                   </Link>{" "}
                   All rights reserved
@@ -160,3 +164,4 @@ export const Footer3 = () => {
     </footer>
   );
 };
+export default Footer3;
