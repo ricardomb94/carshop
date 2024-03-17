@@ -7,6 +7,7 @@
   "description": "\"E-commerce project - MERN stack\"",
   "main": "server.js",
   "type": "module",
+  "repository": "https://github.com/ricardomb94/carshop.git",
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
@@ -14,7 +15,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder.js",
     "data:destroy": "node backend/seeder.js -d",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Ricardo MBK",
   "license": "MIT",

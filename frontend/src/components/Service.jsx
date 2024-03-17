@@ -18,17 +18,18 @@ const Service = ({ service, imageUrl }) => {
         {/* <Link to={`/services/${service._id}`}> */}
         <Card.Img
           src={imageUrl}
+          alt={service.brand}
           className='service-image'
           variant='top'
           style={{ objectFit: "cover" }}
         />
         {/* </Link> */}
         <Card.Body style={{ backgroundColor: randomColor(), color: "black" }}>
-          <Link to={`/services/${service._id}`}>
-            <Card.Title as='div' className='service-title'>
-              <strong>{service.title}</strong>
-            </Card.Title>
-          </Link>
+          {/* <Link to={`/services/${service._id}`}> */}
+          <Card.Title as='div' className='service-title'>
+            <strong>{service.title}</strong>
+          </Card.Title>
+          {/* </Link> */}
           <Card.Text className='text-justify' as='p'>
             {service.description}
           </Card.Text>

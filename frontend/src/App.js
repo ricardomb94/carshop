@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import ContactFormScreen from "./screens/ContactFormScreen"
 import Footer from "./components/Footer";
-import Footer2 from "./components/Footer2";
+import Footer3 from "./components/Footer3";
 
 
 const App = () => {
@@ -20,6 +20,7 @@ const App = () => {
       <Footer />
       <ContactFormScreen/>
       <Footer2/>
+      <Footer3/>
       <ToastContainer />
     </>
   );

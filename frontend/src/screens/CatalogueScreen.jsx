@@ -21,10 +21,6 @@ const CatalogueScreen = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const getImageUrl = (vehicule) => {
-    return vehicule.images.length > 0 ? vehicule.images[0].original : "";
-  };
-
   return (
     <>
       {isLoading ? (
@@ -51,15 +47,27 @@ const CatalogueScreen = () => {
 
           <Fade triggerOnce cascade>
             <Row>
-              {currentItems.map((vehicule) => (
-                <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>
-                  <Vehicule
-                    vehicule={vehicule}
-                    imageUrl={getImageUrl(vehicule)}
-                    alt={vehicule.brand}
-                  />
-                </Col>
-              ))}
+              {currentItems.map((vehicule) => {
+                // const imageUrl =
+                //   vehicule.images.length > 0 ? vehicule.images[0].original : "";
+                const imageUrl =
+                  vehicule.images.length > 0
+                    ? `/${vehicule.images[0].original}`
+                    : "";
+                console.log(
+                  "VEHICULE IMAGES IN CATALG-SCREEN :",
+                  vehicule.image
+                );
+                return (
+                  <Col key={vehicule._id} sm={12} md={6} lg={4} xl={4}>
+                    <Vehicule
+                      vehicule={vehicule}
+                      imageUrl={imageUrl}
+                      alt={vehicule.brand}
+                    />
+                  </Col>
+                );
+              })}
             </Row>
           </Fade>
           <Row className='justify-content-center'>

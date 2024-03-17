@@ -8,7 +8,7 @@ const Vehicule = ({ vehicule, imageUrl }) => {
   return (
     <Card className='my-3 p-3 rounded'>
       <Link to={`/vehicules/${vehicule._id}`}>
-        <Card.Img src={imageUrl} variant='top' />
+        <Card.Img src={imageUrl} alt={vehicule.brand} variant='top' />
       </Link>
       <Card.Body>
         <Link to={`/vehicules/${vehicule._id}`}>

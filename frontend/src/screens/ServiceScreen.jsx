@@ -94,7 +94,7 @@ const ServiceScreen = () => {
                 {currentItems.map((service) => {
                   const imageUrl =
                     service.images.length > 0
-                      ? service.images[0].thumbnail
+                      ? `/${service.images[0].thumbnail}`
                       : "";
                   // const imageUrl =
                   //   service.images.length > 0
