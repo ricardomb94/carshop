@@ -310,7 +310,7 @@ div.information-banner {
 
 .form-contact {
     /* background-color: #000f3f; */
-    background-color: #336863;
+    background-color: #04012a;
     padding: 0 8rem 0 8rem
         /* Add some padding if needed */
 }
@@ -364,7 +364,7 @@ footer.goldenrod {
     }
 
     .form-contact {
-        margin: 0;
+        padding: 0;
     }
 }
 
