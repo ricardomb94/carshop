@@ -125,7 +125,7 @@ const ContactFormScreen = () => {
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Button type='submit' variant='primary' className='mt-2'>
+        <Button type='submit' variant='primary' className='mt-2 mb-2'>
           Envoyer
         </Button>
       </Form>

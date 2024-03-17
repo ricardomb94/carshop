@@ -254,9 +254,9 @@ div.information-banner {
     }
 }
 
-/* .form-contact {
-    background-color: goldenrod;
-} */
+.form-contact {
+    background-color: #04012a;
+}
 
 /* Flip card */
 .flip-card {
@@ -361,6 +361,10 @@ footer.goldenrod {
     .flip-card-front,
     .flip-card-back {
         padding: 1rem;
+    }
+
+    .form-contact {
+        margin: 0;
     }
 }
 

@@ -40,9 +40,9 @@ const Header = () => {
       <header
         style={{
           // backgroundColor: "#161926 !important",
-          backgroundColor: "#DD3845",
-          paddingBottom: "6.5rem",
-          marginBottom: "3rem",
+          // backgroundColor: "#DD3845",
+          // paddingBottom: "6.5rem",
+          marginBottom: "5rem",
         }}
       >
         <Navbar
