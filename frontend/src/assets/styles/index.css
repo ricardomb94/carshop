@@ -361,6 +361,29 @@ div.information-banner {
     .form-contact {
         padding: 0;
     }
+
+    div.information-banner {
+        align-items: center;
+        background-color: rgba(2, 8, 28, .555);
+        box-shadow: 0 5px 9px #0000001a;
+        color: #fff;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        left: 50%;
+        padding: 1rem;
+        position: absolute;
+        border: 1px purple dashed;
+        right: 3rem;
+        top: 12rem;
+        transform: translateX(-50%);
+        transition: transform .5s ease-in-out;
+        width: 100%;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        z-index: 99;
+    }
 }
 
 @media (max-width: 768px) {
