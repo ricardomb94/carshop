@@ -106,9 +106,10 @@ table th {
 }
 
 
-/* .list-group-item {
-    border-radius: 5px;
-} */
+.list-group-item {
+    background: #00325a;
+
+}
 
 
 
