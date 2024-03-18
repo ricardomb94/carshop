@@ -359,7 +359,7 @@ div.information-banner {
 
     /* Styles for small screens */
     .form-contact {
-        padding: 0;
+        padding: 0 1.5rem;
     }
 
     div.information-banner {
