@@ -371,7 +371,7 @@ div.information-banner {
         flex-direction: row;
         justify-content: space-evenly;
         left: 50%;
-        padding: 1rem;
+        padding: 0 1.5rem;
         position: absolute;
         border: 1px purple dashed;
         right: 3rem;
