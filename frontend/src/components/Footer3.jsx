@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { LiaFacebookF, LiaWhatsapp } from "react-icons/lia";
 import "../assets/styles/footer3.css";
-import logo from "../assets/adamoauto-jaune.jpeg";
+import logo from "../assets/adamologo01.png";
 
 export const Footer3 = (props) => {
   const ClickHandler = () => {
@@ -92,42 +92,42 @@ export const Footer3 = (props) => {
                 <div className='service-section'>
                   <ul>
                     <li>
-                      <Link onClick={ClickHandler} to='/service'>
+                      <Link onClick={ClickHandler} to='/'>
                         Diagnostique et entretien
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={ClickHandler} to='/service'>
+                      <Link onClick={ClickHandler} to='/'>
                         Charge et Démarrage
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={ClickHandler} to='/service'>
+                      <Link onClick={ClickHandler} to='/'>
                         Embrayage
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={ClickHandler} to='/service'>
+                      <Link onClick={ClickHandler} to='/'>
                         Moteur
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={ClickHandler} to='/service'>
+                      <Link onClick={ClickHandler} to='/'>
                         Roues
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={ClickHandler} to='/service'>
+                      <Link onClick={ClickHandler} to='/'>
                         Direction et Transmission
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={ClickHandler} to='/service'>
+                      <Link onClick={ClickHandler} to='/'>
                         Suspension
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={ClickHandler} to='/service'>
+                      <Link onClick={ClickHandler} to='/'>
                         Echappement
                       </Link>
                     </li>

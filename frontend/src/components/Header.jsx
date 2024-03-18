@@ -13,7 +13,7 @@ import logo from "../assets/adamoauto-jaune.jpeg";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
-// import logo2 from "../assets/adamologo1.png";
+import logo from "../assets/adamologo01.png";
 import { Reveal, Fade } from "react-awesome-reveal";
 import InformationBox from "./InformationBox";
 import ImageSlider from "./ImageSlider";
