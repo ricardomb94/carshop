@@ -25,7 +25,7 @@ const ContactFormScreen = () => {
     telephone: "",
     email: "",
     message: "",
-    selectedService: services[0],
+    // selectedService: services[0],
   });
 
   const submitHandler = (e) => {
@@ -89,9 +89,7 @@ const ContactFormScreen = () => {
                 value={formData.selectedService}
                 onChange={handleInputChange}
               >
-                <option value={formData.selectedService} disabled>
-                  Sélectionnez un service
-                </option>
+                <option disable>Sélectionnez un service</option>
                 {services.map((service) => (
                   <option key={service} value={service}>
                     {service}
