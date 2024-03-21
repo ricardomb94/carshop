@@ -45,7 +45,7 @@ const submitContactForm = asyncHandler(async (req, res) => {
     // Send email to the admin
     const info = await transporter.sendMail({
       from: "noreply@example.com",
-      to: "admin@example.com", // Replace with the admin's email address
+      to: "progricdev@gmail.com", // Replace with the admin's email address
       subject: "New Contact Form Submission",
       text: `Name: ${name}\nEmail: ${email}\nTelephone: ${telephone}\nService: ${selectedService}\n\nMessage:\n${message}`,
       // You can also use HTML for the email body if needed
