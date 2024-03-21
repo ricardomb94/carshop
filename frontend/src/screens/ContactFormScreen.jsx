@@ -63,7 +63,11 @@ const ContactFormScreen = () => {
     <Container fluid className='form-contact'>
       <h2 className='text-center pt-3'>Besoin d'aide ?</h2>
       <p className='text-center'>Laissez nous un message</p>
-      {isLoading && <ScaleLoader />}
+      {isLoading && (
+        <div className='spinner-overlay'>
+          <ScaleLoader />
+        </div>
+      )}
       <Form onSubmit={submitHandler}>
         <Row>
           <Col lg={6} md={12} sm={12}>
