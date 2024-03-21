@@ -25,7 +25,7 @@ const ContactFormScreen = () => {
     telephone: "",
     email: "",
     message: "",
-    // selectedService: services[0],
+    selectedService: "",
   });
 
   const submitHandler = (e) => {
