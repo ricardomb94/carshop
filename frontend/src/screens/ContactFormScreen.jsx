@@ -95,15 +95,15 @@ const ContactFormScreen = () => {
         </Row>
         <Row>
           <Col lg={6} md={12} sm={12}>
-            <Form.Group controlId='service' className='my-3'>
+            <Form.Group controlId='selectedService' className='my-3'>
               <Form.Control
-                name='service'
+                name='selectedService'
                 type='text'
                 as='select'
                 value={formData.selectedService}
                 onChange={handleInputChange}
               >
-                <option disable>Sélectionnez un service</option>
+                <option disabled>Sélectionnez un service</option>
                 {services.map((service) => (
                   <option key={service} value={service}>
                     {service}
