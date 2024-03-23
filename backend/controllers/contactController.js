@@ -61,4 +61,20 @@ const submitContactForm = asyncHandler(async (req, res) => {
   }
 });
 
-export { getContactMessages, submitContactForm };
+// @desc    Delete a product
+// @route   DELETE /api/contact/:id
+// @access  Private/Admin
+const deleteContact = asyncHandler(async (req, res) => {
+  const contact = await Contact.findById(req.params.id);
+console.log("CONTACT IN DELETE :", contact)
+console.log("REQ IN DELETE :", req)
+  if (contact) {
+    await Contact.deleteOne({ _id: contact._id });
+    res.status(200).json({ message: 'Contact removed' });
+  } else {
+    res.status(404);
+    throw new Error('Contact not found');
+  }
+});
+
+export { getContactMessages, submitContactForm, deleteContact };

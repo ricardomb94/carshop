@@ -115,6 +115,9 @@ const Header = () => {
                       <LinkContainer to='/admin/servicelist'>
                         <NavDropdown.Item>Liste des services</NavDropdown.Item>
                       </LinkContainer>
+                      <LinkContainer to='/admin/messageliste'>
+                        <NavDropdown.Item>Les messages</NavDropdown.Item>
+                      </LinkContainer>
                     </NavDropdown>
                   )}
                 </Reveal>

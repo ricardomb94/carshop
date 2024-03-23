@@ -63,6 +63,8 @@ app.use("/api/admin/vehiculeslist", vehiculeRoutes);
 app.use("/api/admin/vehicule/:id", vehiculeRoutes);
 app.use("/api/services/admin/servicelist", serviceRoutes);
 app.use("/api/admin/service/:id", serviceRoutes)
+app.use("/api/admin/contact/:id", contactRoutes)
+
 
 app.get("/api/config/paypal", (req, res) =>
   res.send({ clientId: process.env.PAYPAL_client_ID })

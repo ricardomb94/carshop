@@ -14,14 +14,14 @@ export const contactApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: CONTACT_URL,
       }),
-      providesTags: ["Message"],
       keepUnusedDataFor: 5,
     }),
-    deleteMessage: builder.mutation({
-      query: (messageId) => ({
-        url: `${CONTACT_URL}/${messageId}`,
+    deleteContact: builder.mutation({
+      query: (contactId) => ({
+        url: `${CONTACT_URL}/${contactId}`,
         method: "DELETE",
       }),
+      providesTags: ["Contact"],
     }),
   }),
 });
@@ -29,7 +29,7 @@ export const contactApiSlice = apiSlice.injectEndpoints({
 export const {
   useSubmitContactFormMutation,
   useGetMessagesQuery,
-  useDeleteMessageMutation,
+  useDeleteContactMutation,
 //   useUpdateMessageMutation,
 //   useGetMessageDetailsQuery,
 } = contactApiSlice;

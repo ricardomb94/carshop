@@ -37,6 +37,7 @@ import ServiceCreateScreen from "./screens/admin/ServiceCreateScreen";
 import ServiceListScreen from "./screens/admin/ServiceListScreen";
 import ServiceEdithScreen from "./screens/admin/ServiceEdithScreen";
 import ContactFormScreen from "./screens/ContactFormScreen";
+import MessageListScreen from "./screens/admin/MessagesLIstScreen";
 
 // import OrdersScreen from "./screens/OrdersScreen";
 // import OrderDetailsScreen from "./screens/OrderDetailsScreen";
@@ -85,7 +86,12 @@ const router = createBrowserRouter(
           path='/admin/service/:id/edit'
           element={<ServiceEdithScreen />}
         />
+         <Route
+          path='/admin/messageliste'
+          element={<MessageListScreen />}
+        />
     </Route>
+    
   )
 );
 

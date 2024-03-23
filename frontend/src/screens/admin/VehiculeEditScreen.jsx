@@ -231,7 +231,7 @@ const VehiculeEditScreen = () => {
         Retour
       </Link>
       <FormContainer>
-        <h1>Editer le Produit</h1>
+        <h1>Metre à jour le Produit</h1>
         {loadingUpdate && <ScaleLoader />}
         {isLoading ? (
           <ScaleLoader />
