@@ -54,7 +54,7 @@ const ServiceScreen = () => {
           </Slide>
         </h2>
       </div>
-      <div style={{ margin: "0rem" }}>
+      <div className='my-5'>
         <Row>
           <Col sm={12} md={6} lg={6} className='mb-5'>
             <FlipCard
@@ -64,7 +64,7 @@ const ServiceScreen = () => {
           </Col>
           <Col sm={12} md={6} lg={6} className='mb-5'>
             <FlipCard
-              front="Nous proposons une large gamme de services pour répondre à tous vos besoins automobiles. De l'entretien régulier aux réparations majeures,nous sommes là pour vous aider à chaque étape du processus."
+              front="Chaque ca étant différent, nos services sont personnalisées pour répondre au mieux à tous vos besoins automobiles. De l'entretien régulier aux réparations majeures,nous sommes là pour vous aider à chaque étape du processus."
               back='Notre équipe de professionnels expérimentés est dédiée à fournir un service de qualité supérieure à chaque client. Nous sommes fiers de notre travail et nous nous engageons à vous offrir une expérience exceptionnelle.'
             />
           </Col>
