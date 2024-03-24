@@ -135,6 +135,10 @@ table th {
     height: 40vh;
 }
 
+.btn-service {
+    display: none;
+}
+
 #username {
     font-weight: 200;
     color: aliceblue;
@@ -356,6 +360,8 @@ div.information-banner {
     /* Adjust as needed */
 }
 
+
+/* Media queries */
 @media (min-width: 320px) and (max-width: 425px) {
 
     /* Styles for small screens */

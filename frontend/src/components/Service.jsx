@@ -33,7 +33,7 @@ const Service = ({ service, imageUrl }) => {
           <Card.Text className='text-justify' as='p'>
             {service.description}
           </Card.Text>
-          <a href='#' className='btn btn-primary'>
+          <a href='#' className='btn btn-primary btn-service'>
             en savoir +
           </a>
         </Card.Body>
