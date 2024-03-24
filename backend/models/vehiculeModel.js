@@ -129,7 +129,7 @@ const vehiculeSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
-});
+},{timestamps:true});
 
 const Vehicule = mongoose.model("Vehicule", vehiculeSchema);
 

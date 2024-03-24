@@ -22,8 +22,13 @@ const contactSchema = new mongoose.Schema({
     enum: ['Service 1', 'Service 2', 'Service 3', 'Service 4', 'Service 5'],
     default: 'Service 1',
     required : true 
-}
-});
+},
+isRead:{
+  type:Boolean,
+  default:false
+},
+},{timestamps:true}
+);
 
 const Contact = mongoose.model("Contact", contactSchema);
 
