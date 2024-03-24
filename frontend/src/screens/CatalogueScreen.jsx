@@ -25,7 +25,7 @@ const CatalogueScreen = () => {
     <>
       {isLoading ? (
         <ScaleLoader
-          visible={true}
+          visible='true'
           height={40}
           width={5}
           color='#36d7b7'
@@ -39,11 +39,13 @@ const CatalogueScreen = () => {
         </Message>
       ) : (
         <>
-          <h2 className='text-center'>
-            <Fade cascade damping={0.1}>
-              Véhicules à vendre
-            </Fade>
-          </h2>
+          <div className='mt-5 mb-5'>
+            <h2 className='text-center servicetitle'>
+              <Fade cascade damping={0.1}>
+                Véhicules à vendre
+              </Fade>
+            </h2>
+          </div>
 
           <Fade triggerOnce cascade>
             <Row>

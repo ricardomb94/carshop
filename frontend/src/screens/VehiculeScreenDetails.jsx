@@ -79,7 +79,7 @@ const VehiculeScreenDetails = () => {
 
   return (
     <>
-      <Link className='btn btn-light my-3' to='/vehicules/all'>
+      <Link className='btn btn-light mt-5 mb-5' to='/vehicules/all'>
         Retour au Catalogue
       </Link>
       {isLoading ? (
@@ -98,7 +98,7 @@ const VehiculeScreenDetails = () => {
         </Message>
       ) : (
         <>
-          <div className='servicetitle' style={{ marginBottom: "2rem" }}>
+          <div className='servicetitle' style={{ marginBottom: "5rem" }}>
             <h2 className='text-center'>
               <Fade cascade damping={0.1}>
                 Détails Techniques
@@ -121,7 +121,7 @@ const VehiculeScreenDetails = () => {
                       )
                     }
                     alt={vehicule.brand}
-                    thumbnailPosition='left'
+                    thumbnailPosition='bottom'
                     fluid
                     onError={handleImageError}
                   />
