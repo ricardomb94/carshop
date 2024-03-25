@@ -9,18 +9,23 @@ import { LinkContainer } from "react-router-bootstrap";
 // import logo from "../assets/adamo-logo-3.jpeg";
 // import logo from "../assets/adamo-logo-7.jpeg";
 // import logo from "../assets/adamo-logo.jpeg";
-
+import io from "socket.io-client";
 import { useSelector, useDispatch } from "react-redux";
+
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import logo from "../assets/adamologo01.png";
 import { Reveal, Fade } from "react-awesome-reveal";
 import InformationBox from "./InformationBox";
 import ImageSlider from "./ImageSlider";
+import { useGetMessagesQuery } from "../slices/contactApiSlice";
+import { useState } from "react";
 
 const Header = () => {
-  const { cartItems } = useSelector((state) => state.cart);
+  // const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
+  const { data: contacts, isLoading, error } = useGetMessagesQuery();
+  const [unreadMessages, setUnreadMessages] = useState(0);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,6 +39,7 @@ const Header = () => {
       console.log(err);
     }
   };
+
   const isHomePage = window.location.pathname === "/";
   return (
     <>
@@ -99,7 +105,16 @@ const Header = () => {
                     </LinkContainer>
                   )}
                   {userInfo && userInfo.isAdmin && (
-                    <NavDropdown title='Admin' id='adminmenu'>
+                    <NavDropdown
+                      title={`Admin ${
+                        unreadMessages > 0 ? (
+                          <Badge bg='danger'>{unreadMessages}0</Badge>
+                        ) : (
+                          ""
+                        )
+                      }`}
+                      id='adminmenu'
+                    >
                       <LinkContainer to='/admin/vehiculeslist'>
                         <NavDropdown.Item>Liste de Véhicules</NavDropdown.Item>
                       </LinkContainer>
@@ -116,7 +131,14 @@ const Header = () => {
                         <NavDropdown.Item>Liste des services</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to='/admin/messageliste'>
-                        <NavDropdown.Item>Les messages</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          Les messages
+                          {/* {messageCount > 0 && ( */}
+                          <Badge bg='danger' pill>
+                            {/* {messageCount} */}0
+                          </Badge>
+                          {/* )} */}
+                        </NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   )}

@@ -15,9 +15,7 @@ import serviceRoutes from "./routes/serviceRoutes.js";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import http from "http"; // Import the http module
-import { Server } from "socket.io"
-import websocketHandler from "./websocket.js";
-// import {WebSocketServer} from "ws"; // Import the WebSocket class
+import {WebSocketServer} from "ws"; // Import the WebSocket class
 
 
 const port = process.env.PORT || 8080;
@@ -96,32 +94,28 @@ app.use(errorHandler);
 
 // // Create an HTTP server instance using Express app
  const server = http.createServer(app);
- const io = new Server(server);
 
 // const server = createServer(app);
-// const wss = new WebSocketServer({ server });
+const wss = new WebSocketServer({ server });
 
-// wss.on('connection', function (ws) {
-//   const id = setInterval(function () {
-//     ws.send(JSON.stringify(process.memoryUsage()), function () {
-//       //
-//       // Ignore errors.
-//       //
-//     });
-//   }, 100);
-//   console.log('started client interval');
+wss.on('connection', function (ws) {
+  const id = setInterval(function () {
+    ws.send(JSON.stringify(process.memoryUsage()), function () {
+      //
+      // Ignore errors.
+      //
+    });
+  }, 100);
+  console.log('started client interval');
 
-//   ws.on('error', console.error);
+  ws.on('error', console.error);
 
-//   ws.on('close', function () {
-//     console.log('stopping client interval');
-//     clearInterval(id);
-//   });
-// });
-
-app.listen(port, () => {
-  console.log(`The Server is listening on ${port} port in ${process.env.NODE_ENV} mode`)
-  websocketHandler(io);// Let's pass the Socket.IO instance
+  ws.on('close', function () {
+    console.log('stopping client interval');
+    clearInterval(id);
+  });
 });
+
+app.listen(port, () => console.log(`The Server is listening on ${port} port in ${process.env.NODE_ENV} mode`));
 
 

@@ -21,7 +21,7 @@ const MessagesListScreen = () => {
     { isLoading: loadingDelete, refresh },
   ] = useDeleteContactMutation();
 
-  // Logic for pagination
+  // const messageCount = messages?.length ?? 0;
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
   const currentItems = contacts
@@ -46,7 +46,9 @@ const MessagesListScreen = () => {
     <>
       <Row className='align-items-center'>
         <Col>
-          <h2>Liste des Messages</h2>
+          <div className='mt-5 mb-5'>
+            <h2 className='servicetitle text-center'>Liste des Messages</h2>
+          </div>
         </Col>
       </Row>
       {loadingDelete && (

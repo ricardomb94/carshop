@@ -38,7 +38,9 @@
     "react-scripts": "^5.0.1",
     "react-typed": "^2.0.12",
     "render-static": "^1.0.1",
-    "sharp": "^0.33.1"
+    "sharp": "^0.33.1",
+    "socket.io": "^4.7.5",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.1",
