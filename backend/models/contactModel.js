@@ -19,8 +19,14 @@ const contactSchema = new mongoose.Schema({
   },
   selectedService: {
     type: String,
-    enum: ['Service 1', 'Service 2', 'Service 3', 'Service 4', 'Service 5'],
-    default: 'Service 1',
+    enum: ["Moteur",
+    "Transmission",
+    "Roues",
+    "Suspension",
+    "Embrayage",
+    "Diagnostique",
+    "Entretien",],
+    default: 'Choisissez un service',
     required : true 
 },
 isRead:{

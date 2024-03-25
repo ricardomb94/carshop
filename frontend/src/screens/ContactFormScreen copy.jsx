@@ -7,13 +7,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const services = [
-  "Moteur",
-  "Transmission",
-  "Roues",
-  "Suspension",
-  "Embrayage",
-  "Diagnostique",
-  "Entretien",
+  "Service 1",
+  "Service 2",
+  "Service 3",
+  "Service 4",
+  "Service 5",
 ];
 
 const ContactFormScreen = () => {
