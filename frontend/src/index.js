@@ -38,6 +38,7 @@ import ServiceListScreen from "./screens/admin/ServiceListScreen";
 import ServiceEdithScreen from "./screens/admin/ServiceEdithScreen";
 import ContactFormScreen from "./screens/ContactFormScreen";
 import MessageListScreen from "./screens/admin/MessagesLIstScreen";
+import TermsAndConditions from "./screens/legal-obligations/TermsAndContditions";
 
 // import OrdersScreen from "./screens/OrdersScreen";
 // import OrderDetailsScreen from "./screens/OrderDetailsScreen";
@@ -54,6 +55,8 @@ const router = createBrowserRouter(
       <Route path='/register' element={<RegisterScreen />} />
       <Route path='/profile' element={<ProfileScreen />} />
       <Route path='/contact' element={<ContactFormScreen />} />
+      <Route path='/cgu' element={<TermsAndConditions />} />
+
 
 
       <Route path='' element={<PrivateRoute />}>

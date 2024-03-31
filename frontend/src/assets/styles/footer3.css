@@ -184,3 +184,51 @@
 .hx-site-footer-bottom-content span a {
     color: #ffffff;
 }
+
+.nav-link {
+    color: #3c4c5d;
+}
+
+.list-unstyled {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.list-unstyled li {
+    margin-bottom: 5px;
+}
+
+.list-unstyled a {
+    color: #333;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.list-unstyled a:hover {
+    color: #000;
+}
+
+.card {
+    background-color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    margin-bottom: 10px;
+}
+
+.list-unstyled {
+    /* Existing styles... */
+    position: sticky;
+    top: 0;
+    /* Maintain position at the top of the viewport */
+}

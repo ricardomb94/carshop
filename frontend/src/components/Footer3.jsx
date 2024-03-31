@@ -69,18 +69,20 @@ export const Footer3 = (props) => {
             </div>
             <div className='col-lg-3 col-md-6 col-sm-6 footer-t'>
               <div className='hx-site-footer-adress'>
-                <h3>Adresse</h3>
+                <h3>Contact</h3>
                 <div className='adress-section'>
                   <ul>
-                    <li>Adresse</li>
-                    <li>14 chemin des closeaux, 94440 Villecresnes </li>
+                    <li>
+                      <span>Adresse:</span> 14 chemin des closeaux, 94440
+                      Villecresnes{" "}
+                    </li>
                   </ul>
                   <ul className='ad'>
                     <li>
-                      <span>Phone:</span> 07 51 30 47 04
+                      <span>Téléphone:</span> 07 51 30 47 04
                     </li>
                     <li>
-                      <span>Email:</span> info@adamoautos.com
+                      <span>Couriel:</span> info@adamoautos.com
                     </li>
                   </ul>
                 </div>
@@ -92,8 +94,8 @@ export const Footer3 = (props) => {
                 <div className='service-section'>
                   <ul>
                     <li>
-                      <Link onClick={ClickHandler} to='/'>
-                        Diagnostique et entretien
+                      <Link onClick={ClickHandler} to='/cgu'>
+                        CGU
                       </Link>
                     </li>
                     <li>
