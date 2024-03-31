@@ -16,6 +16,13 @@ export const contactApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+     getUnreadMessagesCount: builder.query({
+      query: () => ({
+        url: `${CONTACT_URL}/unread`,
+      }),
+      providesTags: ["Contact"],
+    }),
+    
     deleteContact: builder.mutation({
       query: (contactId) => ({
         url: `${CONTACT_URL}/${contactId}`,
@@ -30,6 +37,5 @@ export const {
   useSubmitContactFormMutation,
   useGetMessagesQuery,
   useDeleteContactMutation,
-//   useUpdateMessageMutation,
-//   useGetMessageDetailsQuery,
+  useGetUnreadMessagesCountQuery,
 } = contactApiSlice;

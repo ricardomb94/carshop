@@ -2,8 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import path from "path";
 import express from "express";
-import helmet from "helmet";
-import cors from "cors";
+// import helmet from "helmet";
 import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 import vehiculeRoutes from "./routes/vehiculeRoutes.js";
@@ -14,31 +13,31 @@ import contactRoutes from "./routes/contactRoutes.js";
 import serviceRoutes from "./routes/serviceRoutes.js";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-import http from "http"; // Import the http module
-import { Server } from "socket.io"
-import websocketHandler from "./websocket.js";
-// import {WebSocketServer} from "ws"; // Import the WebSocket class
+import http from "http";
+import { Server } from "socket.io";
+import websocketHandler from "./socket.js";
+import cors from "cors"
 
 
-const port = process.env.PORT || 8080;
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000", // Allow requests from any origin
+    credentials: true , // Enable credentials (cookies, authorization headers, etc.)
+    methods:["GET", "POST"]
+  }
+});
 
-//helmet
-app.use(helmet());
-//Cors
-app.use(
-  cors({
-    origin:"*", // Allow requests from this origin
-    credentials: true, // Enable credentials (cookies, authorization headers, etc.)
-  })
-);
-
-//Body parser middleware
+// app.use(helmet());
+// app.use(cors({
+//   origin: "http://localhost:3000", // Allow requests from client
+//   credentials: true // Enable credentials (cookies, authorization headers, etc.)
+// }));
+app.use(cors())
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('config'));
-
-//Cookies middleware
 app.use(cookieParser());
 
 connectDB(app);
@@ -48,43 +47,40 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use((req, res, next) => {
-  res.setHeader('Cross-Origin-Resource-Policy', 'same-site'); // or 'cross-origin'
+  res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
   next();
 });
 
+// API routes
 app.use("/api/vehicules", vehiculeRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/contact", contactRoutes)
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/services", serviceRoutes)
-const __dirname = path.resolve(); //Set __dirname to current directoryme
+const __dirname = path.resolve();
 app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/thumbnails", express.static(path.join(__dirname, "/thumbnails")));
 app.use("/resized", express.static(path.join(__dirname, "/resized")));
 
-// Define the admin routes before the notFound and errorHandler middleware
+// Admin routes
 app.use("/api/admin/vehiculeslist", vehiculeRoutes);
 app.use("/api/admin/vehicule/:id", vehiculeRoutes);
 app.use("/api/services/admin/servicelist", serviceRoutes);
 app.use("/api/admin/service/:id", serviceRoutes)
 app.use("/api/admin/contact/:id", contactRoutes)
 
-
 app.get("/api/config/paypal", (req, res) =>
   res.send({ clientId: process.env.PAYPAL_client_ID })
 );
 
+// Serve static files in production
 if (process.env.NODE_ENV === "production") {
-  // Serve static files from the specified directories
-    app.use(express.static(path.join(__dirname, '/frontend/build')))
-
-  // For any other route, serve the index.html file
+  app.use(express.static(path.join(__dirname, '/frontend/build')))
   app.get("*", (req, res) =>
     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
   );
 } else {
-  // In development mode, respond with a simple message
   app.get("/", (req, res) => {
     res.send("API is running....");
   });
@@ -92,36 +88,12 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(notFound);
 app.use(errorHandler);
+  
+const port = process.env.PORT || 8080;
 
 
-// // Create an HTTP server instance using Express app
- const server = http.createServer(app);
- const io = new Server(server);
 
-// const server = createServer(app);
-// const wss = new WebSocketServer({ server });
-
-// wss.on('connection', function (ws) {
-//   const id = setInterval(function () {
-//     ws.send(JSON.stringify(process.memoryUsage()), function () {
-//       //
-//       // Ignore errors.
-//       //
-//     });
-//   }, 100);
-//   console.log('started client interval');
-
-//   ws.on('error', console.error);
-
-//   ws.on('close', function () {
-//     console.log('stopping client interval');
-//     clearInterval(id);
-//   });
-// });
-
-app.listen(port, () => {
-  console.log(`The Server is listening on ${port} port in ${process.env.NODE_ENV} mode`)
-  websocketHandler(io);// Let's pass the Socket.IO instance
+server.listen(port, () => {
+  console.log(`The Server is listening on ${port} port in ${process.env.NODE_ENV} mode`);
+  websocketHandler(io);
 });
-
-

@@ -1,10 +1,12 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Row, Col, Button, Container } from "react-bootstrap";
 import { useSubmitContactFormMutation } from "../slices/contactApiSlice";
 import { ScaleLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import openSocket from "socket.io-client";
+
+const socket = openSocket.connect("http://localhost:8080");
 
 const services = [
   "Moteur",
@@ -17,11 +19,7 @@ const services = [
 ];
 
 const ContactFormScreen = () => {
-  const [
-    submitContactForm,
-    { isLoading, error },
-  ] = useSubmitContactFormMutation();
-
+  const [submitContactForm, { isLoading }] = useSubmitContactFormMutation();
   const [formData, setFormData] = useState({
     name: "",
     telephone: "",
@@ -29,6 +27,8 @@ const ContactFormScreen = () => {
     message: "",
     selectedService: "",
   });
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -42,17 +42,17 @@ const ContactFormScreen = () => {
           telephone: "",
           email: "",
           message: "",
-          selectedService: "",
+          selectedService: "", // Set as default value
         });
-        toast.success("Form submitted successfully!");
+        toast.success("Message envoyé avec succès!");
       } catch (error) {
         console.error("Error submitting form:", error);
-        toast.error("Error submitting form: " + error.toString());
+        toast.error("Une erreur lors de l'envoie: " + error.toString());
       }
     } else {
       // Handle the case where no service is selected (e.g., display an error message)
       console.error("Please select a service.");
-      toast.error("Please select a service.");
+      toast.error("Choisissez un service.");
     }
   };
 
@@ -60,6 +60,41 @@ const ContactFormScreen = () => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
+
+  // Socket.IO logic
+  useEffect(() => {
+    // Connect to the socket server on component mount
+    console.log(
+      "Connecting to Socket.IO server:",
+      socket.io.opts.transport,
+      socket.io.opts.hostname,
+      socket.io.opts.port
+    );
+
+    socket.on("connect", () => {
+      setIsSocketConnected(true);
+      console.log("Socket connected!");
+    });
+
+    socket.on("disconnect", () => {
+      setIsSocketConnected(false);
+      console.error("Socket disconnected. Attempting reconnection...");
+      socket.connect(); // Automatically try to reconnect on disconnect
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error("Socket connection error:", error);
+      // Handle connection errors gracefully, e.g., display a user-friendly message
+    });
+
+    socket.on("new_message", (data) => {
+      setUnreadMessagesCount(unreadMessagesCount + 1);
+      // Optionally trigger a re-render to update the badge visually
+    });
+
+    // Disconnect from socket on component unmount
+    return () => socket.disconnect();
+  }, [unreadMessagesCount]);
 
   return (
     <Container fluid className='form-contact'>
@@ -102,10 +137,10 @@ const ContactFormScreen = () => {
                 name='selectedService'
                 type='text'
                 as='select'
-                value={formData.selectedService}
+                // value={formData.selectedService}
                 onChange={handleInputChange}
               >
-                <option disabled>Sélectionnez un service</option>
+                <option value=''>Sélectionnez un service</option>
                 {services.map((service) => (
                   <option key={service} value={service}>
                     {service}
