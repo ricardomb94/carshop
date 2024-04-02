@@ -94,16 +94,6 @@ export const Footer3 = (props) => {
                 <div className='service-section'>
                   <ul>
                     <li>
-                      <Link onClick={ClickHandler} to='/cgu'>
-                        CGU
-                      </Link>
-                    </li>
-                    <li>
-                      <Link onClick={ClickHandler} to='/'>
-                        Charge et Démarrage
-                      </Link>
-                    </li>
-                    <li>
                       <Link onClick={ClickHandler} to='/'>
                         Embrayage
                       </Link>
@@ -140,6 +130,33 @@ export const Footer3 = (props) => {
           </div>
         </div>
       </div>
+      {/* <div className='row'>
+        <div className='col'> */}
+      <div className='my-3'>
+        <div className='row justify-content-md-center offset-6'>
+          <div className='col col-lg-2 '>
+            <Link className='white-link' onClick={ClickHandler} to='/#'>
+              Site map
+            </Link>
+          </div>
+          <div className='col col-lg-2 text-white'>
+            <Link className='white-link' onClick={ClickHandler} to='/cgu'>
+              CGU
+            </Link>
+          </div>
+          <div className='col-md-auto'>
+            <Link
+              className='white-link'
+              onClick={ClickHandler}
+              to='/mentionslegales'
+            >
+              Mentions Légales
+            </Link>
+          </div>
+        </div>
+      </div>
+      {/* </div>
+      </div> */}
       <div className='hx-site-footer-bottom'>
         <div className='container'>
           <div className='hx-site-footer-bottom-content'>

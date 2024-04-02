@@ -232,3 +232,7 @@
     top: 0;
     /* Maintain position at the top of the viewport */
 }
+
+.white-link {
+    color: #fff;
+}
