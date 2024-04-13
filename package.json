@@ -37,6 +37,7 @@
     "react-hook-form": "^7.50.1",
     "react-scripts": "^5.0.1",
     "react-typed": "^2.0.12",
+    "redirect-ssl": "^3.0.0",
     "render-static": "^1.0.1",
     "sharp": "^0.33.1",
     "socket.io": "^4.7.5",

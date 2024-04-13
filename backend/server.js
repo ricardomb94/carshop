@@ -3,6 +3,7 @@ dotenv.config();
 import path from "path";
 import express from "express";
 // import helmet from "helmet";
+import redirectSSL from "redirect-ssl"
 import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 import vehiculeRoutes from "./routes/vehiculeRoutes.js";
@@ -19,7 +20,14 @@ import websocketHandler from "./socket.js";
 import cors from "cors"
 
 
+
 const app = express();
+
+// enable ssl redirect
+app.use(redirectSSL.create({
+  enabled: process.env.NODE_ENV === 'production'
+}))
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
