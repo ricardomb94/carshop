@@ -20,13 +20,8 @@ import websocketHandler from "./socket.js";
 import cors from "cors"
 
 
-
 const app = express();
 
-// enable ssl redirect
-app.use(redirectSSL.create({
-  enabled: process.env.NODE_ENV === 'production'
-}))
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -36,6 +31,10 @@ const io = new Server(server, {
     methods:["GET", "POST"]
   }
 });
+
+
+// enable ssl redirect
+app.use(redirectSSL)
 
 // app.use(helmet());
 // app.use(cors({
