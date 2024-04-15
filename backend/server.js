@@ -26,7 +26,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000", // Allow requests from any origin
+    origin: "https://www.adamoautos.com", // Allow requests from this origin
     credentials: true , // Enable credentials (cookies, authorization headers, etc.)
     methods:["GET", "POST"]
   }
