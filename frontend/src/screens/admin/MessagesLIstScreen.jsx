@@ -32,7 +32,7 @@ const MessagesListScreen = () => {
 
   const deleteHandler = async (id) => {
     console.log("DELETE :", id);
-    if (window.confirm("Êtes vous sûre de vouloir supprimer cet item ?")) {
+    if (window.confirm("Êtes vous sûr de vouloir supprimer ce message?")) {
       try {
         await deleteContact(id);
         refresh();
