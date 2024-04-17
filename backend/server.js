@@ -26,15 +26,15 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://www.adamoautos.com", // Allow requests from this origin
-    credentials: true , // Enable credentials (cookies, authorization headers, etc.)
-    methods:["GET", "POST"]
+    origin: process.env.NODE_ENV === 'production' ? 'https://www.adamoautos.com' : 'http://localhost:3000',
+    credentials: true,
+    methods: ["GET", "POST"]
   }
 });
 
 
 // enable ssl redirect
-app.use(redirectSSL)
+// app.use(redirectSSL)
 
 // app.use(helmet());
 // app.use(cors({
