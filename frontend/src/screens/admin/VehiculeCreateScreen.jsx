@@ -110,13 +110,9 @@ const VehiculeCreateScreen = () => {
       const response = await uploadVehiculeImage(formData);
       console.log("RESPONSE UPLOADED-VEHICULE-IMG :", response);
 
-      const thumbnailPath = response.data.thumbnailPath;
-      console.log("RESP.DATA.THUMBNAIL :", thumbnailPath);
-      console.log("THUMBNAIL PATH:", thumbnailPath);
-
       const newImage = {
-        original: fileType === "image" ? response.data.imagePath : "",
-        thumbnail: thumbnailPath || "", // Check if thumbnailPath is defined
+        original: response.data.imagePath, // Use the secure URL for the original image
+        thumbnail: response.data.thumbnailPath, // Use the secure URL for the thumbnail
         _id: imageId || undefined,
       };
       console.log("NEW-IMG :", newImage);
@@ -134,6 +130,40 @@ const VehiculeCreateScreen = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
+
+  // const uploadFileHandler = async (e, fileType, index, imageId) => {
+  //   const file = e.target.files[0];
+  //   const formData = new FormData();
+  //   formData.append(fileType, file);
+
+  //   try {
+  //     const response = await uploadVehiculeImage(formData);
+  //     console.log("RESPONSE UPLOADED-VEHICULE-IMG :", response);
+
+  //     const thumbnailPath = response.data.thumbnailPath;
+  //     console.log("RESP.DATA.THUMBNAIL :", thumbnailPath);
+  //     console.log("THUMBNAIL PATH:", thumbnailPath);
+
+  //     const newImage = {
+  //       original: fileType === "image" ? response.data.imagePath : "",
+  //       thumbnail: thumbnailPath || "", // Check if thumbnailPath is defined
+  //       _id: imageId || undefined,
+  //     };
+  //     console.log("NEW-IMG :", newImage);
+
+  //     // Update the state immutably
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       images: prevFormData.images.map((img, i) =>
+  //         i === index ? { ...img, ...newImage } : img
+  //       ),
+  //     }));
+
+  //     toast.success("Image uploaded successfully");
+  //   } catch (err) {
+  //     toast.error(err?.data?.message || err.error);
+  //   }
+  // };
 
   return (
     <>
