@@ -47,7 +47,12 @@ router.post("/", (req, res) => {
     }
 
     try {
-      const result = await cloudinary.uploader.upload(req.file.path);
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        // Add options for resizing, cropping, etc.
+        width: 1024,
+        height: 768,
+        resource_type: "auto",
+      });
       const imagePath = result.secure_url;
       const thumbnailPath = result.secure_url; // Cloudinary can generate thumbnails on-the-fly
 
