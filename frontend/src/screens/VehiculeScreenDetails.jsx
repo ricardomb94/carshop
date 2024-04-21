@@ -23,8 +23,6 @@ import { addToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import fallback from "../assets/fallback.jpg";
-import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
-import cloudinary from "cloudinary-core";
 
 // const baseUrl = process.env.BASE_URL || "";
 
@@ -43,36 +41,29 @@ const VehiculeScreenDetails = () => {
     dispatch(addToCart({ ...vehicule, qty }));
     navigate("/panier");
   };
-
-  cloudinary.config({
-    cloud_name: process.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-  });
-
-  // Prepare image items for ImageGallery
+  console.log("VEHICULE IN DETAILS :", vehicule);
+  // Check if vehicule is defined before rendering
+  if (!vehicule) {
+    return (
+      <ScaleLoader
+        visible={+true}
+        height={40}
+        width={5}
+        color='#36d7b7'
+        aria-label='scale-loading'
+        wrapperstyle={{}}
+        wrapperclass='scale-wrapper'
+      />
+    );
+  }
+  // Check if vehicule.images is defined before mapping
   const images =
     vehicule.images &&
     vehicule.images.map((imageObj) => ({
-      original: (
-        <CloudinaryContext key={imageObj._id}>
-          <Image
-            key={imageObj._id}
-            publicId={imageObj.publicId}
-            // Adjust width and height as needed
-          />
-        </CloudinaryContext>
-      ),
-      thumbnail: (
-        <CloudinaryContext key={imageObj._id + "thumb"}>
-          <Image
-            key={imageObj._id + "thumb"}
-            publicId={imageObj.publicId}
-            transformation={{ width: 200, height: 150, crop: "fill" }} // Adjust thumbnail dimensions
-          />
-        </CloudinaryContext>
-      ),
+      original: `${imageObj.original}`,
+      thumbnail: `${imageObj.thumbnail}`,
     }));
+  console.log("IMAGES ARRAY :", images);
 
   const handleImageError = () => {
     // Display error message or a different fallback image
@@ -88,7 +79,7 @@ const VehiculeScreenDetails = () => {
 
   return (
     <>
-      <Link className='btn btn-light mt-5 mb-5' to='/vehicules/all'>
+      <Link className='btn btn-light my-3' to='/vehicules/all'>
         Retour au Catalogue
       </Link>
       {isLoading ? (
@@ -97,9 +88,9 @@ const VehiculeScreenDetails = () => {
           height={40}
           width={5}
           color='#36d7b7'
-          aria-label='scale-loading'
-          wrapperstyle={{}}
-          wrapperclass='scale-wrapper'
+          ariaLabel='scale-loading'
+          wrapperStyle={{}}
+          wrapperClass='scale-wrapper'
         />
       ) : error ? (
         <Message variant='danger'>
@@ -107,7 +98,7 @@ const VehiculeScreenDetails = () => {
         </Message>
       ) : (
         <>
-          <div className='servicetitle' style={{ marginBottom: "5rem" }}>
+          <div className='servicetitle' style={{ marginBottom: "2rem" }}>
             <h2 className='text-center'>
               <Fade cascade damping={0.1}>
                 Détails Techniques
@@ -130,7 +121,7 @@ const VehiculeScreenDetails = () => {
                       )
                     }
                     alt={vehicule.brand}
-                    thumbnailPosition='bottom'
+                    thumbnailPosition='left'
                     fluid
                     onError={handleImageError}
                   />
