@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 
+
+// The capitalizeWords function
+function capitalizeWords(string) {
+  return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+}
+
+console.log(capitalizeWords("hello world")); // Output: "Hello World"
+console.log(capitalizeWords("this is a test")); // Output: "This Is A Test"
+
 const reviewSchema = new mongoose.Schema(
   {
     name: {
@@ -130,6 +139,27 @@ const vehiculeSchema = new mongoose.Schema({
     required: false,
   },
 },{timestamps:true});
+
+// Define pre-save middleware for vehiculeSchema
+vehiculeSchema.pre('save', function(next) {
+ // Capitalize the first letter of each word in the specified fields
+  this.name = capitalizeWords(this.name);
+  this.description = capitalizeWords(this.description);
+  this.brand = capitalizeWords(this.brand);
+  this.category = capitalizeWords(this.category);
+  this.color = capitalizeWords(this.color);
+  this.provenance = capitalizeWords(this.provenance);
+  this.registration = capitalizeWords(this.registration);
+  this.vehiculeInspection = this.vehiculeInspection && capitalizeWords(this.vehiculeInspection);
+  this.originalOwner = capitalizeWords(this.originalOwner);
+  this.odometerReading = capitalizeWords(this.odometerReading);
+  this.energy = capitalizeWords(this.energy);
+  this.transmission = capitalizeWords(this.transmission);
+  this.upholstery = capitalizeWords(this.upholstery);
+  
+  // Continue with the save operation
+  next();
+});
 
 const Vehicule = mongoose.model("Vehicule", vehiculeSchema);
 
