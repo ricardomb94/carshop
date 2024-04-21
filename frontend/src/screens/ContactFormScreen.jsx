@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import openSocket from "socket.io-client";
 
-const socket = openSocket.connect("http://localhost:8080");
+const socket = openSocket.connect("https://www.adamoautos.com");
 
 const services = [
   "Moteur",
