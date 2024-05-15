@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import path from "path";
 import express from "express";
+import rateLimit from "express-rate-limit";
 // import helmet from "helmet";
 import redirectSSL from "redirect-ssl"
 import connectDB from "./config/db.js";
@@ -32,6 +33,12 @@ const io = new Server(server, {
   }
 });
 
+// Set up rate limiting middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again later.",
+});
 
 // enable ssl redirect
 // app.use(redirectSSL)
@@ -46,6 +53,8 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('config'));
 app.use(cookieParser());
+// Apply rate limiting middleware to all endpoints
+app.use(limiter);
 
 connectDB(app);
 
