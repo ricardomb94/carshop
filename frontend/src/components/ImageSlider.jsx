@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
 import Vehicule from "./Vehicule";
-import { Card, Row, Col } from "react-bootstrap"; // Using a grid layout
+import { Card } from "react-bootstrap"; // Using a grid layout
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -24,7 +23,7 @@ const ImageSlider = () => {
     speed: 1500,
     // centerPadding: "1.rem",
     autoplaySpeed: 5000,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
     // centerMode: true,
 
@@ -32,7 +31,7 @@ const ImageSlider = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
@@ -75,10 +74,12 @@ const ImageSlider = () => {
               <Card key={vehicule._id} className='vehicle-card'>
                 <Link to={`/vehicules/${vehicule._id}`}>
                   <LazyLoadImage
-                    style={{
-                      height: "25rem",
-                      objectFit: "cover",
-                    }}
+                    style={
+                      {
+                        // height: "25rem",
+                        // objectFit: "cover",
+                      }
+                    }
                     alt={`${vehicule.brand}`}
                     src={imagesUrl}
                     effect='blur'
