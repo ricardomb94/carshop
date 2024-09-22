@@ -42,7 +42,7 @@
     "redirect-ssl": "^3.0.0",
     "render-static": "^1.0.1",
     "sharp": "^0.33.1",
-    "socket.io": "^4.7.5",
+    "socket.io": "^4.8.0",
     "ws": "^8.16.0"
   },
   "devDependencies": {
