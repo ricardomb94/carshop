@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { useGetVehiculesQuery } from "../slices/vehiculesApiSlice";
 import Vehicule from "./Vehicule";
-import { Card, Row, Col } from "react-bootstrap"; // Using a grid layout
+import { Card } from "react-bootstrap"; // Using a grid layout
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -78,7 +77,7 @@ const ImageSlider = () => {
                     style={
                       {
                         // height: "25rem",
-                        // objectFit: "contain",
+                        // objectFit: "cover",
                       }
                     }
                     alt={`${vehicule.brand}`}
